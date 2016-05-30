@@ -3,7 +3,7 @@ class CreateRuns < ActiveRecord::Migration
     create_table :runs do |t|
       t.datetime :datetime
       t.decimal :distance
-      t.time :duration
+      t.integer :duration
 
       t.timestamps null: false
     end
