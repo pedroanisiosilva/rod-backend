@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :user_id %><br>
-<%= collection_select :run, :user_id, User.all, :id, :name, {:selected => @run.user_id, prompt: 'Select Runner'} %>
+    <%= collection_select :run, :user_id, User.all, :id, :name, {:selected => @run.user_id, prompt: 'Select Runner'} %>
   </div>
 
   <div class="field">
@@ -26,7 +26,9 @@
   </div>
   <div class="field">
     <%= f.label :duration %><br>
-    <%= f.time_select :duration %>
+    <%= f.text_field :duration_formated, label: 'Inform duration: ', placeholder: 'HH:MM:SS', :data=> {:mask=> '23:59:59'}%>
+
+
   </div>
   <div class="actions">
     <%= f.submit %>
