@@ -18,6 +18,7 @@
 
   <thead>
     <tr>
+      <th>Runnner</th>    
       <th>Datetime</th>
       <th>Distance</th>
       <th>Duration</th>
@@ -28,6 +29,11 @@
   <tbody>
     <% @runs.each do |run| %>
       <tr>
+<% if !run.user.nil? %>
+        <td><%= run.user.name %></td>
+<% else %>
+        <td>n/a</td>
+<% end %>
         <td><%= run.datetime %></td>
         <td><%= run.distance %></td>
         <td><%= run.duration %></td>
