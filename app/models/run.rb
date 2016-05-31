@@ -13,6 +13,11 @@ class Run < ActiveRecord::Base
 			Time.at(self.duration).utc.strftime("%H:%M:%S")
 		end
 	end
+
+	def datetime=(new_datetime)
+		self[:datetime] = new_datetime
+	end
+
 end
 
 

@@ -1,3 +1,4 @@
+<% Time.zone = 'Brasilia' %> 
 <%= form_for(@run, :html => {:class => 'form-group'}) do |f| %>
   <% if @run.errors.any? %>
     <div id="error_explanation">
@@ -18,7 +19,7 @@
 
   <div class="field">
     <%= f.label :datetime %><br>
-    <%= f.datetime_select :datetime %>
+    <%= datetime_select :run, :datetime %>
   </div>
   <div class="field">
     <%= f.label :distance %><br>
