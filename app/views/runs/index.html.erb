@@ -24,12 +24,15 @@
       <th>Datetime</th>
       <th>Distance</th>
       <th>Duration</th>
+      <th>Speed (km/h) </th>
+      <th>Pace (m/km) </th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @runs.each do |run| %>
+
       <tr>
 <% if !run.user.nil? %>
         <td><%= run.user.name %></td>
@@ -39,6 +42,8 @@
         <td><%= run.datetime %></td>
         <td><%= run.distance %></td>
         <td><%= run.duration_formated %></td>
+        <td><%= run.speed %>
+        <td><%= run.pace %>
         <td><%= link_to 'Show', run %></td>
         <td><%= link_to 'Edit', edit_run_path(run) %></td>
         <td><%= link_to 'Destroy', run, method: :delete, data: { confirm: 'Are you sure?' } %></td>

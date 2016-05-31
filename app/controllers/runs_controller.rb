@@ -4,7 +4,7 @@ class RunsController < ApplicationController
   # GET /runs
   # GET /runs.json
   def index
-    @runs = Run.all
+    @runs = Run.all.order(:datetime)
   end
 
   # GET /runs/1
