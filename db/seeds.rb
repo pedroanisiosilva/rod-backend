@@ -6,8 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.create(name:'Pedro Anisio Silva', email:'pedroanisio@gmail.com')
-User.create(name:'Ana', email:'annetlugard@me.com')
+#User.create(name:'Pedro Anisio Silva', email:'pedroanisio@gmail.com')
+# User.create(name:'Ana', email:'annetlugard@me.com')
 
 #// Dump Pedro
 a = User.find_by(email:'pedroanisio@gmail.com')
@@ -40,4 +40,5 @@ Run.create(user_id:a.id, distance:'5.6',duration_formated:'00:39:14', datetime:D
 # a.runs.where(:datetime => Time.new(2016, 5)..Time.new(2016, 6)).average(:distance).to_i
 # a.runs.where(:datetime => Time.new(2016, 5)..Time.new(2016, 6)).maximum(:distance).to_i
 # a.runs.where(:datetime => Time.new(2016, 5)..Time.new(2016, 6)).sum(:distance).to_i
+# a.runs.where(:datetime => 1.week.ago.beginning_of_week..1.week.ago.end_of_week).count
 
