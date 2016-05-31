@@ -5,6 +5,7 @@ class RunsController < ApplicationController
   # GET /runs.json
   def index
     @runs = Run.all.order(:datetime)
+    # @runs = @runs.sort_by{|p| p.speed}
   end
 
   # GET /runs/1
