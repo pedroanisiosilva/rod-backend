@@ -32,13 +32,11 @@ end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'rb-fsevent'
   gem 'byebug'
   gem 'sqlite3'
-  gem 'guard-rspec'
   gem 'ruby_gntp'
-  gem 'guard-livereload' 
   gem 'rspec-rails', '~> 3.4'
+  gem 'capybara'
 end
 
 group :development do
