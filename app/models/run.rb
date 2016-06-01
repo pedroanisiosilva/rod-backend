@@ -26,7 +26,7 @@ class Run < ActiveRecord::Base
 		pace = self.duration.to_f/self.distance
         mm, ss = pace.divmod(60)            #=> [4515, 21]
         hh, mm = mm.divmod(60)           #=> [75, 15]
-        "%d:%d" % [mm, ss]
+        "%d:%02d" % [mm, ss]
 	end
 
 end
