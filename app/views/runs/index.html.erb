@@ -35,7 +35,8 @@
 
       <tr>
 <% if !run.user.nil? %>
-        <td><%= run.user.name %></td>
+        <td><%= link_to run.user.name, user_runs_path(run.user) %></td>
+
 <% else %>
         <td>n/a</td>
 <% end %>
