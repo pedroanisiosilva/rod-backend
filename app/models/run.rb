@@ -3,6 +3,7 @@ class Run < ActiveRecord::Base
 	validates_presence_of :distance
 	validates_presence_of :user_id
 	validates_presence_of :duration_formated
+	obfuscate_id	
 
 	def duration_formated=(new_duration)
 	  self[:duration] = new_duration.split(':').map { |a| a.to_i }.inject(0) { |a, b| a * 60 + b}
