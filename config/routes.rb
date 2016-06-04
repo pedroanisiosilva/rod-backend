@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'static_page/help'
   get 'static_page/home'
   get 'week_status/index' => 'week_status#index'
+  get "week_status/:belt" => "week_status#index", :constraints => {:belt => /.*/}
 
 
   resources :runs
