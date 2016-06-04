@@ -9,18 +9,18 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
 
 
 <style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;border-color:#aabcfe;}
-.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#669;background-color:#e8edff;border-top-width:1px;border-bottom-width:1px;}
-.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#000000;color:#039;background-color:#b9c9fe;border-top-width:1px;border-bottom-width:1px;}
-.tg .tg-u34r{font-weight:bold;font-size:13px;font-family:Arial, Helvetica, sans-serif !important;;background-color:#efefef;color:#000000;text-align:right;vertical-align:top}
+.tg  {border-collapse:collapse;border-spacing:0;border-color:#000000;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#000000;color:#669;background-color:#e8edff;border-top-width:1px;border-bottom-width:1px;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#000000;color:#039;background-color:#e0e0eb;border-top-width:1px;border-bottom-width:1px;}
+.tg .tg-u34r{font-weight:bold;font-size:13px;font-family:Arial, Helvetica, sans-serif !important;;color:#000000;text-align:right;vertical-align:top}
 .tg .tg-f2ra{font-weight:bold;background-color:#ffffff;color:#656565;vertical-align:top}
 .tg .tg-3x04{background-color:#ffffff;color:#656565;vertical-align:top}
 .tg .tg-ovtd{background-color:#ffffff;font-weight:bold;color:#656565;vertical-align:top}
 .tg .tg-tdrf{background-color:#fe0000;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
-.tg .tg-yi30{font-weight:bold;font-size:13px;font-family:Arial, Helvetica, sans-serif !important;;background-color:#efefef;color:#000000;text-align:center;vertical-align:top}
+.tg .tg-yi30{font-weight:bold;font-size:15px;font-family:Arial, Helvetica, sans-serif !important;;color:#000000;text-align:center;vertical-align:top}
 .tg .tg-z8q4{background-color:#000000;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
-.tg .tg-qacf{font-size:13px;font-family:Arial, Helvetica, sans-serif !important;;background-color:#efefef;color:#000000;vertical-align:top}
-.tg .tg-6eia{font-weight:bold;font-size:13px;font-family:Arial, Helvetica, sans-serif !important;;background-color:#efefef;color:#000000;vertical-align:top}
+.tg .tg-qacf{font-size:13px;font-family:Arial, Helvetica, sans-serif !important;;color:#000000;vertical-align:top}
+.tg .tg-6eia{font-weight:bold;font-size:13px;font-family:Arial, Helvetica, sans-serif !important;;color:#000000;vertical-align:top}
 .tg .tg-scrz{font-weight:bold;background-color:#ffffff;color:#000000;text-align:center;vertical-align:top}
 .tg .tg-9d65{font-weight:bold;background-color:#ffffff;color:#000000;vertical-align:top}
 .tg .tg-pxng{background-color:#ffffff;color:#000000;vertical-align:top}
@@ -69,14 +69,14 @@ end
 <table class="tg">
 
   <tr>
-    <th class="tg-yi30">Week</th>
+<th class="tg-yi30">Week</th>
     <th class="tg-qacf"><%= Date.today.at_beginning_of_week.strftime("%U").to_i %></th>
     <th class="tg-6eia">Total KMs</th>
     <th class="tg-qacf"><%= total_km.round(2) %></th>
     <th class="tg-u34r">#🏃</th>
     <th class="tg-6eia"><%= total_runners %></th>
-    <th class="tg-u34r">#🏃 w/o KMs</th>
-    <th class="tg-qacf"><%= runners_without_run %></th>    
+    <th class="tg-u34r">#🏃 w/o KM</th>
+    <th class="tg-6eia"><%= runners_without_run %></th>
   </tr> 
 <% 
   categories.each do |key, value|
