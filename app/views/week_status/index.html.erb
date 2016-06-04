@@ -41,10 +41,9 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
 <% 
   categories.each do |key, value|
 
-    runners= User.group('users.id','categories.id','runs.id').joins(:categories, :runs).select('*, sum(runs.distance) as total_distance').where(["categories.name = ? and runs.datetime >= ? AND runs.datetime <= ?", key,Date.today.beginning_of_week,Date.today.end_of_week]).order('total_distance desc')
 
-
-    if runners.size>0
+    if @result[key].to_a.size>0
+      runners = @result[key]
 
     %>
       <tr>
