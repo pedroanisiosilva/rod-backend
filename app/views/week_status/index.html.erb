@@ -40,8 +40,8 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
   margin-bottom: 0;
   border-radius: 5px;
   padding-top:0px; display:inline-block;
-  font-size:6px;
-  height: 20px;
+  font-size:8px;
+  height: 23px;
   width: 50px;
   text-align:center;
   vertical-align:top
@@ -96,9 +96,9 @@ end
     <th class="tg-6eia">Total KMs</th>
     <th class="tg-qacf"><%= total_km.round(2) %></th>
     <th class="tg-u34r">#🏃</th>
-    <th class="tg-6eia"><%= total_runners %></th>
+    <th class="tg-qacf"><%= total_runners %></th>
     <th class="tg-u34r">#🏃 w/o KM</th>
-    <th class="tg-6eia"><%= runners_without_run %></th>
+    <th class="tg-qacf"><%= runners_without_run %></th>
   </tr> 
 <% 
   categories.each do |key, value|
