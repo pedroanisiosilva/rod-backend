@@ -146,21 +146,19 @@ end
       percent_limited = 100
     end
     %> 
-  
-"%d:%02d" % [mm, ss]
 
     <tr>
     <td class="tg-oskr"><%= pos %></td>
     <td class="tg-3x04"><%= runner.name %></td>
-    <td class="tg-3x04"><%= runner.weekly_goal.distance %></td>
-    <td class="tg-3x04"><%= "%3.1d"%total_distance %></td>
+    <td class="tg-3x04"><%= "%3.1f"%runner.weekly_goal.distance %></td>
+    <td class="tg-3x04"><%= "%3.1f"%total_distance %></td>
     <td class="tg-3x04"><%= runs_count %></td>
     <td class="tg-3x04"><%= pace_helper(total_duration,total_distance) %></td>
-    <td class="tg-3x04"><%= "%3d "%(runner.weekly_goal.distance-total_distance).round(1) %></td>
+    <td class="tg-3x04"><%= "%3.1f"%(runner.weekly_goal.distance-total_distance).round(1) %></td>
     <td class="tg-3x04">
       <div class="progress">
         <div class="progress-bar progress-bar-<%= percent_css %> progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<%= percent_limited %>%">
-        <%= "%3d"%percent %>%
+        <%= "%2d"%percent %>%
         </div>
       </div>
     </td>
