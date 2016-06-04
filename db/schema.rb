@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160530145248) do
+ActiveRecord::Schema.define(version: 20160603212103) do
+
+  create_table "categories", force: :cascade do |t|
+    t.date     "first_day"
+    t.date     "last_day"
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "categories", ["user_id"], name: "index_categories_on_user_id"
 
   create_table "runs", force: :cascade do |t|
     t.datetime "datetime"
@@ -29,5 +40,29 @@ ActiveRecord::Schema.define(version: 20160530145248) do
     t.datetime "updated_at", null: false
     t.string   "time_zone"
   end
+
+  create_table "week_goals", force: :cascade do |t|
+    t.date     "first_day"
+    t.date     "last_day"
+    t.integer  "number"
+    t.integer  "user_id"
+    t.decimal  "distance"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "week_goals", ["user_id"], name: "index_week_goals_on_user_id"
+
+  create_table "weekly_goals", force: :cascade do |t|
+    t.date     "first_day"
+    t.date     "last_day"
+    t.integer  "number"
+    t.integer  "user_id"
+    t.decimal  "distance"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "weekly_goals", ["user_id"], name: "index_weekly_goals_on_user_id"
 
 end

@@ -1,0 +1,88 @@
+
+<% 
+categories = Hash.new
+
+categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" => "+250km",
+        "Purple" => "+150km","Blue" => "+100km", "Green" => "+75km",
+        "Orange" => "+50km", "Yellow" => "+25km", "White" => "0-24km"}
+%>
+
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;border-color:#aabcfe;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#669;background-color:#e8edff;border-top-width:1px;border-bottom-width:1px;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#039;background-color:#b9c9fe;border-top-width:1px;border-bottom-width:1px;}
+.tg .tg-3x04{background-color:#ffffff;color:#656565;vertical-align:top}
+.tg .tg-tdrf{background-color:#fe0000;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
+.tg .tg-x0jw{font-weight:bold;font-size:26px;font-family:Georgia, serif !important;;background-color:#ffffff;color:#9b9b9b;text-align:center;vertical-align:top}
+.tg .tg-z8q4{background-color:#000000;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
+.tg .tg-scrz{font-weight:bold;background-color:#ffffff;color:#000000;text-align:center;vertical-align:top}
+.tg .tg-9d65{font-weight:bold;background-color:#ffffff;color:#000000;vertical-align:top}
+.tg .tg-oskr{background-color:#ffffff;vertical-align:top}
+.tg .tg-3we0{background-color:#ffffff;vertical-align:top}
+.tg .tg-5jp5{background-color:#ffffff;color:#656565;vertical-align:top}
+.tg .Black{background-color:#000000;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
+.tg .Red{background-color:#FF0000;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
+.tg .Green{background-color:#008000;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
+.tg .Purple{background-color:#800080 ;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
+.tg .Orange{background-color:#FFA500;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
+.tg .Blue{background-color:#0000FF;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
+.tg .Yellow{background-color:#FFFF00;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
+.tg .White{background-color:#FFFFFF;font-weight:bold;color:#000000;text-align:center;vertical-align:top}
+
+
+
+</style>
+<table class="tg">
+  <tr>
+    <th class="tg-x0jw" colspan="8">Week <%= Date.today.at_beginning_of_week.strftime("%U").to_i %></th>
+  </tr>
+
+    <tr>
+    <td class="tg-scrz">#</td>
+    <td class="tg-9d65">Athlete</td>
+    <td class="tg-9d65">Target</td>
+    <td class="tg-9d65">Real</td>
+    <td class="tg-9d65">Runs</td>
+    <td class="tg-9d65">Pace</td>
+    <td class="tg-9d65">Km to Go</td>
+    <td class="tg-9d65">%</td>
+  </tr>
+<% 
+  categories.each do |key, value|
+
+    cat = Category.where(:name => key)
+
+    if cat.size>0
+
+    %>
+      <tr>
+        <td class="<%= key %>" colspan="8"><%= key %> (<%= value %>)</td>
+      </tr>
+
+  <% cat.each do |categoria| 
+
+    runner = categoria.user
+    total_distance = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:distance).to_f
+    runs_count = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).count
+    total_duration = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:duration)   
+
+    %> 
+  <tr>
+    <td class="tg-oskr">-</td>
+    <td class="tg-3x04"><%= runner.name %></td>
+    <td class="tg-3x04"><%= runner.weekly_goal.distance %></td>
+    <td class="tg-3x04"><%= total_distance %></td>
+    <td class="tg-3x04"><%= runs_count %></td>
+    <td class="tg-3x04"><%= pace_helper(total_duration,total_distance) %></td>
+    <td class="tg-3x04"><%= runner.weekly_goal.distance-total_distance %></td>
+    <td class="tg-3x04"><%= (total_distance/runner.weekly_goal.distance).round(2) %>%</td>
+  </tr>
+
+  <% end %>
+
+
+<% end %>
+
+<% end %>
+</table>
