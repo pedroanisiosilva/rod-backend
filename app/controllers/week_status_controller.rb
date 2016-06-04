@@ -21,7 +21,7 @@ def index
 
 	categories.each do |key, value|
 
-		runners = User.group('users.id').joins(:categories, :runs).select('users.id, users.name, SUM(COALESCE(runs.distance, 0)) as total_distance').where(["categories.name = ? and runs.datetime >= ? AND runs.datetime <= ?", key ,Date.today.beginning_of_week,Date.today.end_of_week]).order("total_distance DESC")
+		runners = User.group('users.id').joins(:categories, :runs).select('users.id, users.name, IFNULL(SUM(runs.distance),0) as total_distance').where(["categories.name = ? and runs.datetime >= ? AND runs.datetime <= ?", key ,Date.today.beginning_of_week,Date.today.end_of_week]).order("total_distance DESC")
 
 		@result[key] = runners
 

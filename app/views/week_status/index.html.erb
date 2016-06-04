@@ -84,7 +84,7 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
     <td class="tg-3x04"><%= runs_count %></td>
     <td class="tg-3x04"><%= pace_helper(total_duration,total_distance) %></td>
     <td class="tg-3x04"><%= runner.weekly_goal.distance-total_distance %></td>
-    <td class="tg-3x04"><%= (total_distance/runner.weekly_goal.distance).round(2) %>%</td>
+    <td class="tg-3x04"><%= (total_distance/runner.weekly_goal.distance).round(2)*100 %>%</td>
   </tr>
 
   <% end %>
