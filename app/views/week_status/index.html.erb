@@ -45,19 +45,12 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
     if @result[key].to_a.size>0
       runners = @result[key]
 
+
     %>
       <tr>
         <td class="<%= key %>" colspan="8"><%= key %> (<%= value %>)</td>
       </tr>
-
-  <% runners.each do |runner| 
-
-    total_distance = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:distance).to_f
-    runs_count = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).count
-    total_duration = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:duration)   
-
-    %> 
-    <tr>
+          <tr>
     <td class="tg-scrz">#</td>
     <td class="tg-9d65">Athlete</td>
     <td class="tg-9d65">Target</td>
@@ -66,10 +59,25 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
     <td class="tg-9d65">Pace</td>
     <td class="tg-9d65">Km to Go</td>
     <td class="tg-9d65">%</td>
-    </tr>    
+    </tr>  
+
+
+  <% pos =0 %>
+
+  <% runners.each do |runner| 
+
+
+    total_distance = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:distance).to_f
+    runs_count = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).count
+    total_duration = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:duration)   
+
+    pos=pos+1
+
+    %> 
+  
   
     <tr>
-    <td class="tg-oskr">-</td>
+    <td class="tg-oskr"><%= pos %></td>
     <td class="tg-3x04"><%= runner.name %></td>
     <td class="tg-3x04"><%= runner.weekly_goal.distance %></td>
     <td class="tg-3x04"><%= total_distance %></td>
