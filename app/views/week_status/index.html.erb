@@ -35,6 +35,28 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
 .tg .Blue{background-color:#0000FF;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
 .tg .Yellow{background-color:#FFFF00;font-weight:bold;color:#000000;text-align:center;vertical-align:top}
 .tg .White{background-color:#FFFFFF;font-weight:bold;color:#000000;text-align:center;vertical-align:top}
+
+.progress {
+  margin-bottom: 0;
+  border-radius: 5px;
+  padding-top:0px; display:inline-block;
+  font-size:6px;
+  height: 20px;
+  width: 50px;
+  text-align:center;
+  vertical-align:top
+}
+
+.progress-bar {
+  float: left;
+  width: 0%;
+  height: 100%;
+  font-size: 8px;
+  line-height: 20px;
+  color: #000000;
+  text-align: center;
+}
+
 </style>
 
 <%
@@ -111,7 +133,20 @@ end
     total_duration = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:duration)   
 
     pos=pos+1
+    percent = (total_distance/runner.weekly_goal.distance).round(2)*100
 
+    if percent <= 30
+      percent_css = "danger"
+    elsif percent >30 and percent<=80
+      percent_css = "warning"
+    else
+      percent_css = "success"
+    end
+
+    percent_limited = percent
+    if percent > 100
+      percent_limited = 100
+    end
     %> 
   
   
@@ -123,7 +158,13 @@ end
     <td class="tg-3x04"><%= runs_count %></td>
     <td class="tg-3x04"><%= pace_helper(total_duration,total_distance) %></td>
     <td class="tg-3x04"><%= (runner.weekly_goal.distance-total_distance).round(1) %></td>
-    <td class="tg-3x04"><%= (total_distance/runner.weekly_goal.distance).round(1)*100 %>%</td>
+    <td class="tg-3x04">
+      <div class="progress">
+        <div class="progress-bar progress-bar-<%= percent_css %> progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<%= percent_limited %>%">
+        <%= percent %>%
+        </div>
+      </div>
+    </td>
   </tr>
 
   <% end %>
@@ -133,3 +174,4 @@ end
 
 <% end %>
 </table>
+
