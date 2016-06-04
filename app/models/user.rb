@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 	has_many :categories
 	has_many :weekly_goals
 	validates_presence_of :email
+	obfuscate_id
 
 	def category
 		self.category_on_date(Date.today)
