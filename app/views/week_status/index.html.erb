@@ -72,11 +72,11 @@ end
     <th class="tg-yi30">Week</th>
     <th class="tg-qacf"><%= Date.today.at_beginning_of_week.strftime("%U").to_i %></th>
     <th class="tg-6eia">Total KMs</th>
-    <th class="tg-qacf"><%= total_km %></th>
+    <th class="tg-qacf"><%= total_km.round(2) %></th>
     <th class="tg-u34r">#Runners w/o KMs</th>
-    <th class="tg-qacf"><%= total_runners %></th>
+    <th class="tg-qacf"><%= runners_without_run %></th>
     <th class="tg-qacf"># Runners</th>
-    <th class="tg-6eia"><%= runners_without_run %></th>
+    <th class="tg-6eia"><%= total_runners %></th>
   </tr> 
 <% 
   categories.each do |key, value|
