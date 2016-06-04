@@ -10,7 +10,7 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
 
 <style type="text/css">
 .tg  {border-collapse:collapse;border-spacing:0;border-color:#aabcfe;}
-.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#669;background-color:#e8edff;border-top-width:1px;border-bottom-width:1px;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#669;background-color:#e8edff;border-top-width:1px;border-bottom-width:1px;}
 .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#039;background-color:#b9c9fe;border-top-width:1px;border-bottom-width:1px;}
 .tg .tg-3x04{background-color:#ffffff;color:#656565;vertical-align:top}
 .tg .tg-tdrf{background-color:#fe0000;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
@@ -38,6 +38,26 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
     <th class="tg-x0jw" colspan="8">Week <%= Date.today.at_beginning_of_week.strftime("%U").to_i %></th>
   </tr>
 
+<% 
+  categories.each do |key, value|
+
+    runners= User.group('users.id','categories.id','runs.id').joins(:categories, :runs).select('*, sum(runs.distance) as total_distance').where(["categories.name = ? and runs.datetime >= ? AND runs.datetime <= ?", key,Date.today.beginning_of_week,Date.today.end_of_week]).order('total_distance desc')
+
+
+    if runners.size>0
+
+    %>
+      <tr>
+        <td class="<%= key %>" colspan="8"><%= key %> (<%= value %>)</td>
+      </tr>
+
+  <% runners.each do |runner| 
+
+    total_distance = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:distance).to_f
+    runs_count = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).count
+    total_duration = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:duration)   
+
+    %> 
     <tr>
     <td class="tg-scrz">#</td>
     <td class="tg-9d65">Athlete</td>
@@ -47,28 +67,9 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
     <td class="tg-9d65">Pace</td>
     <td class="tg-9d65">Km to Go</td>
     <td class="tg-9d65">%</td>
-  </tr>
-<% 
-  categories.each do |key, value|
-
-    cat = Category.where(:name => key)
-
-    if cat.size>0
-
-    %>
-      <tr>
-        <td class="<%= key %>" colspan="8"><%= key %> (<%= value %>)</td>
-      </tr>
-
-  <% cat.each do |categoria| 
-
-    runner = categoria.user
-    total_distance = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:distance).to_f
-    runs_count = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).count
-    total_duration = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:duration)   
-
-    %> 
-  <tr>
+    </tr>    
+  
+    <tr>
     <td class="tg-oskr">-</td>
     <td class="tg-3x04"><%= runner.name %></td>
     <td class="tg-3x04"><%= runner.weekly_goal.distance %></td>
