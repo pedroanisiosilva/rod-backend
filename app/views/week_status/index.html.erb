@@ -10,14 +10,20 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
 
 <style type="text/css">
 .tg  {border-collapse:collapse;border-spacing:0;border-color:#aabcfe;}
-.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#669;background-color:#e8edff;border-top-width:1px;border-bottom-width:1px;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#669;background-color:#e8edff;border-top-width:1px;border-bottom-width:1px;}
 .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#039;background-color:#b9c9fe;border-top-width:1px;border-bottom-width:1px;}
+.tg .tg-u34r{font-weight:bold;font-size:13px;font-family:Arial, Helvetica, sans-serif !important;;background-color:#efefef;color:#000000;text-align:right;vertical-align:top}
+.tg .tg-f2ra{font-weight:bold;background-color:#ffffff;color:#656565;vertical-align:top}
 .tg .tg-3x04{background-color:#ffffff;color:#656565;vertical-align:top}
+.tg .tg-ovtd{background-color:#ffffff;font-weight:bold;color:#656565;vertical-align:top}
 .tg .tg-tdrf{background-color:#fe0000;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
-.tg .tg-x0jw{font-weight:bold;font-size:26px;font-family:Georgia, serif !important;;background-color:#ffffff;color:#9b9b9b;text-align:center;vertical-align:top}
+.tg .tg-yi30{font-weight:bold;font-size:13px;font-family:Arial, Helvetica, sans-serif !important;;background-color:#efefef;color:#000000;text-align:center;vertical-align:top}
 .tg .tg-z8q4{background-color:#000000;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
+.tg .tg-qacf{font-size:13px;font-family:Arial, Helvetica, sans-serif !important;;background-color:#efefef;color:#000000;vertical-align:top}
+.tg .tg-6eia{font-weight:bold;font-size:13px;font-family:Arial, Helvetica, sans-serif !important;;background-color:#efefef;color:#000000;vertical-align:top}
 .tg .tg-scrz{font-weight:bold;background-color:#ffffff;color:#000000;text-align:center;vertical-align:top}
 .tg .tg-9d65{font-weight:bold;background-color:#ffffff;color:#000000;vertical-align:top}
+.tg .tg-pxng{background-color:#ffffff;color:#000000;vertical-align:top}
 .tg .tg-oskr{background-color:#ffffff;vertical-align:top}
 .tg .tg-3we0{background-color:#ffffff;vertical-align:top}
 .tg .tg-5jp5{background-color:#ffffff;color:#656565;vertical-align:top}
@@ -29,15 +35,49 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
 .tg .Blue{background-color:#0000FF;font-weight:bold;color:#ffffff;text-align:center;vertical-align:top}
 .tg .Yellow{background-color:#FFFF00;font-weight:bold;color:#000000;text-align:center;vertical-align:top}
 .tg .White{background-color:#FFFFFF;font-weight:bold;color:#000000;text-align:center;vertical-align:top}
-
-
-
 </style>
-<table class="tg">
-  <tr>
-    <th class="tg-x0jw" colspan="8">Week <%= Date.today.at_beginning_of_week.strftime("%U").to_i %></th>
-  </tr>
 
+<%
+
+total_runners = 0
+total_km = 0
+runners_without_run = 0
+
+categories.each do |key, value|
+
+  if @result[key].to_a.size>0
+
+    runners = @result[key]
+    total_runners = runners.to_a.size + total_runners
+
+    runners.each do |runner| 
+
+      runner_kms = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:distance).to_f
+      total_km = total_km + runner_kms
+
+      if runner_kms == 0
+
+        runners_without_run = runners_without_run+1
+      end
+    end
+  end
+end
+
+%>
+
+
+<table class="tg">
+
+  <tr>
+    <th class="tg-yi30">Week</th>
+    <th class="tg-qacf"><%= Date.today.at_beginning_of_week.strftime("%U").to_i %></th>
+    <th class="tg-6eia">Total KMs</th>
+    <th class="tg-qacf"><%= total_km %></th>
+    <th class="tg-u34r">#Runners w/o KMs</th>
+    <th class="tg-qacf"><%= total_runners %></th>
+    <th class="tg-qacf"># Runners</th>
+    <th class="tg-6eia"><%= runners_without_run %></th>
+  </tr> 
 <% 
   categories.each do |key, value|
 
@@ -45,12 +85,11 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
     if @result[key].to_a.size>0
       runners = @result[key]
 
-
     %>
       <tr>
         <td class="<%= key %>" colspan="8"><%= key %> (<%= value %>)</td>
       </tr>
-          <tr>
+    <tr>
     <td class="tg-scrz">#</td>
     <td class="tg-9d65">Athlete</td>
     <td class="tg-9d65">Target</td>
@@ -83,8 +122,8 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
     <td class="tg-3x04"><%= total_distance %></td>
     <td class="tg-3x04"><%= runs_count %></td>
     <td class="tg-3x04"><%= pace_helper(total_duration,total_distance) %></td>
-    <td class="tg-3x04"><%= (runner.weekly_goal.distance-total_distance).round(2) %></td>
-    <td class="tg-3x04"><%= (total_distance/runner.weekly_goal.distance).round(2)*100 %>%</td>
+    <td class="tg-3x04"><%= (runner.weekly_goal.distance-total_distance).round(1) %></td>
+    <td class="tg-3x04"><%= (total_distance/runner.weekly_goal.distance).round(1)*100 %>%</td>
   </tr>
 
   <% end %>
