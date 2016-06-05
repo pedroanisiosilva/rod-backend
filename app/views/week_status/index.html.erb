@@ -72,7 +72,7 @@ categories.each do |key, value|
 
     runners.each do |runner| 
 
-      runner_kms = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:distance).to_f
+      runner_kms = runner.weekly_runs_km
       total_km = total_km + runner_kms
 
       if runner_kms == 0
@@ -129,9 +129,9 @@ end
   <% runners.each do |runner| 
 
 
-    total_distance = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:distance).to_f
-    runs_count = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).count
-    total_duration = runner.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:duration)   
+    total_distance = runner.weekly_runs_km
+    runs_count = runner.weekly_runs_count
+    total_duration = runner.weekly_runs_duration 
 
     pos=pos+1
     percent = (total_distance/runner.weekly_goal.distance).round(2)*100
