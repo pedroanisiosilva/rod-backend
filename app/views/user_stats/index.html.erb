@@ -1,0 +1,86 @@
+
+
+<h1>User Stats</h1>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+<p>
+  <strong>Time Zone:</strong>
+  <%= @user.time_zone %>
+</p>
+
+<% if params[:target] == "week" %>
+<% date_from_params = Date.commercial(params[:year].to_i, params[:w_id].to_i, 1)%>
+
+<p>
+  <strong>Week:</strong>
+  <%= params[:w_id] %>
+</p>
+<p>
+  <strong>Belt:</strong>
+  <%= 
+  begin
+  	@user.category_on_date(date_from_params).name
+  rescue
+  	"n/a"
+  end
+  %>
+</p>
+<p>
+  <strong>Runs #:</strong>
+  <%= @user.weekly_runs_count_on_date(date_from_params) %>
+</p>
+<p>
+  <strong>Pace #:</strong>
+  <%= pace_helper(@user.weekly_runs_duration_on_date(date_from_params),@user.weekly_runs_km_on_date(date_from_params)) %>
+</p>
+
+<p>
+  <strong>Kms #:</strong>
+  <%= @user.weekly_runs_km_on_date(date_from_params) %>
+</p>
+
+<% else %>
+<% date_from_params = Date.new(params[:year].to_i, params[:w_id].to_i, 1)%>
+
+
+<p>
+  <strong>Month:</strong>
+  <%= Date::MONTHNAMES[params[:w_id].to_i] %>
+</p>
+
+<p>
+  <strong>Belt:</strong>
+  <%=
+  begin
+  	@user.category_on_date(date_from_params).name
+  rescue
+  	"n/a"
+  end %>
+</p>
+<p>
+  <strong>Runs #:</strong>
+  <%= @user.weekly_runs_count_on_date(date_from_params) %>
+</p>
+<p>
+  <strong>Pace #:</strong>
+  <%= pace_helper(@user.weekly_runs_duration_on_date(date_from_params),@user.weekly_runs_km_on_date(date_from_params)) %>
+</p>
+
+<p>
+  <strong>Kms #:</strong>
+  <%= @user.weekly_runs_km_on_date(date_from_params) %>
+</p>
+
+
+<% end %>
+
+
+
+

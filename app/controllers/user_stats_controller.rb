@@ -1,15 +1,13 @@
-
-class WeekResults
-end
-
-
-class WeekStatusController < ApplicationController
+class UserStatsController < ApplicationController
 
   # GET /week_status
   # GET /week_status.json
 
-
 def index
+	 @user = User.find(params[:id])
+end
+
+def indexxx
 
 	categories = Hash.new
 	categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" => "+250km",
@@ -25,7 +23,6 @@ def index
 			runners = runners.sort { |a,b| a.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:distance).to_i<=> b.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:distance).to_i}
 			runners = runners.reverse
 			@result[belt] = runners    	
-
     else
 		categories.each do |key, value|
 
