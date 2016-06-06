@@ -14,7 +14,7 @@
 
   <div class="field">
     <%= f.label :user_id %><br>
-    <%= collection_select :run, :user_id, User.all, :id, :name, {:selected => @run.user_id, prompt: 'Select Runner'} %>
+    <%= collection_select :run, :user_id, User.order('name ASC'), :id, :name, {:selected => @run.user_id, prompt: 'Select Runner'} %>
   </div>
 
   <div class="field">
