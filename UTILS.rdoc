@@ -1,0 +1,89 @@
+
+users = User.all
+users.each do |u|
+
+meta = Array.new
+(1..4).each do |w|
+avg = 0 
+(1..w).each do |i|
+avg = avg+ u.runs.where(:datetime => i.week.ago.beginning_of_week..i.week.ago.end_of_week).sum(:distance).to_f
+end
+meta.push(((avg / w)*1.05).to_f)
+end
+if meta.min <3
+	meta.delete(meta.min)
+end
+if meta.min.nil? || meta.min <3
+	meta = [8]
+end
+puts %{meta ->#{meta.min}}
+
+WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%U").to_i, distance:"%2.0f"%meta.min, user_id:u.id)
+
+end
+
+u = User.find_by(:email => 'lucifvaz@gmail.com')
+w = WeeklyGoal.find_by(:first_day => Date.today.at_beginning_of_week, :user_id =>u.id)
+w.distance = 30
+w.save
+
+WeeklyGoal.where(:first_day => Date.today.at_beginning_of_week).destroy_all
+
+(end_date.to_date - start_date.to_date).to_i
+
+
+
+meta = Array.new
+avg = 0 
+(1..4).each do |i|
+avg = a.runs.where(:datetime => i.week.ago.beginning_of_week..i.week.ago.end_of_week).average(:distance).to_f
+count = a.runs.where(:datetime => i.week.ago.beginning_of_week..i.week.ago.end_of_week).count
+meta.push(((avg*count)*1.05).to_f)
+end
+meta.delete(meta.max)
+meta.delete(meta.min)
+puts %{meta ->#{meta.min}}
+
+
+
+
+Category.find(:all, order =>'user.name')
+User.includes(:runs).order("run.distance desc")
+Category.find(:all, :joins => :user, :order => 'user.name
+
+User.find(:all,:joins =>:run, :order =>run.sum(:distance))
+
+Promoter.joins(:promoter_projects)
+.having('SUM("promoter_projects"."work_days") BETWEEN ? AND ?', min_value, max_value)
+.group("promoters.id")
+
+
+User.joins(:runs).where('SUM("runs"."distance") >0').group("users.id,SUM('runs'.'distance')")
+User.joins(:categories).where(:categories => {:name => "Black"})
+runners = User.group('users.id').joins(:categories, :runs).select('*, sum(runs.distance) as total_distance').where(["categories.name = ? and runs.datetime >= ? AND runs.datetime <= ?", "Black",Date.today.beginning_of_week,Date.today.end_of_week]).order('total_distance desc') 
+
+
+u = User.find_by(:email=>"alexandresantos@mail.com")
+u = User.find_by(:email=>"tati@mail.com")
+Category.create(first_day: Date.today.at_beginning_of_month, last_day: Date.today.at_end_of_month, name: "White",user_id:u.id)
+
+WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%U").to_i, distance:8, user_id:u.id)
+
+
+#importacao
+(\d+,?\d*)\t*(.*)\t(\d+)\/(\d+)
+
+u = User.find_by(:email => 'annetlugard@gmail.com')
+u = User.find_by(:email => 'pedroanisio@gmail.com')
+u = User.find_by(:email => 'Luiz.Pimentel@walmart.com')
+u = User.find_by(:email => 'lucifvaz@gmail.com')
+
+Run.create(user_id:u.id, distance:'\1',duration_formated:'\2', datetime:DateTime.new(2016, \4, \3).at_midday())
+
+
+
+
+
+
+
+
