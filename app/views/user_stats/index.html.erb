@@ -66,16 +66,16 @@
 </p>
 <p>
   <strong>Runs #:</strong>
-  <%= @user.weekly_runs_count_on_date(date_from_params) %>
+  <%= @user.monthly_runs_count_on_date(date_from_params) %>
 </p>
 <p>
   <strong>Pace #:</strong>
-  <%= pace_helper(@user.weekly_runs_duration_on_date(date_from_params),@user.weekly_runs_km_on_date(date_from_params)) %>
+  <%= pace_helper(@user.monthly_runs_duration_on_date(date_from_params),@user.monthly_runs_km_on_date(date_from_params)) %>
 </p>
 
 <p>
   <strong>Kms #:</strong>
-  <%= @user.weekly_runs_km_on_date(date_from_params) %>
+  <%= @user.monthly_runs_km_on_date(date_from_params) %>
 </p>
 
 
