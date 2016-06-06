@@ -1,4 +1,8 @@
-
+<% if params[:target] == "week" %>
+<ul><%= link_to "<", %{/users/#{params[:id]}/stats/#{Time.now.year}/week/#{params[:w_id].to_i-1}} %></ul>
+<% else %>
+<ul><%= link_to "<", %{/users/#{params[:id]}/stats/#{Time.now.year}/month/#{params[:w_id].to_i-1}} %></ul>
+<% end %>
 
 <h1>User Stats</h1>
 
@@ -48,7 +52,6 @@
 
 <% else %>
 <% date_from_params = Date.new(params[:year].to_i, params[:w_id].to_i, 1)%>
-
 
 <p>
   <strong>Month:</strong>

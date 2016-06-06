@@ -2,13 +2,8 @@ Rails.application.routes.draw do
   get 'static_page/about'
   get 'static_page/help'
   get 'static_page/home'
-  get 'week_status/index' => 'week_status#index'
-  get "week_status/:belt" => "week_status#index", :constraints => {:belt => /.*/}
-
-  get '/users/:id/stats/:year/:target/:w_id' => 'user_stats#index', :constraints => {:year => /.*/, :target => /.*/, :w_id => /.*/}do
-    erb :index, :locals => {:year => params[:year], :week => params[:w_id]}
-  end
-
+  get 'week_status/index', to: 'week_status#index'
+  get '/users/:id/stats/:year/:target/:w_id', to: 'user_stats#index'
 
   resources :runs
   # The priority is based upon order of creation: first created -> highest priority.
