@@ -93,7 +93,14 @@ end
 
   <tr>
 <th class="tg-yi30">Week</th>
-    <th class="tg-qacf"><%= Date.today.at_beginning_of_week.strftime("%U").to_i %></th>
+    <%
+    if params[:week_number]
+      week = params[:week_number]
+    else
+      week = Date.today.at_beginning_of_week.strftime("%U").to_i
+    end
+    %>
+    <th class="tg-qacf"><%=  week %></th>
     <th class="tg-6eia">Total KMs</th>
     <th class="tg-qacf"><%= total_km.round(2) %></th>
     <th class="tg-u34r">#🏃</th>
@@ -128,13 +135,14 @@ end
 
   <% runners.each do |runner| 
 
+    range_date = Date.commercial(Time.now.year.to_i, week.to_i)
 
-    total_distance = runner.weekly_runs_km
-    runs_count = runner.weekly_runs_count
-    total_duration = runner.weekly_runs_duration 
+    total_distance = runner.weekly_runs_km_on_date(range_date)
+    runs_count = runner.weekly_runs_count_on_date(range_date)
+    total_duration = runner.weekly_runs_duration_on_date(range_date)
 
     pos=pos+1
-    percent = (total_distance/runner.weekly_goal.distance).round(2)*100
+    percent = (total_distance/runner.weekly_goal_on_date(range_date).distance).round(2)*100
 
     if percent <= 30
       percent_css = "danger"
@@ -153,7 +161,7 @@ end
     <tr>
     <td class="tg-oskr"><%= pos %></td>
     <td class="tg-3x04"><%= runner.name %></td>
-    <td class="tg-3x04"><%= "%3.1f"%runner.weekly_goal.distance %></td>
+    <td class="tg-3x04"><%= "%3.1f"%runner.weekly_goal_on_date(range_date).distance %></td>
     <td class="tg-3x04"><%= "%3.1f"%total_distance %></td>
     <td class="tg-3x04"><%= runs_count %></td>
     <td class="tg-3x04"><%= pace_helper(total_duration,total_distance) %></td>

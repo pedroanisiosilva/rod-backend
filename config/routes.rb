@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   get 'static_page/help'
   get 'static_page/home'
   get 'week_status/index', to: 'week_status#index'
-  get 'week_status/:belt', to: 'week_status#index'
+  get 'week_status/:week_number/:belt', to: 'week_status#index'
+  get 'week_status/:week_number', to: 'week_status#index'
 
   get '/users/:id/stats/:year/:target/:w_id', to: 'user_stats#index'
 
