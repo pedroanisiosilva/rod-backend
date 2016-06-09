@@ -1,10 +1,5 @@
 
-
-
-
 <p id="notice"><%= notice %></p>
-<% Time.zone = 'Brasilia' %>    
-
 
       <!-- start: Content -->
 <div id="content" class="col-sm-11">
@@ -47,7 +42,7 @@
 <% else %>
         <td>n/a</td>
 <% end %>
-        <td><%= run.datetime %></td>
+        <td><%= run.in_user_time_zone(run.datetime) %></td>
         <td><%= run.distance %></td>
         <td><%= run.duration_formated %></td>
         <td><%= run.speed %>

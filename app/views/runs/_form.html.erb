@@ -1,4 +1,11 @@
-<% Time.zone = 'Brasilia' %> 
+<%
+
+if !@run.user.nil?
+  Time.zone = @run.user.time_zone
+else
+  Time.zone = 'Brasilia'
+end
+%> 
 <%= form_for(@run, :html => {:class => 'form-group'}) do |f| %>
   <% if @run.errors.any? %>
     <div id="error_explanation">
