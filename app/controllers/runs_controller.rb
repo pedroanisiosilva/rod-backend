@@ -6,7 +6,7 @@ class RunsController < ApplicationController
   # GET /runs.json
   def index
     if params[:user_id]
-      @runs = User.find(params[:user_id]).order('datetime DESC')
+      @runs = User.find(params[:user_id]).runs.order('datetime DESC')
     else
       @runs = Run.order('datetime DESC')
     end
