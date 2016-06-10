@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 	has_many :weekly_goals
 	validates_presence_of :email
 	obfuscate_id
+	after_create :create_category_and_initial_goal
 
 	def category
 		self.category_on_date(Date.today)
@@ -73,6 +74,16 @@ class User < ActiveRecord::Base
 	def monthly_runs_duration_on_date(date)
 		time_obj = Time.parse(date.to_s)
 		self.runs.where(:datetime => time_obj.at_beginning_of_month..time_obj.end_of_month).sum(:duration)
-	end					
+	end
+
+	private
+
+	def create_category_and_initial_goal
+		initital_category = "White"
+		inititial_goal = "6"
+
+		Category.create(first_day: Date.today.at_beginning_of_month, last_day: Date.today.at_end_of_month, name: initital_category,user_id:self.id)
+		WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%U").to_i, distance:inititial_goal, user_id:self.id)
+	end			
 
 end
