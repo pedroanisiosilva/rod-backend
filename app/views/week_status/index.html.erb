@@ -137,7 +137,7 @@ end
 
     range_date = Date.commercial(Time.now.year.to_i, week.to_i)
 
-    next if runner.weekly_goal_on_date(range_date).distance.nil?
+    next if runner.weekly_goal_on_date(range_date).nil?
 
     total_distance = runner.weekly_runs_km_on_date(range_date)
     runs_count = runner.weekly_runs_count_on_date(range_date)
