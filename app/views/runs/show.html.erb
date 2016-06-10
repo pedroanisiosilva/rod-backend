@@ -7,7 +7,7 @@
 
 <p>
   <strong>Datetime:</strong>
-  <%= @run.in_user_time_zone(@run.datetime) %>
+  <%= @run.datetime.in_time_zone(@run.user.time_zone) %>
 </p>
 
 <p>
