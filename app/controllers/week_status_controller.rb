@@ -27,7 +27,7 @@ def index
     		end
 
     		belt = params[:belt].capitalize
-			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name').where(["categories.name = ?", belt])
+			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ?", belt])
 			runners = runners.sort { |a,b| a.runs.where(:datetime => range_date.beginning_of_week..range_date.end_of_week).sum(:distance).to_i<=> b.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:distance).to_i}
 			runners = runners.reverse
 			@result[belt] = runners    	
@@ -35,7 +35,7 @@ def index
     else
 		categories.each do |key, value|
 
-			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name').where(["categories.name = ?", key])
+			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ?", key])
 			runners = runners.sort { |a,b| a.runs.where(:datetime => range_date.beginning_of_week..range_date.end_of_week).sum(:distance).to_i<=> b.runs.where(:datetime => Date.today.beginning_of_week..Date.today.end_of_week).sum(:distance).to_i}
 			runners = runners.reverse
 			@result[key] = runners

@@ -17,5 +17,10 @@
   <%= @user.time_zone %>
 </p>
 
+<p>
+  <strong>Status:</strong>
+  <%= @user.status %>
+</p>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

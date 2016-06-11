@@ -22,9 +22,14 @@ WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.toda
 
 end
 
-u = User.find_by(:email => 'lucifvaz@gmail.com')
+u = User.find_by(:email => 'carumachado@gmail.com')
+// Criar weeklyGoal
+WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%U").to_i, distance:6, user_id:u.id)
+
+// Atualizar Weekly Goal
+u = User.find_by(:email => 'andreg_santos@hotmail.com')
 w = WeeklyGoal.find_by(:first_day => Date.today.at_beginning_of_week, :user_id =>u.id)
-w.distance = 30
+w.distance = 6
 w.save
 
 WeeklyGoal.where(:first_day => Date.today.at_beginning_of_week).destroy_all
@@ -63,7 +68,7 @@ User.joins(:categories).where(:categories => {:name => "Black"})
 runners = User.group('users.id').joins(:categories, :runs).select('*, sum(runs.distance) as total_distance').where(["categories.name = ? and runs.datetime >= ? AND runs.datetime <= ?", "Black",Date.today.beginning_of_week,Date.today.end_of_week]).order('total_distance desc') 
 
 
-u = User.find_by(:email=>"alexandresantos@mail.com")
+u = User.find_by(:email=>"juarezmacedo@uol.com.br")
 u = User.find_by(:email=>"tati@mail.com")
 Category.create(first_day: Date.today.at_beginning_of_month, last_day: Date.today.at_end_of_month, name: "White",user_id:u.id)
 
@@ -79,6 +84,8 @@ u = User.find_by(:email => 'Luiz.Pimentel@walmart.com')
 u = User.find_by(:email => 'lucifvaz@gmail.com')
 
 Run.create(user_id:u.id, distance:'\1',duration_formated:'\2', datetime:DateTime.new(2016, \4, \3).at_midday())
+
+Orange Belt - ranking week 23
 
 
 

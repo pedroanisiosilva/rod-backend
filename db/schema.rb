@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160603212103) do
+ActiveRecord::Schema.define(version: 20160611140310) do
 
   create_table "categories", force: :cascade do |t|
     t.date     "first_day"
@@ -23,6 +23,18 @@ ActiveRecord::Schema.define(version: 20160603212103) do
   end
 
   add_index "categories", ["user_id"], name: "index_categories_on_user_id"
+
+  create_table "events", force: :cascade do |t|
+    t.integer  "type"
+    t.text     "description"
+    t.date     "start_date"
+    t.string   "end_date"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "events", ["user_id"], name: "index_events_on_user_id"
 
   create_table "runs", force: :cascade do |t|
     t.datetime "datetime"
@@ -36,9 +48,10 @@ ActiveRecord::Schema.define(version: 20160603212103) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "time_zone"
+    t.integer  "status",     default: 0
   end
 
   create_table "week_goals", force: :cascade do |t|
