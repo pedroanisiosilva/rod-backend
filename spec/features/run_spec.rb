@@ -1,4 +1,5 @@
 require "rails_helper"
+require 'pp'
 
 def select_date(date, options = {})
   field = options[:from]
@@ -16,13 +17,13 @@ def select_time(hour, minute, options = {})
   select minute, :from => "#{base_id}_5i"
 end
 
-RSpec.feature "User can creat run" do
+RSpec.feature "Run" do
 
 	scenario "Simply create run" do
 		user = create(:user)
 
 		visit('/runs/new')
-		select 'Pedro Silva', :from => 'User'
+		select user.name, :from => 'User'
 		select_date("2016,June,10", :from => "Datetime")
 		select_time(15,45, :from => "Datetime")		
 		fill_in('Distance', :with => '15.6')
@@ -33,12 +34,10 @@ RSpec.feature "User can creat run" do
 
 	scenario "Create run for Brasilia Time Zone" do
 		user = create(:user)
-		user.time_zone = 'Brasilia'
-		user.save
 
 		visit('/runs/new')
 		#save_and_open_page
-		select 'Pedro Silva', :from => 'User'
+		select user.name, :from => 'User'
 		select_date("2016,June,10", :from => "Datetime")
 		select_time(15,45, :from => "Datetime")		
 		fill_in('Distance', :with => '15.6')
@@ -55,7 +54,7 @@ RSpec.feature "User can creat run" do
 
 		visit('/runs/new')
 		#save_and_open_page
-		select 'Pedro Silva', :from => 'User'
+		select user.name, :from => 'User'
 		select_date("2016,June,10", :from => "Datetime")
 		select_time(15,45, :from => "Datetime")		
 		fill_in('Distance', :with => '15.6')
@@ -63,6 +62,23 @@ RSpec.feature "User can creat run" do
 		click_button('Create Run')
 		#save_and_open_page
 		expect(page).to have_content('15:45:00 -0700')
-	end	
+	end
 
+	scenario ".can have notes" do
+
+		user = create(:user)
+
+		visit('/runs/new')
+		#save_and_open_page
+		select user.name, :from => 'User'
+		select_date("2016,June,10", :from => "Datetime")
+		select_time(15,45, :from => "Datetime")		
+		fill_in('Distance', :with => '15.6')
+		fill_in('run_duration_formated',:with => '01:30:00')
+		fill_in('Note',:with => 'Bla bla bla')
+		click_button('Create Run')
+		save_and_open_page
+		expect(page).to have_content('Bla bla bla')
+
+	end
 end

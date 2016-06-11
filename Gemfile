@@ -40,6 +40,7 @@ group :development, :test do
   gem 'capybara'
   gem 'launchy'
   gem "factory_girl_rails"
+  gem 'forgery', '0.6.0'
 end
 
 group :development do

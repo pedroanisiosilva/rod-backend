@@ -1,7 +1,11 @@
 FactoryGirl.define do
-  factory :user do
-    name "Pedro Silva"
-    email	"pedroanisio@me.com"
-    time_zone = Time.zone.to_s
-  end
+
+	sequence(:email) { |n| "person-#{n}@example.com" }
+
+	factory :user do
+
+    	name Forgery::Name.full_name
+    	email :email
+    	time_zone 'Brasilia'
+  	end
 end
