@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-	enum status: [:active, :inactive, :failed, :injured]
+	enum status: [:active, :inactive, :failed, :injured, :quitted]
 	has_many :runs
 	has_many :categories
 	has_many :weekly_goals

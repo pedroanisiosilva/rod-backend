@@ -165,7 +165,7 @@ end
     km_to_go_text = "%3.1f"%(runner.weekly_goal.distance-total_distance).round(1)
     pos_text = pos
 
-    if runner.injured?
+    if runner.injured? || runner.quitted?
       runs_count = "n/a"
       total_distance_text = "n/a"
       target_text = "n/a"
@@ -179,7 +179,7 @@ end
     <tr>
     <td class="tg-oskr"><%= pos_text %></td>
     <td class="tg-3x04">
-    <% if runner.injured? %>😷 - <% end %><%= runner.name %></td>
+    <% if runner.injured?%>😷 - <% end %><% if runner.quitted?%>🚫 - <% end %><%= runner.name %></td>
     <td class="tg-3x04"><%= target_text %></td>
     <td class="tg-3x04"><%= total_distance_text %></td>
     <td class="tg-3x04"><%= runs_count %></td>
