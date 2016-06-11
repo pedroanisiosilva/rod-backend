@@ -6,8 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-#User.create(name:'Pedro Anisio Silva', email:'pedroanisio@gmail.com')
-# User.create(name:'Ana', email:'annetlugard@me.com')
+User.create(name:'Pedro Anisio Silva', email:'pedroanisio@gmail.com', time_zone:'Brasilia')
 
 #// Dump Pedro
 a = User.find_by(email:'pedroanisio@gmail.com')
