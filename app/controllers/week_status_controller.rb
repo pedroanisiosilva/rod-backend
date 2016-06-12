@@ -33,6 +33,11 @@ def index
 			@result[belt] = runners    	
 
     else
+
+        if params[:week_number]
+          range_date = Date.commercial(Time.now.year.to_i, params[:week_number].to_i)
+        end
+
 		categories.each do |key, value|
 
 			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ?", key])
