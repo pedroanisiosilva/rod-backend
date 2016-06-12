@@ -16,9 +16,9 @@ def index
         "Purple" => "+150km","Blue" => "+100km", "Green" => "+75km",
         "Orange" => "+50km", "Yellow" => "+25km", "White" => "0-24km"}
 
-    @result = Hash.new
+  @result = Hash.new
 
-    range_date = Date.today
+  range_date = Date.today
 
     if params[:belt]
 
@@ -34,9 +34,9 @@ def index
 
     else
 
-        if params[:week_number]
-          range_date = Date.commercial(Time.now.year.to_i, params[:week_number].to_i)
-        end
+    if params[:week_number]
+        range_date = Date.commercial(Time.now.year.to_i, params[:week_number].to_i)
+      end
 
 		categories.each do |key, value|
 
