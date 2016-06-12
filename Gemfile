@@ -38,6 +38,9 @@ group :development, :test do
   gem 'ruby_gntp'
   gem 'rspec-rails', '~> 3.4'
   gem 'capybara'
+  gem 'launchy'
+  gem "factory_girl_rails"
+  gem 'forgery', '0.6.0'
 end
 
 group :development do

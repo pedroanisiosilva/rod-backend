@@ -7,7 +7,7 @@
 
 <p>
   <strong>Datetime:</strong>
-  <%= @run.datetime %>
+  <%= @run.datetime.in_time_zone(@run.user.time_zone) %>
 </p>
 
 <p>
@@ -18,6 +18,11 @@
 <p>
   <strong>Duration:</strong>
   <%= @run.duration_formated %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @run.note %>
 </p>
 
 <%= link_to 'Edit', edit_run_path(@run) %> |

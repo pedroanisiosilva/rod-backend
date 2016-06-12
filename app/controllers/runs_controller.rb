@@ -1,13 +1,14 @@
 class RunsController < ApplicationController
   before_action :set_run, only: [:show, :edit, :update, :destroy]
 
+
   # GET /runs
   # GET /runs.json
   def index
     if params[:user_id]
-      @runs = User.find(params[:user_id]).runs.order(:datetime)
+      @runs = User.find(params[:user_id]).runs.order('datetime DESC')
     else
-      @runs = Run.all.order(:datetime)
+      @runs = Run.order('datetime DESC')
     end
     # @runs = @runs.sort_by{|p| p.speed}
   end
@@ -74,6 +75,6 @@ class RunsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def run_params
-      params.require(:run).permit(:datetime, :distance, :duration_formated, :user_id)
+      params.require(:run).permit(:datetime, :distance, :duration_formated, :user_id, :note)
     end
 end
