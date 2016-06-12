@@ -77,7 +77,6 @@ RSpec.feature "Run" do
 		fill_in('run_duration_formated',:with => '01:30:00')
 		fill_in('Note',:with => 'Bla bla bla')
 		click_button('Create Run')
-		save_and_open_page
 		expect(page).to have_content('Bla bla bla')
 
 	end
