@@ -158,7 +158,11 @@ end
     end
 
     total_distance_text = "%3.1f"%total_distance
-    target_text = "%3.1f"%runner.weekly_goal_on_date(range_date).distance
+    if !runner.weekly_goal_on_date(range_date).nil?
+      target_text = "%3.1f"%runner.weekly_goal_on_date(range_date).distance
+    else
+      target_text = "n/a"
+    end
     pace_text = pace_helper(total_duration,total_distance) 
     km_to_go_text = "%3.1f"%(runner.weekly_goal.distance-total_distance).round(1)
     pos_text = pos
