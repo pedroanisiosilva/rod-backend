@@ -160,7 +160,7 @@ end
     total_distance_text = "%3.1f"%total_distance
     target_text = "%3.1f"%runner.weekly_goal_on_date(range_date).distance
     pace_text = pace_helper(total_duration,total_distance) 
-    km_to_go_text = "%3.1f"%(runner.weekly_goal_on_date(range_date)-total_distance).round(1)
+    km_to_go_text = "%3.1f"%(runner.weekly_goal_on_date(range_date).distance-total_distance).round(1)
     pos_text = pos
     percent_text  = "%2d"%percent
 
