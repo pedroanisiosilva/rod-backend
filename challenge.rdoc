@@ -1,0 +1,18 @@
+challenge
+	start_day
+	end_day
+	constrain:text
+		at_least one run
+		distance >= 3 and <4
+	description
+	status: active
+	badge: img url
+
+	active_challengers = Challengers.active
+
+	active_challengers.each do |challenger| 
+		challenger.process(run)
+	end
+
+	
+
