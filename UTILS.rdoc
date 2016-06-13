@@ -8,10 +8,17 @@ results = Hash.new
 	total_week_km = u.runs.where(:datetime => w.week.ago.beginning_of_week..w.week.ago.end_of_week).sum(:distance).to_f
 	total_week_duration = u.runs.where(:datetime => w.week.ago.beginning_of_week..w.week.ago.end_of_week).sum(:duration)	
 	week_number = w.week.ago.beginning_of_week.strftime("%U").to_i
-	results[week_number] = total_week
+	results[week_number] = {"km" => total_week_km, "pace" => pace_helper(total_week_duration,total_week_km)}
 
 end
 
+
+def pace_helper(duration,distance)
+pace = duration.to_f/distance
+mm, ss = pace.divmod(60)
+hh, mm = mm.divmod(60)
+"%d:%02d" % [mm, ss]
+end
 
 
 
