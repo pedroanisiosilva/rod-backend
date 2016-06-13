@@ -21,7 +21,7 @@ def index
   if params[:week_number].nil?
     week = Date.today.at_beginning_of_week.strftime("%U").to_i
   else
-    week = params[:week_number]
+    week = params[:week_number].to_i
   end
 
   range_date = Date.commercial(Time.now.year.to_i, week)
