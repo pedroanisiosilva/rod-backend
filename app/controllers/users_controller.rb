@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  skip_before_filter :require_no_authentication, only: [:new]
+
 
   # GET /users
   # GET /users.json
@@ -24,9 +26,11 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    byebug
     @user = User.new(user_params)
 
     respond_to do |format|
+
       if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }

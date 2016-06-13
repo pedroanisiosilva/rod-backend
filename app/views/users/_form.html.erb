@@ -1,5 +1,5 @@
 <%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
+    <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
@@ -15,19 +15,38 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
+
   <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true %>
   </div>
+
   <div class="field">
     <%= f.label :time_zone %><br>
     <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
   </div>
+
    <div class="field">
     <%= f.label :status %><br>
      <%= f.select :status, User.statuses.keys %>
-  </div>     
+  </div>
+  <%if @user.new_record? %>
+    <div class="field">
+      <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+      <%= f.password_field :password, autocomplete: "off" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+      <%= f.password_field :current_password, autocomplete: "off" %>
+    </div>
+  <% end %>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Update" %>
   </div>
 <% end %>
