@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # devise_for :users, controllers: {:registrations => "registrations"}
   get 'static_page/about'
   get 'static_page/help'
   get 'static_page/home'
@@ -8,6 +9,10 @@ Rails.application.routes.draw do
 
   get '/users/:id/stats/:year/:target/:w_id', to: 'user_stats#index'
 
+  # as :user do
+  #   get "/register", to: "registrations#new", as: "register"
+  # end
+
   resources :runs
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -16,8 +21,11 @@ Rails.application.routes.draw do
   root 'users#index'
 
   shallow do
-     resources :users do 
+     resources :users do
           resources :runs
      end
  end
+
+  devise_for :users, controllers: {:registrations => "registrations"}
+
 end
