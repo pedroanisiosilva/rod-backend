@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  devise_for :users, :skip => [:registrations, :sessions]
+
+  as :user do
+      get "/sign_up" => "devise/registrations#new", :as => :new_user_registration
+      post "/sign_up" => "devise/registrations#create", :as => :user_registration
+      get "/login" => "devise/sessions#new", :as => :new_user_session
+      post "/login" => "devise/sessions#create", :as => :user_session
+      delete "/logout" => "devise/sessions#destroy", :as => :destroy_user_session
+  end
+
   # devise_for :users, controllers: {:registrations => "registrations"}
   get 'static_page/about'
   get 'static_page/help'
@@ -21,11 +31,10 @@ Rails.application.routes.draw do
   root 'users#index'
 
   shallow do
-     resources :users do
-          resources :runs
-     end
- end
+      resources :users do
+           resources :runs
+      end
+  end
 
-  devise_for :users, controllers: {:registrations => "registrations"}
 
 end

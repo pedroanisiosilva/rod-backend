@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
 	before_create :set_default_role
 	before_validation :set_default_time_zone, :set_default_password
 
+  ROLES = %w[admin moderator author banned].freeze
+
 	def category
 		self.category_on_date(Date.today)
 	end
