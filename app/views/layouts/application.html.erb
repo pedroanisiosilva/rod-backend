@@ -5,11 +5,14 @@
   <%= stylesheet_link_tag	'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag	'style.min' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-
   <%= csrf_meta_tags %>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body>
 
+<%= render :partial => 'shared/user_top_bar' %>
+<%= render partial: "shared/flash_messages", flash: flash %> 
 <%= yield %>
 
 </body>

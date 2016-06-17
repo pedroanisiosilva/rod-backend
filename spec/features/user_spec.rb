@@ -7,6 +7,8 @@ RSpec.feature "User status" do
 			user = create(:user)
 			user.status = "injured"
 			user.save
+			login_as user, :scope => :user
+
 		end
 
 		scenario "visit week_status" do		
@@ -21,6 +23,8 @@ RSpec.feature "User status" do
 			user = create(:user)
 			user.status = "quitted"
 			user.save
+			login_as user, :scope => :user
+
 		end
 
 		scenario "visit week_status" do		

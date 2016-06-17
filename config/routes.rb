@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   root 'users#index'
 
   shallow do
-      resources :users do
+      resources :users, :except => [:destroy] do
            resources :runs
       end
   end
