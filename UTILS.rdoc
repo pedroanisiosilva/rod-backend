@@ -37,7 +37,7 @@ WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.toda
 // Atualizar Weekly Goal
 u = User.find_by(:email => 'andreg_santos@hotmail.com')
 w = WeeklyGoal.find_by(:first_day => Date.today.at_beginning_of_week, :user_id =>u.id)
-w.distance = 6
+w.distance = 8
 w.save
 
 WeeklyGoal.where(:first_day => Date.today.at_beginning_of_week).destroy_all

@@ -1,12 +1,11 @@
 <%
-
 if !@run.user.nil?
   Time.zone = @run.user.time_zone
 else
   Time.zone = 'Brasilia'
 end
 %> 
-<%= form_for(@run, :html => {:class => 'form-group'}) do |f| %>
+<%= form_for(@run, :html => {:class => 'form-horizontal'}) do |f| %>
   <% if @run.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@run.errors.count, "error") %> prohibited this run from being saved:</h2>
@@ -19,18 +18,18 @@ end
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="from-group">
     <%= f.label :user_id %><br>
-    <%= collection_select :run, :user_id, User.order('name ASC'), :id, :name, {:selected => @run.user_id, prompt: 'Select Runner'} %>
+    <%= collection_select :run, :user_id, User.order('name ASC'), :id, :name, {:selected => @run.user_id, prompt: 'Select Runner'}, :class => 'form-control'%>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :datetime %><br>
     <%= datetime_select :run, :datetime %>
   </div>
   <div class="field">
-    <%= f.label :distance %><br>
-    <%= f.text_field :distance, :class => 'form-group'%>
+    <%= f.label :distance, :class => 'form-control' %><br>
+    <%= f.text_field :distance, :class => 'form-control' %>
   </div>
   <div class="field">
     <%= f.label :duration %><br>
