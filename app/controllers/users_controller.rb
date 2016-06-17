@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   skip_before_filter :require_no_authentication, only: [:new]
-  # load_and_authorize_resource
+  load_and_authorize_resource
 
   # GET /users
   # GET /users.json

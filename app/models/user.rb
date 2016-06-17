@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 	obfuscate_id
 	after_create :create_category_and_initial_goal
 	before_create :set_default_role
-	before_validation :set_default_time_zone, :set_default_password
+	before_validation :set_default_time_zone
 
   ROLES = %w[admin moderator author banned].freeze
 
@@ -96,13 +96,9 @@ class User < ActiveRecord::Base
   	self.time_zone ||= Time.zone.to_s
   end
 
-  def set_default_password
-  	self.password_confirmation ||= self.password ||= "runordie"
-  end
-
 	def create_category_and_initial_goal
 		initital_category = "White"
-		inititial_goal = "6"
+		inititial_goal = "8"
 
 		Category.create(first_day: Date.today.at_beginning_of_month, last_day: Date.today.at_end_of_month, name: initital_category,user_id:self.id)
 		WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%U").to_i, distance:inititial_goal, user_id:self.id)
