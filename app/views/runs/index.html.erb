@@ -37,7 +37,7 @@
 <% else %>
         <td>n/a</td>
 <% end %>
-        <td><%= run.in_user_time_zone(run.datetime) %></td>
+        <td><%= run.in_user_time_zone(run.datetime).strftime('%v %R')  %></td>
         <td><%= run.distance %></td>
         <td><%= run.duration_formated %></td>
         <td><%= run.speed %>

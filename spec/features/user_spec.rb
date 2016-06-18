@@ -25,6 +25,33 @@ RSpec.feature "Admin" do
 			expect(page).to have_content("successfully")
 		end
 	end
+
+	context "when update" do
+		before do
+			user = create(:user)
+			r = Role.new
+			r.name = "admin"
+			r.save
+			user.role_id = r.id
+			user.save
+			login_as user, :scope => :user
+
+
+		end
+
+		scenario "other user" do
+			normal_user = create(:user)
+			normal_user.save
+			visit(user_path(normal_user))
+			click_link('Edit')
+			fill_in('Password', :with => 'pedroanisio')
+			fill_in('Password confirmation', :with => 'pedroanisio')
+			fill_in('Current password', :with =>'734bds29rd')
+			#save_and_open_page
+			click_button('Update User')
+			expect(page).to have_content("successfully")
+		end
+	end	
 end
 
 RSpec.feature "User status" do
