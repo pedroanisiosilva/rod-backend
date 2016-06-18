@@ -22,10 +22,5 @@ module Runordie
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-    config.assets.precompile += %w( login.js )
-    config.assets.precompile += %w( login-style.css )
-    config.assets.precompile += %w( login-normalized.css )
-
-
   end
 end
