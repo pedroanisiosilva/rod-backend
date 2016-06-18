@@ -11,6 +11,13 @@ class RunsController < ApplicationController
       @runs = Run.order('datetime DESC')
     end
     # @runs = @runs.sort_by{|p| p.speed}
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @runs.to_csv }
+      format.xls # { send_data @products.to_csv(col_sep: "\t") }
+    end
+
   end
 
   # GET /runs/1

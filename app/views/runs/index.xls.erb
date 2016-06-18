@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+<Styles>
+   <Style ss:ID="s22">
+   <NumberFormat ss:Format="yyyy\-mm\-dd"/>
+  </Style>
+</Styles>  
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Runner</Data></Cell>
+        <Cell><Data ss:Type="String">Datetime</Data></Cell>
+        <Cell><Data ss:Type="String">Distance</Data></Cell>
+        <Cell><Data ss:Type="String">Duration</Data></Cell>
+        <Cell><Data ss:Type="String">Speed</Data></Cell>
+        <Cell><Data ss:Type="String">Pace</Data></Cell>
+      </Row>
+    <% @runs.each do |run| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= run.user.name %></Data></Cell>
+        <Cell ss:StyleID="s22"><Data ss:Type="DateTime"><%= run.in_user_time_zone(run.datetime).strftime("%Y-%m-%dT%H:%M:%S.%L") %></Data>
+        </Cell>
+        <Cell><Data ss:Type="Number"><%= run.distance %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= run.duration_formated %></Data></Cell>        
+        <Cell><Data ss:Type="String"><%= run.speed %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= run.pace %></Data></Cell>        
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

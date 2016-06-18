@@ -3,6 +3,15 @@ class Run < ActiveRecord::Base
 	validates_presence_of :distance, :user_id, :duration_formated
 	obfuscate_id
 
+	def self.to_csv(options = {})
+	  CSV.generate(options) do |csv|
+	    csv << column_names
+	    all.each do |run|
+	      csv << run.attributes.values_at(*column_names)
+	    end
+	  end
+	end
+
 	def duration_formated=(new_duration)
 	  self[:duration] = new_duration.split(':').map { |a| a.to_i }.inject(0) { |a, b| a * 60 + b}
 	end	

@@ -84,6 +84,21 @@ RSpec.feature "Run" do
 		fill_in('Note',:with => 'Bla bla bla')
 		click_button('Create Run')
 		expect(page).to have_content('Bla bla bla')
-
 	end
+
+  	scenario '.can download CSV' do
+
+		user = create(:user)
+		login_as user, :scope => :user	  		
+
+  		first_run = create(:run, :distance =>'10',:duration=>'3600')
+  		second_run = create(:run, :distance =>'12',:duration=>'3600')
+  		third_run = create(:run, :distance =>'12',:duration=>'3600')
+
+		visit runs_path
+		save_and_open_page
+		click_on 'CSV'
+
+     	expect( DownloadHelpers::download_content ).to include distance_csv
+    end
 end
