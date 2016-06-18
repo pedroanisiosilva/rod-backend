@@ -1,3 +1,16 @@
+
+$(document).ready(function(){
+    $('.form').find('input, textarea').each(function(el){
+      var $this = $(this),
+      label = $this.prev('label');
+
+        if ($this.val() === '') {
+          label.removeClass('active highlight');
+        } else {
+          label.addClass('active highlight');
+        }
+    });
+
 $('.form').find('input, textarea').on('keyup blur focus', function (e) {
 
   var $this = $(this),
@@ -41,3 +54,11 @@ $('.tab a').on('click', function (e) {
   $(target).fadeIn(600);
 
 });
+
+
+
+});
+
+
+
+
