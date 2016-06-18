@@ -40,7 +40,9 @@ class AddDeviseToUsers < ActiveRecord::Migration
     # add_index :users, :confirmation_token,   unique: true
     # add_index :users, :unlock_token,         unique: true
 
-  User.create!(:name => 'runordieadm', :password => 'runordie2016', :password_confirmation => 'runordie2016', :email => "runordieadm@gmail.com")
+  u = User.create!(:name => 'runordieadm', :password => 'runordie2016', :password_confirmation => 'runordie2016', :email => "runordieadm@gmail.com")
+  u.role = Role.find_by_name('admin')
+  u.save!
 
   end
 
