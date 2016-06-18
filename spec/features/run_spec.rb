@@ -48,7 +48,7 @@ RSpec.feature "Run" do
 		fill_in('run_duration_formated',:with => '01:30:00')
 		click_button('Create Run')
 		#save_and_open_page
-		expect(page).to have_content('15:45:00 -0300')
+		expect(page).to have_content('15:45 BRT')
 	end
 
 	scenario "Create run for Pacific Time (US & Canada) Time Zone" do
@@ -66,7 +66,7 @@ RSpec.feature "Run" do
 		fill_in('run_duration_formated',:with => '01:30:00')
 		click_button('Create Run')
 		#save_and_open_page
-		expect(page).to have_content('15:45:00 -0700')
+		expect(page).to have_content('15:45 PDT')
 	end
 
 	scenario ".can have notes" do
