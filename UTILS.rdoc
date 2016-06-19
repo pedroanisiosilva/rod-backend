@@ -1,5 +1,5 @@
 
-u = User.find_by(:email => 'pedroanisio@gmail.com')
+u = User.find_by(:email => 'eloildo.silva@gmail.com')
 
 results = Hash.new
 
@@ -19,9 +19,6 @@ mm, ss = pace.divmod(60)
 hh, mm = mm.divmod(60)
 "%d:%02d" % [mm, ss]
 end
-
-
-
 
 
 

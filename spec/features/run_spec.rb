@@ -86,7 +86,7 @@ RSpec.feature "Run" do
 		expect(page).to have_content('Bla bla bla')
 	end
 
-  	scenario '.can download CSV' do
+  	scenario '.can download XLS' do
 
 		user = create(:user)
 		login_as user, :scope => :user	  		
@@ -96,9 +96,10 @@ RSpec.feature "Run" do
   		third_run = create(:run, :distance =>'12',:duration=>'3600')
 
 		visit runs_path
-		save_and_open_page
-		click_on 'CSV'
-
-     	expect( DownloadHelpers::download_content ).to include distance_csv
+		click_on 'XLS'
+		header = page.response_headers['Content-Type']
+		#pp page.response_headers
+		#header.should match /^application\/xls/
+     	expect(header).to match /^application\/xls/
     end
 end

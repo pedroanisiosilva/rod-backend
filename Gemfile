@@ -42,6 +42,7 @@ group :development, :test do
   gem 'launchy'
   gem "factory_girl_rails"
   gem 'forgery', '0.6.0'
+  gem 'selenium-webdriver'
 end
 
 group :development do

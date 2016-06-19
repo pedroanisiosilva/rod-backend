@@ -5,6 +5,19 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
+require 'shared/download_helper.rb'
+require "selenium/webdriver"
+
+Capybara.register_driver :selenium do |app|
+  profile = Selenium::WebDriver::Firefox::Profile.new
+  profile['browser.download.dir'] = DownloadHelpers::PATH.to_s
+  profile['browser.download.folderList'] = 2
+
+  # Suppress "open with" dialog
+  profile['browser.helperApps.neverAsk.saveToDisk'] = 'text/csv'
+  Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
+end
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -29,6 +42,10 @@ ActiveRecord::Migration.maintain_test_schema!
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
+
+  config.before( :each ) do
+      DownloadHelpers::clear_downloads
+  end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
