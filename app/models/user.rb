@@ -101,7 +101,7 @@ class User < ActiveRecord::Base
 		inititial_goal = "8"
 
 		Category.create(first_day: Date.today.at_beginning_of_month, last_day: Date.today.at_end_of_month, name: initital_category,user_id:self.id)
-		WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%U").to_i, distance:inititial_goal, user_id:self.id)
+		WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%W").to_i, distance:inititial_goal, user_id:self.id)
 	end
 
 end

@@ -7,7 +7,7 @@ results = Hash.new
 
 	total_week_km = u.runs.where(:datetime => w.week.ago.beginning_of_week..w.week.ago.end_of_week).sum(:distance).to_f
 	total_week_duration = u.runs.where(:datetime => w.week.ago.beginning_of_week..w.week.ago.end_of_week).sum(:duration)	
-	week_number = w.week.ago.beginning_of_week.strftime("%U").to_i
+	week_number = w.week.ago.beginning_of_week.strftime("%W").to_i
 	results[week_number] = {"km" => total_week_km, "pace" => pace_helper(total_week_duration,total_week_km)}
 
 end
@@ -23,13 +23,13 @@ end
 
 
 
-WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%U").to_i, distance:"%2.0f"%meta.min, user_id:u.id)
+WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%W").to_i, distance:"%2.0f"%meta.min, user_id:u.id)
 
 end
 
 u = User.find_by(:email => 'carumachado@gmail.com')
 // Criar weeklyGoal
-WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%U").to_i, distance:6, user_id:u.id)
+WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%W").to_i, distance:6, user_id:u.id)
 
 // Atualizar Weekly Goal
 u = User.find_by(:email => 'andreg_santos@hotmail.com')
@@ -77,7 +77,7 @@ u = User.find_by(:email=>"juarezmacedo@uol.com.br")
 u = User.find_by(:email=>"tati@mail.com")
 Category.create(first_day: Date.today.at_beginning_of_month, last_day: Date.today.at_end_of_month, name: "White",user_id:u.id)
 
-WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%U").to_i, distance:8, user_id:u.id)
+WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%W").to_i, distance:8, user_id:u.id)
 
 
 #importacao

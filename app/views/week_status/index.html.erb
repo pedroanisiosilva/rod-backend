@@ -63,7 +63,7 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
 if params[:week_number]
   week = params[:week_number]
 else
-  week = Date.today.at_beginning_of_week.strftime("%U").to_i
+  week = Date.today.at_beginning_of_week.strftime("%W").to_i
 end
 total_runners = total_km = runners_without_run = 0
 range_date = Date.commercial(Time.now.year.to_i, week.to_i)
@@ -101,8 +101,8 @@ end
     <th class="tg-qacf"><%=  week %></th>
     <th class="tg-6eia">Total KMs</th>
     <th class="tg-qacf"><%= total_km.round(2) %></th>
-    <th class="tg-u34r">#🏃</th>
-    <th class="tg-qacf"><%= total_runners %></th>
+    <th class="tg-u34r">#</th>
+    <th class="tg-qacf"><%= total_runners %> 🏃</th>
     <th class="tg-u34r">#🏃 w/o KM</th>
     <th class="tg-qacf"><%= runners_without_run %></th>
   </tr> 

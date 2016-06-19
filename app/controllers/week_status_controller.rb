@@ -19,7 +19,7 @@ def index
   @result = Hash.new
 
   if params[:week_number].nil?
-    week = Date.today.at_beginning_of_week.strftime("%U").to_i
+    week = Date.today.at_beginning_of_week.strftime("%W").to_i
   else
     week = params[:week_number].to_i
   end
@@ -30,7 +30,8 @@ def index
 
     	belt = params[:belt].capitalize
 			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ?", belt])
-			runners = runners.sort { |a,b| a.runs.where(:datetime => range_date.beginning_of_week..range_date.end_of_week).sum(:distance).to_i<=> b.runs.where(:datetime => range_date.beginning_of_week..range_date.end_of_week).sum(:distance).to_i}
+			self.delete_from_relation_if_no_goal(runners)
+      runners = runners.sort { |a,b| a.runs.where(:datetime => range_date.beginning_of_week..range_date.end_of_week).sum(:distance).to_i<=> b.runs.where(:datetime => range_date.beginning_of_week..range_date.end_of_week).sum(:distance).to_i}
 			runners = runners.reverse
 			@result[belt] = runners    	
 
@@ -39,11 +40,17 @@ def index
 		  categories.each do |key, value|
 
   			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ?", key])
-  			runners = runners.sort { |a,b| a.runs.where(:datetime => range_date.beginning_of_week..range_date.end_of_week).sum(:distance).to_i<=> b.runs.where(:datetime => Date.today.beginning_of_week..range_date.end_of_week).sum(:distance).to_i}
+  			self.delete_from_relation_if_no_goal(runners)
+        runners = runners.sort { |a,b| a.runs.where(:datetime => range_date.beginning_of_week..range_date.end_of_week).sum(:distance).to_i<=> b.runs.where(:datetime => Date.today.beginning_of_week..range_date.end_of_week).sum(:distance).to_i}
   			runners = runners.reverse
   			@result[key] = runners
 
 		  end    	
     end
   end
+
+  def delete_from_relation_if_no_goal (runners)
+    runners.to_a.delete_if {|runner| runner.weekly_goal.nil?}
+  end
+
 end

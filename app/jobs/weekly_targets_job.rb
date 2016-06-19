@@ -21,7 +21,7 @@
 # 		    	end
 # 		    end   	
 
-# 			WeeklyGoal.create(first_day:tomorrow.at_beginning_of_week, last_day: tomorrow.at_end_of_week, number: tomorrow.at_beginning_of_week.strftime("%U").to_i, distance:new_target, user_id:user.id)
+# 			WeeklyGoal.create(first_day:tomorrow.at_beginning_of_week, last_day: tomorrow.at_end_of_week, number: tomorrow.at_beginning_of_week.strftime("%W").to_i, distance:new_target, user_id:user.id)
 # 	  	end
 # 	end
 
