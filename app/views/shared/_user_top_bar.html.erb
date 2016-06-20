@@ -19,9 +19,9 @@
     <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Stats<span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="<%= %{/week_status/#{Date.today.strftime('%W').to_i}} %>">Current Week</a></li>
-        <li><a href="<%= %{/week_status/#{Date.today.strftime('%W').to_i-1}} %>">Previus Week</a></li>
-        <li><a href="<%= %{/week_status/#{Date.today.strftime('%W').to_i+1}} %>">Next Week</a></li>
+        <li><a href="<%= %{/week_status/#{Date.today.in_time_zone.strftime('%W').to_i}} %>">Current Week</a></li>
+        <li><a href="<%= %{/week_status/#{Date.today.in_time_zone.strftime('%W').to_i-1}} %>">Previus Week</a></li>
+        <li><a href="<%= %{/week_status/#{Date.today.in_time_zone.strftime('%W').to_i+1}} %>">Next Week</a></li>
       </ul>
     </li>
 
