@@ -5,11 +5,21 @@ class RunsController < ApplicationController
   # GET /runs
   # GET /runs.json
   def index
-    if params[:user_id]
-      @runs = User.find(params[:user_id]).runs.order('datetime DESC')
+
+    if current_user.role.name == ("admin")
+
+      if params[:user_id]
+        @runs = User.find(params[:user_id]).runs.order('datetime DESC')
+      else
+        @runs = Run.order('datetime DESC')
+      end
+
     else
-      @runs = Run.order('datetime DESC')
-    end
+      @runs = current_user.runs.order('datetime DESC')
+    end    
+  
+
+
     # @runs = @runs.sort_by{|p| p.speed}
 
     respond_to do |format|
