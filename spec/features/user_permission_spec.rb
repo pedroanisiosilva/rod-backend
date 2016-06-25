@@ -20,7 +20,51 @@ end
 
 RSpec.feature "Runner profile" do
 
-	scenario "as normal users cannot see other runners run" do
+
+	scenario "as registered users can create run" do
+
+		user = create(:user)
+		login_as user, :scope => :user
+		visit('/runs/new')
+		select_date("2016,June,10", :from => "Datetime")
+		select_time(15,45, :from => "Datetime")		
+		fill_in('Distance', :with => '15.6')
+		fill_in('run_duration_formated',:with => '01:30:00')
+		click_button('Create Run')
+		expect(page).to have_content('Run was successfully created')
+	end	
+
+	# scenario "as registered users cannot create run for another user" do
+
+	# 	user = create(:user)
+	# 	user_b = create(:user, :name => "Usain Bolt")
+	# 	login_as user, :scope => :user
+	# 	visit('/runs/new')
+	# 	# select "Usain Bolt", :from => 'User'
+	# 	select_date("2016,June,10", :from => "Datetime")
+	# 	select_time(15,45, :from => "Datetime")		
+	# 	fill_in('Distance', :with => '15.6')
+	# 	fill_in('run_duration_formated',:with => '01:30:00')
+	# 	click_button('Create Run')
+	# 	expect(page).to_not have_content('Run was successfully created')
+	# end		
+
+	scenario "as admin users can create run for another user" do
+
+		user = create(:user)
+		user_b = create(:user, :name => "Usain Bolt")
+		login_as user, :scope => :user
+		visit('/runs/new')
+		# select "Usain Bolt", :from => 'User'
+		select_date("2016,June,10", :from => "Datetime")
+		select_time(15,45, :from => "Datetime")		
+		fill_in('Distance', :with => '15.6')
+		fill_in('run_duration_formated',:with => '01:30:00')
+		click_button('Create Run')
+		expect(page).to have_content('Run was successfully created')
+	end		
+
+	scenario "as registered users cannot see other runners run" do
 		user_a = create(:user, :name => "Zé das Colves")
 		user_b = create(:user, :name => "Usain Bolt")
 
@@ -36,7 +80,6 @@ RSpec.feature "Runner profile" do
 
 		expect(page).to_not have_content('Usain Bolt')
 		expect(page).to have_content(user_a.name)
-
 	end
 
 	scenario "as admin users cannot see other runners run" do

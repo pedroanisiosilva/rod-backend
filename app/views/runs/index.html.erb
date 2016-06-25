@@ -50,8 +50,16 @@
         <td><%= run.speed %>
         <td><%= run.pace %>
         <td><%= link_to 'Show', run %></td>
-        <td><%= link_to 'Edit', edit_run_path(run) %></td>
-        <td><%= link_to 'Destroy', run, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if can? :update, @runs %>
+            <%= link_to 'Edit', edit_run_path(run) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :destroy, @runs %>
+            <%= link_to 'Destroy', run, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+            </td>
       </tr>
     <% end %>
   </tbody>
