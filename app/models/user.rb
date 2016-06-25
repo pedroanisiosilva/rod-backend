@@ -9,7 +9,6 @@ class User < ActiveRecord::Base
 	has_many :categories
 	has_many :weekly_goals
 	validates_presence_of :email, :time_zone
-	obfuscate_id
 	after_create :create_category_and_initial_goal
 	before_create :set_default_role
 	before_validation :set_default_time_zone

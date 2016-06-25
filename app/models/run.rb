@@ -1,7 +1,6 @@
 class Run < ActiveRecord::Base
 	belongs_to :user, :validate => true
 	validates_presence_of :distance, :user_id, :duration_formated
-	obfuscate_id
 
 	def self.to_csv(options = {})
 	  CSV.generate(options) do |csv|

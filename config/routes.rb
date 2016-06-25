@@ -36,5 +36,16 @@ Rails.application.routes.draw do
       end
   end
 
+  #api
+  namespace :api do
+    namespace :v1 do
+      shallow do
+          resources :users, :except => [:destroy] do
+               resources :runs
+          end
+      end      
+    end
+  end  
+
 
 end
