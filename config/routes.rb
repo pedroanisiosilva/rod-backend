@@ -43,9 +43,11 @@ Rails.application.routes.draw do
           resources :users, :except => [:destroy] do
                resources :runs
           end
-      end      
+      end
+      devise_scope :user do      
+        post "/sessions" => "sessions#create", :as => :session
+        delete "/sessions/destroy" => "sessions#destroy", :as => :session_destroy
+      end
     end
-  end  
-
-
+  end
 end

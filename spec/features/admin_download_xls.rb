@@ -13,7 +13,6 @@ RSpec.feature "Admin" do
 		visit runs_path
 		click_on 'XLS'
 		header = page.response_headers['Content-Type']
-		#pp page.response_headers
 		#header.should match /^application\/xls/
      	expect(header).to match /^application\/xls/
     end

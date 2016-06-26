@@ -1,5 +1,4 @@
 require "rails_helper"
-require 'pp'
 include Warden::Test::Helpers
 
 def select_date(date, options = {})
