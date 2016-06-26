@@ -1,12 +1,14 @@
 class Api::V1::SessionsController < Devise::SessionsController
-  prepend_before_filter :require_no_authentication, :only => [:create ]
+  skip_before_filter :verify_authenticity_token    
+  prepend_before_filter :require_no_authentication, :only => [ :new, :create, :cancel ]
   before_filter :ensure_params_exist
-
   respond_to :json
-  skip_before_filter :verify_authenticity_token
-
+  
   def create
     resource = User.find_for_database_authentication(:email => params[:email])
+
+    logger.debug "Resource attributes hash: #{resource.inspect}"
+
     return invalid_login_attempt unless resource
 
     if resource.valid_password?(params[:password])
