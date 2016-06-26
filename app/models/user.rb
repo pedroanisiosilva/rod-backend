@@ -1,8 +1,10 @@
 class User < ActiveRecord::Base
 	acts_as_token_authenticatable
+	before_save :ensure_authentication_token	
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+
+  	devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 	enum status: [:active, :inactive, :failed, :injured, :quitted]
 	belongs_to :role
@@ -103,5 +105,17 @@ class User < ActiveRecord::Base
 		Category.create(first_day: Date.today.at_beginning_of_month, last_day: Date.today.at_end_of_month, name: initital_category,user_id:self.id)
 		WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%W").to_i, distance:inititial_goal, user_id:self.id)
 	end
+  def ensure_authentication_token
+    if authentication_token.blank?
+      self.authentication_token = generate_authentication_token
+    end
+  end
 
+  
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
+    end
+  end
 end
