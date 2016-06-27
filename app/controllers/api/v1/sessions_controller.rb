@@ -1,13 +1,21 @@
 class Api::V1::SessionsController < Devise::SessionsController
-  skip_before_filter :verify_authenticity_token    
+  protect_from_forgery with: :reset_session
+  skip_before_filter :verify_authenticity_token
   prepend_before_filter :require_no_authentication, :only => [ :new, :create, :cancel ]
-  before_filter :ensure_params_exist
+  before_filter :ensure_params_exist, :set_default_response_format
   respond_to :json
+  before_filter :use_dummy_session  
+
+  def use_dummy_session
+  return unless request.format.json?
+    # env["rack.session"] = {}
+    request.session_options[:skip] = true
+  end
   
   def create
     resource = User.find_for_database_authentication(:email => params[:email])
 
-    logger.debug "Resource attributes hash: #{resource.inspect}"
+    #logger.debug "Resource attributes hash: #{resource.inspect}"
 
     return invalid_login_attempt unless resource
 
@@ -34,4 +42,8 @@ class Api::V1::SessionsController < Devise::SessionsController
     warden.custom_failure!
     render :json=> {:success=>false, :message=>"Error with your login or password"}, :status=>401
   end
+
+  def set_default_response_format
+    request.format = :json
+  end    
 end

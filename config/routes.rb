@@ -16,12 +16,7 @@ Rails.application.routes.draw do
   get 'week_status/index', to: 'week_status#index'
   get 'week_status/:week_number/:belt', to: 'week_status#index'
   get 'week_status/:week_number', to: 'week_status#index'
-
   get '/users/:id/stats/:year/:target/:w_id', to: 'user_stats#index'
-
-  # as :user do
-  #   get "/register", to: "registrations#new", as: "register"
-  # end
 
   resources :runs
   # The priority is based upon order of creation: first created -> highest priority.
@@ -37,7 +32,7 @@ Rails.application.routes.draw do
   end
 
   #api
-  namespace :api do
+  namespace :api, constraints: { format: 'json' } do
     namespace :v1 do
       shallow do
           resources :users, :except => [:destroy] do
