@@ -51,7 +51,7 @@ RSpec.feature "Admin" do
 			click_button('Update User')
 			expect(page).to have_content("successfully")
 		end
-	end	
+	end
 end
 
 RSpec.feature "User status" do
@@ -65,7 +65,7 @@ RSpec.feature "User status" do
 
 		end
 
-		scenario "visit week_status" do		
+		scenario "visit week_status" do
 
 			visit('/week_status/index')
 			expect(page).to have_content("😷")
@@ -81,11 +81,11 @@ RSpec.feature "User status" do
 
 		end
 
-		scenario "visit week_status" do		
+		scenario "visit week_status" do
 
 			visit('/week_status/index')
 			expect(page).to have_content("🚫")
 		end
 
-	end	
+	end
 end
