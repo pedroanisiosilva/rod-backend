@@ -1,7 +1,9 @@
 class User < ActiveRecord::Base
+	acts_as_token_authenticatable
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+
+  	devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 	enum status: [:active, :inactive, :failed, :injured, :quitted]
 	belongs_to :role
@@ -9,7 +11,6 @@ class User < ActiveRecord::Base
 	has_many :categories
 	has_many :weekly_goals
 	validates_presence_of :email, :time_zone
-	obfuscate_id
 	after_create :create_category_and_initial_goal
 	before_create :set_default_role
 	before_validation :set_default_time_zone

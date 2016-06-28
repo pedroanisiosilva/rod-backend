@@ -15,7 +15,6 @@ class WeeklyGoal < ActiveRecord::Base
 
 	    	last_week_performance = user.weekly_runs_km_on_date(last_week)
 	    	last_week_goal = user.weekly_goal_on_date(Date.today).distance.to_f
-	    	pp last_week_goal
 
 		    if last_week_performance >= last_week_goal
 

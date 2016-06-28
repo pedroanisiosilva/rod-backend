@@ -1,5 +1,4 @@
 require "rails_helper"
-require 'pp'
 include Warden::Test::Helpers
 
 def select_date(date, options = {})
@@ -24,7 +23,7 @@ RSpec.feature "Run" do
 		user = create(:user)
 		login_as user, :scope => :user
 		visit('/runs/new')
-		select user.name, :from => 'User'
+		# select user.name, :from => 'User'
 		select_date("2016,June,10", :from => "Datetime")
 		select_time(15,45, :from => "Datetime")		
 		fill_in('Distance', :with => '15.6')
@@ -41,7 +40,7 @@ RSpec.feature "Run" do
 
 		visit('/runs/new')
 		#save_and_open_page
-		select user.name, :from => 'User'
+		#select user.name, :from => 'User'
 		select_date("2016,June,10", :from => "Datetime")
 		select_time(15,45, :from => "Datetime")		
 		fill_in('Distance', :with => '15.6')
@@ -59,7 +58,7 @@ RSpec.feature "Run" do
 
 		visit('/runs/new')
 		#save_and_open_page
-		select user.name, :from => 'User'
+		#select user.name, :from => 'User'
 		select_date("2016,June,10", :from => "Datetime")
 		select_time(15,45, :from => "Datetime")		
 		fill_in('Distance', :with => '15.6')
@@ -76,7 +75,7 @@ RSpec.feature "Run" do
 
 		visit('/runs/new')
 		#save_and_open_page
-		select user.name, :from => 'User'
+		#select user.name, :from => 'User'
 		select_date("2016,June,10", :from => "Datetime")
 		select_time(15,45, :from => "Datetime")		
 		fill_in('Distance', :with => '15.6')

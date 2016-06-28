@@ -16,19 +16,14 @@ Rails.application.routes.draw do
   get 'week_status/index', to: 'week_status#index'
   get 'week_status/:week_number/:belt', to: 'week_status#index'
   get 'week_status/:week_number', to: 'week_status#index'
-
   get '/users/:id/stats/:year/:target/:w_id', to: 'user_stats#index'
-
-  # as :user do
-  #   get "/register", to: "registrations#new", as: "register"
-  # end
 
   resources :runs
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'users#index'
+  root 'runs#index'
 
   shallow do
       resources :users, :except => [:destroy] do
@@ -36,5 +31,18 @@ Rails.application.routes.draw do
       end
   end
 
-
+  #api
+  namespace :api, constraints: { format: 'json' } do
+    namespace :v1 do
+      shallow do
+          resources :users, :except => [:destroy] do
+               resources :runs
+          end
+      end
+      devise_scope :user do      
+        post "/sessions" => "sessions#create", :as => :session
+        delete "/sessions/destroy" => "sessions#destroy", :as => :session_destroy
+      end
+    end
+  end
 end

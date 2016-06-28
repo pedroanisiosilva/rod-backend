@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
   skip_before_filter :require_no_authentication, only: [:new]
+  before_action :authenticate_user!  
   load_and_authorize_resource except: [:create]
 
   # GET /users
@@ -67,7 +67,6 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      puts params[:id]
       @user = User.find(params[:id]) if params[:id].present?
     end
 

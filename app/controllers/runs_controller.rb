@@ -1,15 +1,24 @@
 class RunsController < ApplicationController
   before_action :set_run, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
+  load_and_authorize_resource
 
   # GET /runs
   # GET /runs.json
   def index
-    if params[:user_id]
-      @runs = User.find(params[:user_id]).runs.order('datetime DESC')
+
+    if current_user.role.name == ("admin")
+
+      if params[:user_id]
+        @runs = User.find(params[:user_id]).runs.order('datetime DESC')
+      else
+        @runs = Run.order('datetime DESC')
+      end
+
     else
-      @runs = Run.order('datetime DESC')
-    end
+      @runs = current_user.runs.order('datetime DESC')
+    end    
+
     # @runs = @runs.sort_by{|p| p.speed}
 
     respond_to do |format|
@@ -26,8 +35,13 @@ class RunsController < ApplicationController
   end
 
   # GET /runs/new
-  def new
-    @run = Run.new
+  def new    
+    @user = current_user
+    if @user.role.name == ("admin")
+      @run = Run.new()
+    else
+      @run = @user.runs.create(params[:run])          
+    end  
   end
 
   # GET /runs/1/edit
@@ -37,7 +51,7 @@ class RunsController < ApplicationController
   # POST /runs
   # POST /runs.json
   def create
-    @run = Run.new(run_params)
+    @run = Run.new(run_params)  
 
     respond_to do |format|
       if @run.save

@@ -1,5 +1,4 @@
 class UserStatsController < ApplicationController
-
   # GET /week_status
   # GET /week_status.json
 
