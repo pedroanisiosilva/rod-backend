@@ -16,6 +16,7 @@
         <Cell><Data ss:Type="String">Datetime</Data></Cell>
         <Cell><Data ss:Type="String">Distance</Data></Cell>
         <Cell><Data ss:Type="String">Duration</Data></Cell>
+        <Cell><Data ss:Type="String">Duration in seconds</Data></Cell>
         <Cell><Data ss:Type="String">Speed</Data></Cell>
         <Cell><Data ss:Type="String">Pace</Data></Cell>
       </Row>
@@ -25,7 +26,8 @@
         <Cell ss:StyleID="s22"><Data ss:Type="DateTime"><%= run.in_user_time_zone(run.datetime).strftime("%Y-%m-%dT%H:%M:%S.%L") %></Data>
         </Cell>
         <Cell><Data ss:Type="Number"><%= run.distance %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= run.duration_formated %></Data></Cell>        
+        <Cell><Data ss:Type="String"><%= run.duration_formated %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= run.duration.to_i %></Data></Cell>         
         <Cell><Data ss:Type="String"><%= run.speed %></Data></Cell>
         <Cell><Data ss:Type="String"><%= run.pace %></Data></Cell>        
       </Row>
