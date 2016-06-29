@@ -1,30 +1,38 @@
+
+
+require 'telegram/bot'
+
 module Comunicator
 
   CONFIG = YAML::load_file('config/telegram/telegram.yml').symbolize_keys
   LOGGER = Logger.new(STDOUT, Logger::DEBUG)
 
-  class Telegram
+  class RodTelegram
 
     attr :bot, :rod_group
 
-    def send_msg(txt)
+    def send_msg(txt, photo = nil)
+      raise 'message or photo is required!' if !txt.present? and !photo.present?
+
       LOGGER.debug "send msg to ROD"
-      bot.send_message new_group_msg(txt)
+
+      Telegram::Bot::Client.run(CONFIG[:telegram]["token"]) do |bot|
+        if photo.present?
+          bot.api.send_photo(new_group_msg(txt,photo))
+        else txt.present?
+          bot.api.send_message new_group_msg(txt)
+        end
+      end
       LOGGER.debug "end send msg to ROD"
     end
 
     private
-      def new_group_msg(txt)
-        TelegramBot::OutMessage.new(chat: rod_group, text: txt)
+      def new_group_msg(txt, p = nil)
+        attrs = {chat_id: CONFIG[:telegram]["chat_id"], text: txt}
+        attrs.merge!({photo: Faraday::UploadIO.new(Paperclip.io_adapters.for(p.image), p.image_content_type), caption: p.caption}) if p.present?
+        attrs
       end
 
-      def bot
-        @bot ||= TelegramBot.new(token: CONFIG[:telegram]["token"], logger: LOGGER)
-      end
-
-      def rod_group
-        @rod_group ||= TelegramBot::GroupChat.new(id: CONFIG[:telegram]["chat_id"], logger: LOGGER, title: CONFIG[:telegram]["title"])
-      end
   end
 
 end
