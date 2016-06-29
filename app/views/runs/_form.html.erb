@@ -4,13 +4,13 @@ if !@run.user.nil?
 else
   Time.zone = 'Brasilia'
 end
-%> 
+%>
 <%= form_for(@run, :html => {:class => 'form-horizontal'}) do |f| %>
   <%= render 'shared/error_messages', :local_model => @run %>
 
   <% if current_user.role.name == "admin" %>
   <div class="form-group">
-    <%= f.label :user_id, :class => 'control-label col-sm-2'  %><div class="col-sm-6"> 
+    <%= f.label :user_id, :class => 'control-label col-sm-2'  %><div class="col-sm-6">
     <%= collection_select :run, :user_id, User.order('name ASC'), :id, :name, {:selected => @run.user_id, prompt: 'Select Runner'}, :class => 'form-control'%>
     </div>
   </div>
@@ -19,26 +19,27 @@ end
   <% end %>
 
   <div class="form-group">
-    <%= f.label :datetime, :class => 'control-label col-sm-2'  %><div class="col-sm-6"> 
+    <%= f.label :datetime, :class => 'control-label col-sm-2'  %><div class="col-sm-6">
     <%= datetime_select :run, :datetime %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :distance, :class => 'control-label col-sm-2'  %><div class="col-sm-6"> 
+    <%= f.label :distance, :class => 'control-label col-sm-2'  %><div class="col-sm-6">
     <%= f.text_field :distance, :class => 'form-control' %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :duration, :class => 'control-label col-sm-2'  %><div class="col-sm-6"> 
+    <%= f.label :duration, :class => 'control-label col-sm-2'  %><div class="col-sm-6">
     <%= f.text_field :duration_formated, label: 'Inform duration: ', placeholder: 'HH:MM:SS', :data=> {:mask=> '23:59:59'}, :class => 'form-control'%>
     </div>
   </div>
   <div class="form-group">
     <%= f.label :note, :class => 'control-label col-sm-2'  %>
-    <div class="col-sm-6"> 
+    <div class="col-sm-6">
       <%= f.text_area :note, :class => 'form-control', :row => '5'%>
     </div>
-  </div>  
+  </div>
+
   <div class="form-group">
     <%= f.submit %>
   </div>

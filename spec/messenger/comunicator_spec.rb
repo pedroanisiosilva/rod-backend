@@ -11,20 +11,17 @@ RSpec.feature "Comunicator" do
       expect { @telegram.send_msg(nil) }.to raise_error 'message or photo is required!'
       expect { @telegram.send_msg(nil, "") }.to raise_error 'message or photo is required!'
     end
+
     scenario "buildin msg" do
-      allow(Faraday::UploadIO).to receive(:new).and_return("teste")
-      attrs = @telegram.send :new_group_msg, "Teste", "teste"
+      @image = RodImage.new(:caption => "Teste")
+      allow(@image).to receive(:image).and_return("Image")
+      allow(Faraday::UploadIO).to receive(:new).and_return(nil)
+      allow(Paperclip.io_adapters).to receive(:for).and_return(nil)
+      attrs = @telegram.send :new_group_msg, "Teste", @image
       expect(attrs[:chat_id]).to eq(-127271582)
       expect(attrs[:text]).to eq("Teste")
-      expect(attrs[:caption]).to eq("Teste")
-      expect(attrs[:photo]).to eq("teste")
-
-      # allow(bot).to receive(:send_message).and_return(nil)
-      # @telegram.send_msg "Teste"
-      # expect(bot).to have_received(:send_message) do |msg|
-      #   expect(msg.chat.title).to eq("ROD")
-      #   expect(msg.text).to eq("Teste")
-      # end
+      expect(attrs[:caption]).to eq(@image.caption)
+      expect(attrs[:photo]).to eq(nil)
     end
 
   end
