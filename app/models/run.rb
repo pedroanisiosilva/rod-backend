@@ -1,6 +1,6 @@
 class Run < ActiveRecord::Base
 	belongs_to :user, :validate => true
-	validates_presence_of :distance, :user_id, :duration_formated
+	validates_presence_of :distance, :user_id
 	has_many :rod_images, :dependent => :destroy, :as => :images
 
 	def self.to_csv(options = {})
