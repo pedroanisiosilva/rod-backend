@@ -27,7 +27,7 @@ RSpec.feature "Run" do
 		select_date("2016,June,10", :from => "Datetime")
 		select_time(15,45, :from => "Datetime")		
 		fill_in('Distance', :with => '15.6')
-		fill_in('run_duration_formated',:with => '01:30:00')
+		fill_in('run_duration',:with => '01:30:00')
 
 		click_button('Create Run')
 		expect(page).to have_content('Run was successfully created')
@@ -44,7 +44,7 @@ RSpec.feature "Run" do
 		select_date("2016,June,10", :from => "Datetime")
 		select_time(15,45, :from => "Datetime")		
 		fill_in('Distance', :with => '15.6')
-		fill_in('run_duration_formated',:with => '01:30:00')
+		fill_in('run_duration',:with => '01:30:00')
 		click_button('Create Run')
 		#save_and_open_page
 		expect(page).to have_content('15:45 BRT')
@@ -62,7 +62,7 @@ RSpec.feature "Run" do
 		select_date("2016,June,10", :from => "Datetime")
 		select_time(15,45, :from => "Datetime")		
 		fill_in('Distance', :with => '15.6')
-		fill_in('run_duration_formated',:with => '01:30:00')
+		fill_in('run_duration',:with => '01:30:00')
 		click_button('Create Run')
 		#save_and_open_page
 		expect(page).to have_content('15:45 PDT')
@@ -79,7 +79,7 @@ RSpec.feature "Run" do
 		select_date("2016,June,10", :from => "Datetime")
 		select_time(15,45, :from => "Datetime")		
 		fill_in('Distance', :with => '15.6')
-		fill_in('run_duration_formated',:with => '01:30:00')
+		fill_in('run_duration',:with => '01:30:00')
 		fill_in('Note',:with => 'Bla bla bla')
 		click_button('Create Run')
 		expect(page).to have_content('Bla bla bla')

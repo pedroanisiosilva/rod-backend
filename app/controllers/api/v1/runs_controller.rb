@@ -37,7 +37,7 @@ class Api::V1::RunsController < Api::V1::BaseController
 	private
     # Never trust parameters from the scary internet, only allow the white list through.
     def run_params
-      params.require(:run).permit(:datetime, :distance, :duration_formated, :user_id, :note)
+      params.require(:run).permit(:datetime, :distance, :user_id, :note)
     end  
 end
 

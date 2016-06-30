@@ -28,7 +28,7 @@ RSpec.feature "Runner profile" do
 		select_date("2016,June,10", :from => "Datetime")
 		select_time(15,45, :from => "Datetime")		
 		fill_in('Distance', :with => '15.6')
-		fill_in('run_duration_formated',:with => '01:30:00')
+		fill_in('run_duration',:with => '01:30:00')
 		click_button('Create Run')
 		expect(page).to have_content('Run was successfully created')
 	end	
@@ -43,7 +43,7 @@ RSpec.feature "Runner profile" do
 	# 	select_date("2016,June,10", :from => "Datetime")
 	# 	select_time(15,45, :from => "Datetime")		
 	# 	fill_in('Distance', :with => '15.6')
-	# 	fill_in('run_duration_formated',:with => '01:30:00')
+	# 	fill_in('run_duration',:with => '01:30:00')
 	# 	click_button('Create Run')
 	# 	expect(page).to_not have_content('Run was successfully created')
 	# end		
@@ -58,7 +58,7 @@ RSpec.feature "Runner profile" do
 		select_date("2016,June,10", :from => "Datetime")
 		select_time(15,45, :from => "Datetime")		
 		fill_in('Distance', :with => '15.6')
-		fill_in('run_duration_formated',:with => '01:30:00')
+		fill_in('run_duration',:with => '01:30:00')
 		click_button('Create Run')
 		expect(page).to have_content('Run was successfully created')
 	end		
