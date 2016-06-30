@@ -1,7 +1,8 @@
 class Run < ActiveRecord::Base
 	belongs_to :user, :validate => true
 	validates_presence_of :distance, :user_id, :duration_formated
-	has_many :rod_images, :dependent => :destroy, :as => :images
+	has_many :rod_images, :dependent => :destroy
+  accepts_nested_attributes_for :rod_images, allow_destroy: true
 
 	def self.to_csv(options = {})
 	  CSV.generate(options) do |csv|

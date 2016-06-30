@@ -17,7 +17,7 @@ class RunsController < ApplicationController
 
     else
       @runs = current_user.runs.order('datetime DESC')
-    end    
+    end
 
     # @runs = @runs.sort_by{|p| p.speed}
 
@@ -35,13 +35,13 @@ class RunsController < ApplicationController
   end
 
   # GET /runs/new
-  def new    
+  def new
     @user = current_user
     if @user.role.name == ("admin")
       @run = Run.new()
     else
-      @run = @user.runs.create(params[:run])          
-    end  
+      @run = @user.runs.create(params[:run])
+    end
   end
 
   # GET /runs/1/edit
@@ -51,7 +51,7 @@ class RunsController < ApplicationController
   # POST /runs
   # POST /runs.json
   def create
-    @run = Run.new(run_params)  
+    @run = Run.new(run_params)
 
     respond_to do |format|
       if @run.save
@@ -96,6 +96,6 @@ class RunsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def run_params
-      params.require(:run).permit(:datetime, :distance, :duration_formated, :user_id, :note)
+      params.require(:run).permit(:datetime, :distance, :duration_formated, :user_id, :note, rod_images_attributes: [:image])
     end
 end

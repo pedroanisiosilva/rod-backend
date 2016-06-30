@@ -41,6 +41,15 @@ end
   </div>
 
   <div class="form-group">
+    <%= f.label :images, :class => 'control-label col-sm-2'  %>
+    <%= f.fields_for :rod_images, RodImage.new do |images| %>
+      <div class="col-sm-6">
+        <%= images.file_field :image, :class => 'form-control'%>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-group">
     <%= f.submit %>
   </div>
 <% end %>
