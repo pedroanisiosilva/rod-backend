@@ -7,4 +7,8 @@ class RunObserver < ActiveRecord::Observer
   def comunicator
     @comunicator ||= Comunicator::RodTelegram.new
   end
+
+    def short_name(full_name)
+    	%{#{full_name.split(" ")[0]} #{full_name.split(" ")[-1]}}
+  	end
 end
