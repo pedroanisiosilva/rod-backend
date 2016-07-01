@@ -15,3 +15,4 @@
 //= require turbolinks
 //= require_tree .
 //*= stub login
+//= require moment

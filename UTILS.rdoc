@@ -95,9 +95,11 @@ API Call
 
 Desenvolvimento
 
+curl -X POST -H "Accept: application/json" -H "X-User-Email: runordieadm@gmail.com" -H "X-User-Token: -Ee48k2xe532wEJ3Uh4V"  --data "user_id=7&duration=3600&distance=10&datetime=2016-06-29T22:20:02Z" http://localhost:3000/api/v1/users/7/runs -v -k 
+
 curl -X POST -H "Accept: application/json" --data "email=runordieadm@gmail.com&password=runordie2016" http://localhost:3000/api/v1/sessions
 
-curl -X GET -H "Accept: application/json" -H "X-User-Email: runordieadm@gmail.com" -H "X-User-Token: -Ee48k2xe532wEJ3Uh4V" http://localhost:3000/api/v1/users/ -v -k
+curl -X GET -H "Accept: application/json" -H "X-User-Email: runordieadm@gmail.com" -H "X-User-Token: MWvcEXT8wRqDsktxz3uU" http://localhost:3000/api/v1/users/ -v -k
 
 curl -X GET -H "Accept: application/json" http://localhost:3000/api/v1/users/ -v -k
 
@@ -105,7 +107,7 @@ curl -X GET -H "Accept: application/json" -H "X-User-Email: runordieadm@gmail.co
 
 curl -X DELETE -H "Accept: application/json" --data "email=runordieadm@gmail.com&password=runordie2016" localhost:3000/api/v1/sessions/destroy -v -k
 
-
+PRODUCAO
 
 curl -X POST -H "Accept: application/json" --data "email=pedroanisio@gmail.com&password=ironman2014" http://app.runordie.run/api/v1/sessions
 
