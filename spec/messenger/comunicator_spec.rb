@@ -17,9 +17,11 @@ RSpec.feature "Comunicator" do
       allow(@image).to receive(:image).and_return("Image")
       allow(Faraday::UploadIO).to receive(:new).and_return(nil)
       allow(Paperclip.io_adapters).to receive(:for).and_return(nil)
-      attrs = @telegram.send :new_group_msg, "Teste", @image
+      attrs = @telegram.send :new_group_msg, "Teste"
       expect(attrs[:chat_id]).to eq(-127271582)
       expect(attrs[:text]).to eq("Teste")
+
+      attrs = @telegram.send :new_group_photo, @image
       expect(attrs[:caption]).to eq(@image.caption)
       expect(attrs[:photo]).to eq(nil)
     end

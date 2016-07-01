@@ -17,20 +17,21 @@ module Comunicator
       LOGGER.debug "send msg to ROD"
 
       Telegram::Bot::Client.run(CONFIG[:telegram]["token"]) do |bot|
-        if photo.present?
-          bot.api.send_photo(new_group_msg(txt,photo))
-        else txt.present?
-          bot.api.send_message new_group_msg(txt)
-        end
+
+        bot.api.send_message new_group_msg(txt) if txt.present?
+        bot.api.send_photo new_group_photo(photo) if photo.present?
+
       end
       LOGGER.debug "end send msg to ROD"
     end
 
     private
-      def new_group_msg(txt, p = nil)
-        attrs = {chat_id: CONFIG[:telegram]["chat_id"], text: txt}
-        attrs.merge!({photo: Faraday::UploadIO.new(Paperclip.io_adapters.for(p.image), p.image_content_type), caption: p.caption}) if p.present?
-        attrs
+      def new_group_msg(txt)
+        {chat_id: CONFIG[:telegram]["chat_id"], text: txt}
+      end
+
+      def new_group_photo(photo)
+        {chat_id: CONFIG[:telegram]["chat_id"], photo: Faraday::UploadIO.new(Paperclip.io_adapters.for(photo.image), photo.image_content_type), caption: photo.caption}
       end
 
   end
