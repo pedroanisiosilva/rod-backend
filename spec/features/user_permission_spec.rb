@@ -18,7 +18,13 @@ def select_time(hour, minute, options = {})
 end
 
 RSpec.feature "Runner profile" do
+  before(:all) do
+    ActiveRecord::Base.observers.disable :run_observer
+  end
 
+  after(:all) do
+    ActiveRecord::Base.observers.enable :run_observer
+  end
 
 	scenario "as registered users can create run" do
 
@@ -26,12 +32,12 @@ RSpec.feature "Runner profile" do
 		login_as user, :scope => :user
 		visit('/runs/new')
 		select_date("2016,June,10", :from => "Datetime")
-		select_time(15,45, :from => "Datetime")		
+		select_time(15,45, :from => "Datetime")
 		fill_in('Distance', :with => '15.6')
 		fill_in('run_duration',:with => '01:30:00')
 		click_button('Create Run')
 		expect(page).to have_content('Run was successfully created')
-	end	
+	end
 
 	# scenario "as registered users cannot create run for another user" do
 
@@ -41,12 +47,12 @@ RSpec.feature "Runner profile" do
 	# 	visit('/runs/new')
 	# 	# select "Usain Bolt", :from => 'User'
 	# 	select_date("2016,June,10", :from => "Datetime")
-	# 	select_time(15,45, :from => "Datetime")		
+	# 	select_time(15,45, :from => "Datetime")
 	# 	fill_in('Distance', :with => '15.6')
 	# 	fill_in('run_duration',:with => '01:30:00')
 	# 	click_button('Create Run')
 	# 	expect(page).to_not have_content('Run was successfully created')
-	# end		
+	# end
 
 	scenario "as admin users can create run for another user" do
 
@@ -56,12 +62,12 @@ RSpec.feature "Runner profile" do
 		visit('/runs/new')
 		# select "Usain Bolt", :from => 'User'
 		select_date("2016,June,10", :from => "Datetime")
-		select_time(15,45, :from => "Datetime")		
+		select_time(15,45, :from => "Datetime")
 		fill_in('Distance', :with => '15.6')
 		fill_in('run_duration',:with => '01:30:00')
 		click_button('Create Run')
 		expect(page).to have_content('Run was successfully created')
-	end		
+	end
 
 	scenario "as registered users cannot see other runners run" do
 		user_a = create(:user, :name => "Zé das Colves")

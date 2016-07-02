@@ -1,4 +1,13 @@
 telegram:
-  token: '227016059:AAFf73zjb52ftKSugmz2O4EFTf2shtATe2o'
-  chat_id: -127271582
-  title: "ROD"
+  development:
+    token: '227016059:AAFf73zjb52ftKSugmz2O4EFTf2shtATe2o'
+    chat_id: -127271582
+    title: "ROD"
+  production:
+    token: '227016059:AAFf73zjb52ftKSugmz2O4EFTf2shtATe2o'
+    chat_id: -127271582
+    title: "ROD"
+  test:
+    token: '227016059:AAFf73zjb52ftKSugmz2O4EFTf2shtATe2o'
+    chat_id: -149144441
+    title: "ROD"

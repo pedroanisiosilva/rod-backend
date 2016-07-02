@@ -16,22 +16,25 @@ module Comunicator
 
       LOGGER.debug "send msg to ROD"
 
-      Telegram::Bot::Client.run(CONFIG[:telegram]["token"]) do |bot|
+      Logger.info("Telegram not configured for this env") unless CONFIG[:telegram][Rails.env].present?
+
+      Telegram::Bot::Client.run(CONFIG[:telegram][Rails.env]["token"]) do |bot|
 
         bot.api.send_message new_group_msg(txt) if txt.present?
         bot.api.send_photo new_group_photo(photo) if photo.present?
 
-      end
+      end if CONFIG[:telegram][Rails.env].present?
+
       LOGGER.debug "end send msg to ROD"
     end
 
     private
       def new_group_msg(txt)
-        {chat_id: CONFIG[:telegram]["chat_id"], text: txt}
+        {chat_id: CONFIG[:telegram][Rails.env]["chat_id"], text: txt}
       end
 
       def new_group_photo(photo)
-        {chat_id: CONFIG[:telegram]["chat_id"], photo: Faraday::UploadIO.new(Paperclip.io_adapters.for(photo.image), photo.image_content_type), caption: photo.caption}
+        {chat_id: CONFIG[:telegram][Rails.env]["chat_id"], photo: Faraday::UploadIO.new(Paperclip.io_adapters.for(photo.image), photo.image_content_type), caption: photo.caption || nil}
       end
 
   end

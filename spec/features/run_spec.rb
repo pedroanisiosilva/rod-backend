@@ -18,6 +18,13 @@ def select_time(hour, minute, options = {})
 end
 
 RSpec.feature "Run" do
+  before(:all) do
+    ActiveRecord::Base.observers.disable :run_observer
+  end
+
+  after(:all) do
+    ActiveRecord::Base.observers.enable :run_observer
+  end
 
 	scenario "Simply create run" do
 		user = create(:user)
@@ -25,7 +32,7 @@ RSpec.feature "Run" do
 		visit('/runs/new')
 		# select user.name, :from => 'User'
 		select_date("2016,June,10", :from => "Datetime")
-		select_time(15,45, :from => "Datetime")		
+		select_time(15,45, :from => "Datetime")
 		fill_in('Distance', :with => '15.6')
 		fill_in('run_duration',:with => '01:30:00')
 
@@ -42,7 +49,7 @@ RSpec.feature "Run" do
 		#save_and_open_page
 		#select user.name, :from => 'User'
 		select_date("2016,June,10", :from => "Datetime")
-		select_time(15,45, :from => "Datetime")		
+		select_time(15,45, :from => "Datetime")
 		fill_in('Distance', :with => '15.6')
 		fill_in('run_duration',:with => '01:30:00')
 		click_button('Create Run')
@@ -60,7 +67,7 @@ RSpec.feature "Run" do
 		#save_and_open_page
 		#select user.name, :from => 'User'
 		select_date("2016,June,10", :from => "Datetime")
-		select_time(15,45, :from => "Datetime")		
+		select_time(15,45, :from => "Datetime")
 		fill_in('Distance', :with => '15.6')
 		fill_in('run_duration',:with => '01:30:00')
 		click_button('Create Run')
@@ -71,13 +78,13 @@ RSpec.feature "Run" do
 	scenario ".can have notes" do
 
 		user = create(:user)
-		login_as user, :scope => :user		
+		login_as user, :scope => :user
 
 		visit('/runs/new')
 		#save_and_open_page
 		#select user.name, :from => 'User'
 		select_date("2016,June,10", :from => "Datetime")
-		select_time(15,45, :from => "Datetime")		
+		select_time(15,45, :from => "Datetime")
 		fill_in('Distance', :with => '15.6')
 		fill_in('run_duration',:with => '01:30:00')
 		fill_in('Note',:with => 'Bla bla bla')
