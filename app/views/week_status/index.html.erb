@@ -27,9 +27,11 @@ def speed_avatar_helper(speed)
     "red_fox"
   elsif speed >= 7.5 && speed < 17.1
     "mustang_horse"
-  else
+  elsif speed < 7.5 && > 0
     "black_manba_snake"
-  end
+  else
+    "none"
+  end 
 end 
 
 %>
