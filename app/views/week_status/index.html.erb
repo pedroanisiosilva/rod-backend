@@ -16,6 +16,7 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
 .tg .tg-u34r{font-weight:bold;font-size:13px;font-family:Arial, Helvetica, sans-serif !important;;color:#000000;text-align:right;vertical-align:middle;}
 .tg .tg-f2ra{font-weight:bold;background-color:#ffffff;color:#656565;vertical-align:middle}
 .tg .tg-3x04{background-color:#ffffff;color:#656565;vertical-align:middle}
+.tg .tg-3x04icon{background-color:#ffffff;color:#656565;vertical-align:middle;align:center;}
 .tg .tg-ovtd{background-color:#ffffff;font-weight:bold;color:#656565;vertical-align:middle}
 .tg .tg-tdrf{background-color:#fe0000;font-weight:bold;color:#ffffff;text-align:center;vertical-align:middle}
 .tg .tg-yi30{font-weight:bold;font-size:15px;font-family:Arial, Helvetica, sans-serif !important;;color:#000000;text-align:center;vertical-align:middle}
@@ -300,7 +301,7 @@ end
     <td class="tg-3x04"><%= total_distance_text %></td>
     <td class="tg-3x04"><%= runs_count %></td>
     <td class="tg-3x04"><%= pace_text %></td>
-    <td class="tg-3x04"><div class="<%= speed_category(speed_from_seconds(total_distance,total_duration)) %>"></div>​</td>
+    <td class="tg-3x04icon"><div class="<%= speed_category(speed_from_seconds(total_distance,total_duration)) %>"></div>​</td>
     <td class="tg-3x04"><%= km_to_go_text%></td>
     <td class="tg-3x04">
       <div class="progress">
