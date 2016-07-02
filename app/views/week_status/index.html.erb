@@ -6,34 +6,6 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
         "Purple" => "+150km","Blue" => "+100km", "Green" => "+75km",
         "Orange" => "+50km", "Yellow" => "+25km", "White" => "0-24km"}
 
-
-def speed_avatar_helper(speed)
-
-  if speed >= 17.1
-    "peregrine_falcon"
-  elsif speed >= 15 && speed < 17.1
-    "golden_eagle"
-  elsif speed >= 13.3 && speed < 15
-    "cheetah"
-  elsif speed >= 12 && speed < 1.3
-    "ostrish"
-  elsif speed >= 10.9 && speed < 12
-    "pronghorn_antelope"
-  elsif speed >= 10 && speed < 10.9
-    "blue_wildebeest"    
-  elsif speed >= 9.2 && speed < 17.1
-    "brown_hare"
-  elsif speed >= 8.6 && speed < 17.1
-    "red_fox"
-  elsif speed >= 7.5 && speed < 17.1
-    "mustang_horse"
-  elsif speed < 7.5 && speed > 0
-    "black_manba_snake"
-  else
-    "none"
-  end 
-end 
-
 %>
 
 
@@ -333,7 +305,7 @@ end
     <td class="tg-3x04"><%= target_text %></td>
     <td class="tg-3x04"><%= total_distance_text %></td>
     <td class="tg-3x04"><%= runs_count %></td>
-    <td class="tg-3x04"><%= pace_text %><div class="<%= speed_avatar_helper(total_distance/(total_duration/60/60)) %>"></div>​</td>
+    <td class="tg-3x04"><%= pace_text %><div class="<%= speed_category(speed_from_seconds(total_distance,total_duration)) %>"></div>​</td>
     <td class="tg-3x04"><%= km_to_go_text%></td>
     <td class="tg-3x04">
       <div class="progress">

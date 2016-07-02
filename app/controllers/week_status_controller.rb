@@ -4,6 +4,7 @@ end
 
 
 class WeekStatusController < ApplicationController
+  include ApplicationHelper
 
   # GET /week_status
   # GET /week_status.json
