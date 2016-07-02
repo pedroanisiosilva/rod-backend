@@ -38,9 +38,17 @@ def index
     	belt = params[:belt].capitalize
 			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", belt, filter_date.at_beginning_of_month])
 			self.delete_from_relation_if_no_goal(runners,range_date)
-      runners = runners.sort { |a,b| a.runs.where(:datetime => range_date.beginning_of_week..range_date.end_of_week).sum(:distance).to_i<=> b.runs.where(:datetime => range_date.beginning_of_week..range_date.end_of_week).sum(:distance).to_i}
-			runners = runners.reverse
-			@result[belt] = runners    	
+
+      speed_hash = Hash.new
+
+      runners.each do |runner|
+        total_distance = runner.weekly_runs_km_on_date(range_date)
+        total_duration = runner.weekly_runs_duration_on_date(range_date)
+        speed = total_duration/total_distance
+        speed_hash[speed] = runner
+      end
+
+      @result[key] = Hash[speed_hash.sort].values
 
     else
 
@@ -48,9 +56,17 @@ def index
 
   			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", key, filter_date.at_beginning_of_month])
   			self.delete_from_relation_if_no_goal(runners,range_date)
-        runners = runners.sort { |a,b| a.runs.where(:datetime => range_date.beginning_of_week..range_date.end_of_week).sum(:distance).to_i<=> b.runs.where(:datetime => Date.today.beginning_of_week..range_date.end_of_week).sum(:distance).to_i}
-  			runners = runners.reverse
-  			@result[key] = runners
+
+        speed_hash = Hash.new
+
+        runners.each do |runner|
+          total_distance = runner.weekly_runs_km_on_date(range_date)
+          total_duration = runner.weekly_runs_duration_on_date(range_date)
+          speed = total_duration/total_distance
+          speed_hash[speed] = runner
+        end
+
+  			@result[key] = Hash[speed_hash.sort].values
 
 		  end    	
     end
