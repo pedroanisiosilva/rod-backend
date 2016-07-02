@@ -33,7 +33,7 @@ def index
     filter_date = range_date
   end
 
-  nan_speed = 0.1
+  nan_speed = 100.1
   speed_hash = Hash.new
 
     if params[:belt]
@@ -41,8 +41,6 @@ def index
     	belt = params[:belt].capitalize
 			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", belt, filter_date.at_beginning_of_month])
 			self.delete_from_relation_if_no_goal(runners,range_date)
-
-
 
       runners.each do |runner|
         total_distance = runner.weekly_runs_km_on_date(range_date)
