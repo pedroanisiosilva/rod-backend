@@ -10,6 +10,10 @@ module ApplicationHelper
 	    end
 	end
 
+  def short_name(full_name)
+    %{#{full_name.split(" ")[0]} #{full_name.split(" ")[-1]}}
+  end
+
   def bootstrap_class_for flash_type
     case flash_type
       when "success"
