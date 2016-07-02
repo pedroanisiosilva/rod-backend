@@ -48,7 +48,7 @@ def index
         speed_hash[speed] = runner
       end
 
-      @result[key] = Hash[speed_hash.sort].values
+      @result[key] = Hash[speed_hash.sort {|x, y| x.to_i<=>y.to_i}].values
 
     else
 
@@ -66,7 +66,7 @@ def index
           speed_hash[speed] = runner
         end
 
-  			@result[key] = Hash[speed_hash.sort].values
+  			@result[key] = Hash[speed_hash.sort {|x, y| x.to_i<=>y.to_i}].values
 
 		  end    	
     end
