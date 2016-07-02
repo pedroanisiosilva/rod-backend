@@ -59,122 +59,114 @@ categories = {"Extreme Black" => "+450km", "Extreme Red" => "+350km", "Black" =>
 }
 
 div.peregrine_falcon {
-  content:url(<%= asset_path 'peregrine_falcon.png' %>);
+  content:url(<%= asset_path 'peregrine_falcon_2.png' %>);
   height: auto; 
   width: auto; 
-  max-height: 16px; 
-  display:inline;
-  margin-left:10px;
-  margin-right:10px;
-  vertical-align:top;
-
+  max-height: 20px; 
+  display:inline-block;
+  vertical-align:text-bottom;
+  margin:auto;
+  align: middle;
 }
 
 div.golden_eagle {
-  content:url(<%= asset_path 'golden_eagle.png' %>);
+  content:url(<%= asset_path 'golden_eagle_2.png' %>);
   height: auto; 
   width: auto; 
-  max-height: 16px; 
-  display:inline;
-  margin-left:10px;
-  margin-right:10px;
-  vertical-align:top;
-
+  max-height: 20px; 
+  display:inline-block;
+  vertical-align:text-bottom;
+  margin:auto;
+  align: middle;
 }
 
 div.blue_wildebeest {
-  content:url(<%= asset_path 'blue_wildebeest.png' %>);
+  content:url(<%= asset_path 'blue_wildebeest_2.png' %>);
   height: auto; 
   width: auto; 
   max-height: 16px; 
-  display:inline;
-  margin-left:10px;
-  margin-right:10px;
-  vertical-align:top;
-
+  display:inline-block;
+  vertical-align:text-bottom;
+  margin:auto;
+  align: middle;
 }
 
 div.pronghorn_antelope {
-  content:url(<%= asset_path 'pronghorn_antelope.png' %>);
+  content:url(<%= asset_path 'pronghorn_antelope_2.png' %>);
   height: auto; 
   width: auto; 
-  max-height: 16px; 
-  display:inline;
-  margin-left:10px;
-  margin-right:10px;
-  vertical-align:top;
-
+  max-height: 23px; 
+  display:inline-block;
+  vertical-align:text-bottom;
+  margin:auto;
+  align: middle;
 }
 
 div.ostrish {
-  content:url(<%= asset_path 'ostrish.png' %>);
+  content:url(<%= asset_path 'ostrich_2.png' %>);
   height: auto; 
   width: auto; 
-  max-height: 16px; 
-  display:inline;
-  margin-left:10px;
-  margin-right:10px;
-  vertical-align:top;
-
+  max-height: 23px; 
+  display:inline-block;
+  vertical-align:text-bottom;
+  margin:auto;
+  align: middle;
 }
 
 div.cheetah {
-  content:url(<%= asset_path 'cheetah.png' %>);
+  content:url(<%= asset_path 'cheetah_2.png' %>);
   height: auto; 
   width: auto; 
   max-height: 16px; 
-  display:inline;
-  margin-left:10px;
-  margin-right:10px;
-  vertical-align:top;
-
+  display:inline-block;
+  vertical-align:text-bottom;
+  margin:auto;
+  align: middle;
 }
 
 div.red_fox {
-  content:url(<%= asset_path 'red_fox.png' %>);
+  content:url(<%= asset_path 'red_fox_2.png' %>);
   height: auto; 
   width: auto; 
-  max-height: 16px; 
-  display:inline;
-  margin-left:10px;
-  margin-right:10px;
-  vertical-align:top;
-
+  max-height: 12px; 
+  display:inline-block;
+  vertical-align:text-bottom;
+  margin:auto;
+  align: middle;
 }
 
 div.brown_hare {
   content:url(<%= asset_path 'brown_hare.png' %>);
   height: auto; 
   width: auto; 
-  max-height: 16px; 
-  display:inline;
-  margin-left:10px;
-  margin-right:10px;
-  vertical-align:top;
-
+  max-height: 20px; 
+  display:inline-block;
+  vertical-align:text-bottom;
+  margin:auto;
+  align: middle;
 }
 
 div.black_manba_snake {
   content:url(<%= asset_path 'black_manba_snake.png' %>);
   height: auto; 
   width: auto; 
-  max-height: 16px; 
-  display:inline;
-  margin-left:10px;
-  margin-right:10px;
-  vertical-align:top;
+  max-height: 23px; 
+  display:inline-block;
+  vertical-align:text-bottom;
+  margin:auto;
+  align: middle;
 
 }
 
 div.mustang_horse {
-  content:url(<%= asset_path 'mustang_horse.png' %>);
+  content:url(<%= asset_path 'mustang_horse_2.png' %>);
   height: auto; 
   width: auto; 
-  max-height: 16px; 
-  display:inline;
-  margin-left:10px;
-  margin-right:10px;
-  vertical-align:top;
+  max-height: 19px; 
+  display:inline-block;
+  vertical-align:text-bottom;
+  margin:auto;
+  align: middle;
 
 }
 
@@ -222,8 +214,9 @@ end
     <th class="tg-qacf"><%=  week %></th>
     <th class="tg-6eia">Total KMs</th>
     <th class="tg-qacf"><%= total_km.round(2) %></th>
-    <th class="tg-u34r">#</th>
-    <th class="tg-qacf"><%= total_runners %> 🏃</th>
+    <th class="tg-u34r"></th>
+    <th class="tg-u34r">#<%= total_runners %> 🏃</th>
+    <th class="tg-qacf"></th>
     <th class="tg-u34r">#🏃 w/o KM</th>
     <th class="tg-qacf"><%= runners_without_run %></th>
   </tr> 
@@ -236,7 +229,7 @@ end
 
     %>
       <tr>
-        <td class="<%= key %>" colspan="8"><%= key %> (<%= value %>)</td>
+        <td class="<%= key %>" colspan="9"><%= key %> (<%= value %>)</td>
       </tr>
     <tr>
     <td class="tg-scrz">#</td>
@@ -245,6 +238,7 @@ end
     <td class="tg-9d65">Real</td>
     <td class="tg-9d65">Runs</td>
     <td class="tg-9d65">Pace</td>
+    <td class="tg-9d65"></td>
     <td class="tg-9d65">Km to Go</td>
     <td class="tg-9d65">%</td>
     </tr>  
@@ -305,7 +299,8 @@ end
     <td class="tg-3x04"><%= target_text %></td>
     <td class="tg-3x04"><%= total_distance_text %></td>
     <td class="tg-3x04"><%= runs_count %></td>
-    <td class="tg-3x04"><%= pace_text %><div class="<%= speed_category(speed_from_seconds(total_distance,total_duration)) %>"></div>​</td>
+    <td class="tg-3x04"><%= pace_text %></td>
+    <td class="tg-3x04"><div class="<%= speed_category(speed_from_seconds(total_distance,total_duration)) %>"></div>​</td>
     <td class="tg-3x04"><%= km_to_go_text%></td>
     <td class="tg-3x04">
       <div class="progress">
