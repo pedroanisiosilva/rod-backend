@@ -29,7 +29,7 @@ def index
     if params[:belt]
 
     	belt = params[:belt].capitalize
-			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", belt, range_date.at_beginning_of_month])
+			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", belt, Date.today.at_beginning_of_month])
 			self.delete_from_relation_if_no_goal(runners,range_date)
       runners = runners.sort { |a,b| a.runs.where(:datetime => range_date.beginning_of_week..range_date.end_of_week).sum(:distance).to_i<=> b.runs.where(:datetime => range_date.beginning_of_week..range_date.end_of_week).sum(:distance).to_i}
 			runners = runners.reverse
@@ -39,7 +39,7 @@ def index
 
 		  categories.each do |key, value|
 
-  			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", key, range_date.at_beginning_of_month])
+  			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", key, Date.today.at_beginning_of_month])
   			self.delete_from_relation_if_no_goal(runners,range_date)
         runners = runners.sort { |a,b| a.runs.where(:datetime => range_date.beginning_of_week..range_date.end_of_week).sum(:distance).to_i<=> b.runs.where(:datetime => Date.today.beginning_of_week..range_date.end_of_week).sum(:distance).to_i}
   			runners = runners.reverse
