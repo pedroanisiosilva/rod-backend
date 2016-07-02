@@ -47,7 +47,7 @@ def index
         total_duration = runner.weekly_runs_duration_on_date(range_date)
         speed = total_duration/total_distance
         if speed.nan?
-          nan_speed=nan_speed+0.1
+          nan_speed=nan_speed+0.01
           speed = nan_speed
         end
         speed_hash[speed] = runner
@@ -67,7 +67,7 @@ def index
           total_duration = runner.weekly_runs_duration_on_date(range_date)
           speed = total_duration/total_distance
         if speed.nan?
-          nan_speed=nan_speed+0.1
+          nan_speed=nan_speed+0.01
           speed = nan_speed
         end
           speed_hash[speed] = runner
