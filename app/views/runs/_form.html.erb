@@ -9,7 +9,7 @@ end
 <script>
 
 $('#new_run').submit(function(){
-  $('#run_duration').val(moment.duration($('#run_duration').val(), "HH:mm:ss").asSeconds());  
+  $('#run_duration').val(moment.duration($('#run_duration').val(), "HH:mm:ss").asSeconds());
   return true
 });
 
@@ -55,12 +55,19 @@ $( document).ready(function() {
       <%= f.text_area :note, :class => 'form-control', :row => '5'%>
     </div>
   </div>
-
-  <div class="form-group">
-    <%= f.label :images, :class => 'control-label col-sm-2'  %>
+  <div class="image-form">
     <%= f.fields_for :rod_images, RodImage.new do |images| %>
-      <div class="col-sm-6">
-        <%= images.file_field :image, :class => 'form-control'%>
+      <div class="form-group">
+        <%= f.label :images, :class => 'control-label col-sm-2'  %>
+        <div class="col-sm-6">
+          <%= images.file_field :image, :class => 'form-control'%>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :caption, :class => 'control-label col-sm-2'  %>
+        <div class="col-sm-6">
+          <%= images.text_field :caption, :class => 'form-control'%>
+        </div>
       </div>
     <% end %>
   </div>

@@ -34,7 +34,7 @@ module Comunicator
       end
 
       def new_group_photo(photo)
-        {chat_id: CONFIG[:telegram][Rails.env]["chat_id"], photo: Faraday::UploadIO.new(Paperclip.io_adapters.for(photo.image), photo.image_content_type), caption: photo.caption}
+        {chat_id: CONFIG[:telegram][Rails.env]["chat_id"], photo: Faraday::UploadIO.new(Paperclip.io_adapters.for(photo.image), photo.image_content_type), caption: photo.caption || nil}
       end
 
   end

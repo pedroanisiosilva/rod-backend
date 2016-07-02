@@ -3,6 +3,14 @@ require "rails_helper"
 
 RSpec.describe "Generate Weekly goal job"  do
 
+  before(:all) do
+    ActiveRecord::Base.observers.disable :run_observer
+  end
+
+  after(:all) do
+    ActiveRecord::Base.observers.enable :run_observer
+  end
+
   	scenario '.when runner fail in previus go' do
 		user = create(:user)
 		user.weekly_goal.delete
