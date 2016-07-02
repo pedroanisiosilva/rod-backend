@@ -33,7 +33,7 @@ def index
     filter_date = range_date
   end
 
-  nan_speed = 0
+  nan_speed = 1000000
 
     if params[:belt]
       speed_hash = Hash.new
