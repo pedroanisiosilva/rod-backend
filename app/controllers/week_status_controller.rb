@@ -34,9 +34,9 @@ def index
   end
 
   nan_speed = 0
-  speed_hash = Hash.new
 
     if params[:belt]
+      speed_hash = Hash.new
 
     	belt = params[:belt].capitalize
 			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", belt, filter_date.at_beginning_of_month])
@@ -58,6 +58,8 @@ def index
     else
 
 		  categories.each do |key, value|
+        speed_hash = Hash.new
+
 
   			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", key, filter_date.at_beginning_of_month])
   			self.delete_from_relation_if_no_goal(runners,range_date)
