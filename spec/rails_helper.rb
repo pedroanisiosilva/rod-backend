@@ -7,7 +7,7 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'shared/download_helper.rb'
 require "selenium/webdriver"
-
+require 'telegram/bot'
 Capybara.register_driver :selenium do |app|
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile['browser.download.dir'] = DownloadHelpers::PATH.to_s
@@ -45,7 +45,10 @@ RSpec.configure do |config|
 
   config.before( :each ) do
       DownloadHelpers::clear_downloads
+      # allow_any_instance_of(::Telegram::Bot::Api).to receive(:call).with("photo")
+      # allow_any_instance_of(::Telegram::Bot::Api).to receive(:call).with("message")
   end
+
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
