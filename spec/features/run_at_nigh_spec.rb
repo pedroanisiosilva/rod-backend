@@ -18,13 +18,13 @@ def select_time(hour, minute, options = {})
 end
 
 RSpec.feature "Run" do
-  before(:all) do
-    ActiveRecord::Base.observers.disable :run_observer
-  end
+  # before(:all) do
+  #   ActiveRecord::Base.observers.disable :run_observer
+  # end
 
-  after(:all) do
-    ActiveRecord::Base.observers.enable :run_observer
-  end
+  # after(:all) do
+  #   ActiveRecord::Base.observers.enable :run_observer
+  # end
 
 	scenario "Creat run neer midnight" do
 		user = create(:user)
