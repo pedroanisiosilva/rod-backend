@@ -177,10 +177,10 @@ div.mustang_horse {
 if params[:week_number]
   week = params[:week_number]
 else
-  week = Date.today.at_beginning_of_week.strftime("%W").to_i
+  week = Time.zone.now.at_beginning_of_week.strftime("%W").to_i
 end
 total_runners = total_km = runners_without_run = 0
-range_date = Date.commercial(Time.now.year.to_i, week.to_i)
+range_date = Date.commercial(Time.zone.now.year.to_i, week.to_i)
 
 categories.each do |key, value|
 
@@ -249,7 +249,7 @@ end
 
   <% runners.each do |runner| 
 
-    range_date = Date.commercial(Time.now.year.to_i, week.to_i)
+    range_date = Date.commercial(Time.zone.now.year.to_i, week.to_i)
 
     next if runner.weekly_goal_on_date(range_date).nil?
 

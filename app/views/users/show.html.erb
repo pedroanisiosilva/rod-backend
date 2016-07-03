@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<ul><%= link_to "User Status", %{/users/#{params[:id]}/stats/#{Time.now.year}/month/#{Time.now.month}} %></ul>
+<ul><%= link_to "User Status", %{/users/#{params[:id]}/stats/#{Time.zone.now.year}/month/#{Time.zone.now.month}} %></ul>
 
 <p>
   <strong>Name:</strong>

@@ -25,7 +25,7 @@ def index
     week = params[:week_number].to_i
   end
 
-  range_date = Date.commercial(Time.now.year.to_i, week)
+  range_date = Date.commercial(Time.zone.now.year.to_i, week)
 
   if range_date.beginning_of_week.month != range_date.end_of_week.month
     filter_date = Date.today
@@ -53,7 +53,7 @@ def index
         speed_hash[speed] = runner
       end
 
-      @result[key] = Hash[speed_hash.sort].values
+      @result[belt] = Hash[speed_hash.sort].values
 
     else
 

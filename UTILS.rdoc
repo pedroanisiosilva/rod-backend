@@ -21,21 +21,21 @@ end
 
 
 
-WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%W").to_i, distance:"%2.0f"%meta.min, user_id:u.id)
+WeeklyGoal.create(first_day:Time.zone.now.at_beginning_of_week, last_day: Time.zone.now.at_end_of_week, number: Time.zone.now.at_beginning_of_week.strftime("%W").to_i, distance:"%2.0f"%meta.min, user_id:u.id)
 
 end
 
 u = User.find_by(:email => 'carumachado@gmail.com')
 // Criar weeklyGoal
-WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%W").to_i, distance:6, user_id:u.id)
+WeeklyGoal.create(first_day:Time.zone.now.at_beginning_of_week, last_day: Time.zone.now.at_end_of_week, number: Time.zone.now.at_beginning_of_week.strftime("%W").to_i, distance:6, user_id:u.id)
 
 // Atualizar Weekly Goal
 u = User.find_by(:email => 'andreg_santos@hotmail.com')
-w = WeeklyGoal.find_by(:first_day => Date.today.at_beginning_of_week, :user_id =>u.id)
+w = WeeklyGoal.find_by(:first_day => Time.zone.now.at_beginning_of_week, :user_id =>u.id)
 w.distance = 8
 w.save
 
-WeeklyGoal.where(:first_day => Date.today.at_beginning_of_week).destroy_all
+WeeklyGoal.where(:first_day => Time.zone.now.at_beginning_of_week).destroy_all
 
 (end_date.to_date - start_date.to_date).to_i
 
@@ -68,14 +68,14 @@ Promoter.joins(:promoter_projects)
 
 User.joins(:runs).where('SUM("runs"."distance") >0').group("users.id,SUM('runs'.'distance')")
 User.joins(:categories).where(:categories => {:name => "Black"})
-runners = User.group('users.id').joins(:categories, :runs).select('*, sum(runs.distance) as total_distance').where(["categories.name = ? and runs.datetime >= ? AND runs.datetime <= ?", "Black",Date.today.beginning_of_week,Date.today.end_of_week]).order('total_distance desc') 
+runners = User.group('users.id').joins(:categories, :runs).select('*, sum(runs.distance) as total_distance').where(["categories.name = ? and runs.datetime >= ? AND runs.datetime <= ?", "Black",Time.zone.now.beginning_of_week,Time.zone.now.end_of_week]).order('total_distance desc') 
 
 
 u = User.find_by(:email=>"juarezmacedo@uol.com.br")
 u = User.find_by(:email=>"tati@mail.com")
-Category.create(first_day: Date.today.at_beginning_of_month, last_day: Date.today.at_end_of_month, name: "White",user_id:u.id)
+Category.create(first_day: Time.zone.now.at_beginning_of_month, last_day: Time.zone.now.at_end_of_month, name: "White",user_id:u.id)
 
-WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%W").to_i, distance:8, user_id:u.id)
+WeeklyGoal.create(first_day:Time.zone.now.at_beginning_of_week, last_day: Time.zone.now.at_end_of_week, number: Time.zone.now.at_beginning_of_week.strftime("%W").to_i, distance:8, user_id:u.id)
 
 
 #importacao

@@ -1,7 +1,7 @@
 <% if params[:target] == "week" %>
-<ul><%= link_to "<", %{/users/#{params[:id]}/stats/#{Time.now.year}/week/#{params[:w_id].to_i-1}} %></ul>
+<ul><%= link_to "<", %{/users/#{params[:id]}/stats/#{Time.zone.now.year}/week/#{params[:w_id].to_i-1}} %></ul>
 <% else %>
-<ul><%= link_to "<", %{/users/#{params[:id]}/stats/#{Time.now.year}/month/#{params[:w_id].to_i-1}} %></ul>
+<ul><%= link_to "<", %{/users/#{params[:id]}/stats/#{Time.zone.now.year}/month/#{params[:w_id].to_i-1}} %></ul>
 <% end %>
 
 <h1>User Stats</h1>
