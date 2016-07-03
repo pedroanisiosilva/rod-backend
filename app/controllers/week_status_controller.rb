@@ -20,7 +20,7 @@ def index
   @result = Hash.new
 
   if params[:week_number].nil?
-    week = Date.today.at_beginning_of_week.strftime("%W").to_i
+    week = Time.zone.now.at_beginning_of_week.strftime("%W").to_i
   else
     week = params[:week_number].to_i
   end
@@ -28,7 +28,7 @@ def index
   range_date = Date.commercial(Time.zone.now.year.to_i, week)
 
   if range_date.beginning_of_week.month != range_date.end_of_week.month
-    filter_date = Date.today
+    filter_date = Time.zone.now
   else
     filter_date = range_date
   end

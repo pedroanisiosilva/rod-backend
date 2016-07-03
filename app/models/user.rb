@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   ROLES = %w[admin moderator author banned].freeze
 
 	def category
-		self.category_on_date(Date.today)
+		self.category_on_date(Time.zone.now)
 	end
 
 	def category_on_date(date)
@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
 	end
 
 	def weekly_goal
-		self.weekly_goal_on_date(Date.today)
+		self.weekly_goal_on_date(Time.zone.now)
 	end
 
 	def weekly_goal_on_date(date)
@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
 	end
 
 	def weekly_runs_km
-		self.weekly_runs_km_on_date(Date.today)
+		self.weekly_runs_km_on_date(Time.zone.now)
 	end
 
 	def weekly_runs_km_on_date(date)
@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
 	end
 
 	def weekly_runs_count
-		self.weekly_runs_count_on_date(Date.today)
+		self.weekly_runs_count_on_date(Time.zone.now)
 	end
 
 	def weekly_runs_count_on_date(date)
@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
 	end
 
 	def weekly_runs_duration
-		self.weekly_runs_duration_on_date(Date.today)
+		self.weekly_runs_duration_on_date(Time.zone.now)
 	end
 
 	def weekly_runs_duration_on_date(date)
@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
 	end
 
 	def monthly_runs_km
-		self.monthly_runs_km_on_date(Date.today)
+		self.monthly_runs_km_on_date(Time.zone.now)
 	end
 
 	def monthly_runs_km_on_date(date)
@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
 	end
 
 	def monthly_runs_count
-		self.weekly_runs_count_on_date(Date.today)
+		self.weekly_runs_count_on_date(Time.zone.now)
 	end
 
 	def monthly_runs_count_on_date(date)
@@ -79,7 +79,7 @@ class User < ActiveRecord::Base
 	end
 
 	def monthly_runs_duration
-		self.weekly_runs_duration_on_date(Date.today)
+		self.weekly_runs_duration_on_date(Time.zone.now)
 	end
 
 	def monthly_runs_duration_on_date(date)
@@ -101,8 +101,8 @@ class User < ActiveRecord::Base
 		initital_category = "White"
 		inititial_goal = "8"
 
-		Category.create(first_day: Date.today.at_beginning_of_month, last_day: Date.today.at_end_of_month, name: initital_category,user_id:self.id)
-		WeeklyGoal.create(first_day:Date.today.at_beginning_of_week, last_day: Date.today.at_end_of_week, number: Date.today.at_beginning_of_week.strftime("%W").to_i, distance:inititial_goal, user_id:self.id)
+		Category.create(first_day: Time.zone.now.at_beginning_of_month, last_day: Time.zone.now.at_end_of_month, name: initital_category,user_id:self.id)
+		WeeklyGoal.create(first_day:Time.zone.now.at_beginning_of_week, last_day: Time.zone.now.at_end_of_week, number: Time.zone.now.at_beginning_of_week.strftime("%W").to_i, distance:inititial_goal, user_id:self.id)
 	end
 
 end

@@ -32,5 +32,5 @@
 
 # end
 
-# WeeklyTargetsJob.set(wait_until: Date.today.noon).perform_later
+# WeeklyTargetsJob.set(wait_until: Time.zone.now.noon).perform_later
 

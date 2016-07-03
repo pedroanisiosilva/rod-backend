@@ -14,7 +14,7 @@ class WeeklyGoal < ActiveRecord::Base
 	    users.each do | user |
 
 	    	last_week_performance = user.weekly_runs_km_on_date(last_week)
-	    	last_week_goal = user.weekly_goal_on_date(Date.today).distance.to_f
+	    	last_week_goal = user.weekly_goal_on_date(Time.zone.now).distance.to_f
 
 		    if last_week_performance >= last_week_goal
 

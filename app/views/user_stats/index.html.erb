@@ -19,7 +19,6 @@
   <%= @user.time_zone %>
 </p>
 
-<% if params[:target] == "week" %>
 <%
 
 Time.zone = @user.time_zone
@@ -28,6 +27,9 @@ time_zone = Time.zone.utc_offset/60/60
 date_from_params = DateTime.commercial(params[:year].to_i, params[:w_id].to_i,1,0,0,0,time_zone.to_s)
 
 %>
+
+<% if params[:target] == "week" %>
+
 
 <p>
   <strong>Week:</strong>
@@ -58,7 +60,6 @@ date_from_params = DateTime.commercial(params[:year].to_i, params[:w_id].to_i,1,
 </p>
 
 <% else %>
-<% date_from_params = Date.new(params[:year].to_i, params[:w_id].to_i, 1)%>
 
 <p>
   <strong>Month:</strong>
