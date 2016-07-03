@@ -115,6 +115,68 @@ curl -X POST -H "Accept: application/json" --data "email=pedroanisio@gmail.com&p
 
 curl -X GET -H "Accept: application/json" -H "X-User-Email pedroanisio@gmail.com" -H "X-User-Token 2SyHaQrDMBj9EhZNKnNq" http://localhost:3000/api/v1/users/ -v -k
 
+---
+
+
+last_month = Time.now - 1.month
+time_obj = Time.parse(last_month.to_s)
+runner.runs.where(:datetime => time_obj.at_beginning_of_month..time_obj.end_of_month).sum(:distance).to_f
+
+
+last_month = DateTime.now.in_time_zone('Brasilia') -1.month
+time_obj = Time.parse(last_month.to_s)
+runner.runs.where(:datetime => time_obj.at_beginning_of_month..time_obj.end_of_month).sum(:distance).to_f
+
+
+users = User.active
+users.each do |user|
+total_distance = user.monthly_runs_km_on_date(last_month)
+if total_distance < 25
+belt = "White"
+elsif total_distance >= 25 && total_distance < 50
+belt = "Yellow"
+elsif total_distance >= 50 && total_distance < 75
+belt = "Orange"
+elsif total_distance >= 75 && total_distance < 100
+belt = "Green"
+elsif total_distance >= 10 && total_distance < 150
+belt = "Blue"
+elsif total_distance >= 150 && total_distance < 200
+belt = "Purple"
+elsif total_distance >= 200 && total_distance < 250
+belt = "Red"
+elsif total_distance >= 250 && total_distance < 350
+belt = "Black"
+end
+if belt
+c = Category.where(:user_id => user.id, :first_day => Date.today.at_beginning_of_month)
+if c.size == 0
+Category.create(first_day: Date.today.at_beginning_of_month, last_day: Date.today.at_end_of_month, name: belt,user_id:user.id)
+end
+end
+end
+
+
+c = Category.where(:first_day => Date.today.at_beginning_of_month)
+
+Category.create(first_day: Date.today.at_beginning_of_month, last_day: Date.today.at_end_of_month, name: "White",user_id:u.id)
+
+
+
+User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", "Black", Date.today.at_beginning_of_month])
+
+
+peregrine_falcon < 3:29			>= 17.1
+golden_eagle 3:30 a 3:59		>= 15.0 e < 17.1
+cheetah 4:00 a 4:29 15.0		>= 13.3 e < 15.0
+ostrish 4:30 a 4:59 13.3		>= 12.0 e < 13.3
+pronghorn_antelope 5:00 a 5:29	>= 10.9 e < 12.0
+blue_wildebeest 5:30 a 5:59		>= 10.0 e < 10.9
+brown_hare 6:00 a 6:29			>= 9.2 e < 10.0
+red_fox 6:30 a 6:59				>= 8.6 e < 9.2
+mustang_horse 7:00 a 8:00		>= 7.5 e < 8.6
+black_manba_snake > 8:01 		<= 7.5
+
 
 
 

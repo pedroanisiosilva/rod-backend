@@ -19,7 +19,7 @@ class RunObserver < ActiveRecord::Observer
 		new_run_congrats[6] = "👊🏃💨 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km👊"
 		new_run_congrats[7] = "👏🎉🏃🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km💪"
 
-    comunicator.send_msg(random_message(new_run_congrats), run.rod_images.first)
+comunicator.send_msg(random_message(new_run_congrats))
   end
 
   def comunicator
