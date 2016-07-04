@@ -26,11 +26,12 @@ class User < ActiveRecord::Base
 	end
 
 	def weekly_goal
-		self.weekly_goal_on_date(Time.zone.now)
+		self.weekly_goal_on_date(Date.today)
 	end
 
 	def weekly_goal_on_date(date)
 		self.weekly_goals.find_by(:first_day => date.at_beginning_of_week)
+		self.weekly_goals.find_by(:first_day => date.beginning_of_week)
 	end
 
 	def weekly_runs_km

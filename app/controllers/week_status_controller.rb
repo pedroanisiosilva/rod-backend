@@ -1,8 +1,4 @@
 
-class WeekResults
-end
-
-
 class WeekStatusController < ApplicationController
   include ApplicationHelper
 
