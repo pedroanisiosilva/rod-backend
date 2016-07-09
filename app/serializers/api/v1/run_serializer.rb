@@ -2,6 +2,14 @@ class Api::V1::RunSerializer < Api::V1::BaseSerializer
   attributes :id, :distance, :duration, :speed, :note, :pace, :datetime
   belongs_to :user
 
+  def pace
+    object.pace
+  end
+
+  def speed
+    object.speed
+  end
+
   def id
   	object.id = object.to_param
   end
