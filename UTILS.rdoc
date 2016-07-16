@@ -105,7 +105,7 @@ curl -X DELETE -H "Accept: application/json" --data "email=runordieadm@gmail.com
 
 curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: 2SyHaQrDMBj9EhZNKnNq" http://app.runordie.run/api/v1/users/6/runs -v -k
 
-curl -X POST -H "Accept: application/json" --data "email=runordieadm@gmail.com" http://localhost:3000/password
+curl -X POST -H "Accept: application/json" --data "user[email]=pedroanisio@gmail.com" http://localhost:3000/password -v -k
 
 
 PRODUCAO

@@ -7,7 +7,6 @@ Rails.application.routes.draw do
       get "/login" => "devise/sessions#new", :as => :new_user_session
       post "/login" => "devise/sessions#create", :as => :user_session
       delete "/logout" => "devise/sessions#destroy", :as => :destroy_user_session
-      post "/password" => "passwords#create", :as => :passwords
   end
 
 
@@ -44,6 +43,7 @@ Rails.application.routes.draw do
       devise_scope :user do      
         post "/sessions" => "sessions#create", :as => :session
         delete "/sessions/destroy" => "sessions#destroy", :as => :session_destroy
+        post "/password" => "passwords#create", :as => :passwords
       end
     end
   end
