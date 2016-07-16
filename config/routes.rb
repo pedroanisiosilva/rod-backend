@@ -7,7 +7,9 @@ Rails.application.routes.draw do
       get "/login" => "devise/sessions#new", :as => :new_user_session
       post "/login" => "devise/sessions#create", :as => :user_session
       delete "/logout" => "devise/sessions#destroy", :as => :destroy_user_session
+      post "/password" => "passwords#create", :as => :passwords
   end
+
 
   # devise_for :users, controllers: {:registrations => "registrations"}
   get 'static_page/about'

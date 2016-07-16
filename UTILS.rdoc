@@ -99,21 +99,22 @@ curl -X POST -H "Accept: application/json" -H "X-User-Email: runordieadm@gmail.c
 
 curl -X POST -H "Accept: application/json" --data "email=runordieadm@gmail.com&password=runordie2016" http://localhost:3000/api/v1/sessions
 
-curl -X GET -H "Accept: application/json" -H "X-User-Email: runordieadm@gmail.com" -H "X-User-Token: MWvcEXT8wRqDsktxz3uU" http://localhost:3000/api/v1/users/ -v -k
-
-curl -X GET -H "Accept: application/json" http://localhost:3000/api/v1/users/ -v -k
-
 curl -X GET -H "Accept: application/json" -H "X-User-Email: runordieadm@gmail.com" -H "X-User-Token: -Ee48k2xe532wEJ3Uh4V" http://localhost:3000/api/v1/users/ -v -k
 
 curl -X DELETE -H "Accept: application/json" --data "email=runordieadm@gmail.com&password=runordie2016" localhost:3000/api/v1/sessions/destroy -v -k
+
+curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: 2SyHaQrDMBj9EhZNKnNq" http://app.runordie.run/api/v1/users/6/runs -v -k
+
+curl -X POST -H "Accept: application/json" --data "email=runordieadm@gmail.com" http://localhost:3000/password
+
 
 PRODUCAO
 
 curl -X POST -H "Accept: application/json" --data "email=pedroanisio@gmail.com&password=ironman2014" http://app.runordie.run/api/v1/sessions
 
-2SyHaQrDMBj9EhZNKnNq
+curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: 2SyHaQrDMBj9EhZNKnNq" http://app.runordie.run/api/v1/users/ -v -k
 
-curl -X GET -H "Accept: application/json" -H "X-User-Email pedroanisio@gmail.com" -H "X-User-Token 2SyHaQrDMBj9EhZNKnNq" http://localhost:3000/api/v1/users/ -v -k
+curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: 2SyHaQrDMBj9EhZNKnNq" http://app.runordie.run/api/v1/users/6/runs -v -k
 
 ---
 
