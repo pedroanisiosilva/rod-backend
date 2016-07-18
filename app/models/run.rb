@@ -29,10 +29,10 @@ class Run < ActiveRecord::Base
 		Time.zone.parse datetime.to_s
 	end
 
-	def datetime=(datetime)
-		Time.zone = self.user.time_zone
-		self[:datetime] = Time.zone.local_to_utc(datetime)
-	end
+	# def datetime=(datetime)
+	# 	Time.zone = self.user.time_zone
+	# 	self[:datetime] = Time.zone.local_to_utc(datetime)
+	# end
 
 	def speed
 		(self.distance/(self.duration.to_f/3600)).round(2)
