@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 	enum status: [:active, :inactive, :failed, :injured, :quitted]
 	belongs_to :role
-	has_many :runs
+	has_many :runs, -> { order(datetime: :desc) }
 	has_many :categories
 	has_many :weekly_goals
 	validates_presence_of :email, :time_zone
