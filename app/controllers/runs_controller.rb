@@ -98,7 +98,7 @@ class RunsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def run_params
       runp = params.require(:run).permit(:datetime, :distance, :duration, :speed, :pace, :user_id, :note, rod_images_attributes: [:image, :caption])
-      runp["rod_images_attributes"].reject!{|_,t| t["caption"].empty? }
+      runp["rod_images_attributes"].reject!{|_,t| t["caption"].empty? and t["image"] == nil }
       runp
     end
 end
