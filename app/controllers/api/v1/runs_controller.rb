@@ -21,12 +21,7 @@ class Api::V1::RunsController < Api::V1::BaseController
   end
 
   def create
-    #@run = Run.new(run_params)
-
-    duration_str = Time.at(477).utc.strftime("%H:%M:%S")
-
-	@run = Run.create(user_id: params[:user_id],duration: params[:duration], created_at: Time.zone.now, distance: params[:distance], datetime: Time.parse(params[:datetime]).to_datetime, updated_at: Time.zone.now)
-
+    @run = Run.create(user_id: params[:user_id],duration: params[:duration], created_at: Time.zone.now, distance: params[:distance], datetime: Time.parse(params[:datetime]).to_datetime, updated_at: Time.zone.now)
 
 	  if @run.save
 		render(json: Api::V1::RunSerializer.new(@run).to_json)

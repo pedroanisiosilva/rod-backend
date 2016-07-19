@@ -3,7 +3,7 @@ class Run < ActiveRecord::Base
 	validates_presence_of :distance, :user_id
 	has_many :rod_images, :dependent => :destroy
 	attr_accessor :speed, :pace
-  accepts_nested_attributes_for :rod_images, allow_destroy: true
+	accepts_nested_attributes_for :rod_images, allow_destroy: true
 
 	def self.to_csv(options = {})
 	  CSV.generate(options) do |csv|
