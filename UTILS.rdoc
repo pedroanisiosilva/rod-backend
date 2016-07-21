@@ -92,7 +92,7 @@ API Call
 
 Desenvolvimento
 
-curl -X POST -H "Accept: application/json" -H "X-User-Email: runordieadm@gmail.com" -H "X-User-Token: -Ee48k2xe532wEJ3Uh4V"  --data "user_id=7&duration=3600&distance=10&datetime=2016-06-29T22:20:02Z" http://localhost:3000/api/v1/users/7/runs -v -k 
+curl -X POST -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: fSC5x4k4wtTQDQrcrAzX"  --data "user_id=7&duration=3600&distance=10&datetime=2016-06-29T22:20:02Z" http://localhost:3000/api/v1/users/2/runs -v -k 
 
 curl -X POST -H "Accept: application/json" --data "email=runordieadm@gmail.com&password=runordie2016" http://localhost:3000/api/v1/sessions
 
@@ -102,9 +102,12 @@ curl -X GET -H "Accept: application/json" -H "X-User-Email: runordieadm@gmail.co
 
 curl -X DELETE -H "Accept: application/json" --data "email=runordieadm@gmail.com&password=runordie2016" localhost:3000/api/v1/sessions/destroy -v -k
 
-curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: 2SyHaQrDMBj9EhZNKnNq" http://app.runordie.run/api/v1/users/6/runs -v -k
+curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: fSC5x4k4wtTQDQrcrAzX" http://localhost:3000/api/v1/users/2/runs -v -k
 
 curl -X POST -H "Accept: application/json" --data "user[email]=pedroanisio@gmail.com" http://localhost:3000/api/v1/password -v -k
+
+## upload image
+curl -v -H 'Content-Type: multipart/form-data' -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: fSC5x4k4wtTQDQrcrAzX" -X POST -i -F content_type="image/jpg" -F user_id=2 -F duration=3600 -F distance=10 -F datetime=2016-06-29T22:20:02Z -F "rod_images_attributes]["0"][image]=@/Users/pasilv1/Desktop/upload.png;type=image/png" http://localhost:3000/api/v1/users/2/runs -v -k 
 
 
 PRODUCAO
@@ -185,6 +188,28 @@ u = User.find_by_name("\1")
 WeeklyGoal.create(first_day:Time.zone.tomorrow.at_beginning_of_week, last_day: Time.zone.tomorrow.at_end_of_week, number: Time.zone.tomorrow.at_beginning_of_week.strftime("%W").to_i, distance:\2, user_id:u.id)
 
 
+r.rod_images.collect {|e| e.image.url}
+
+
+
+filter_date = Time.zone.now - 1.month
+u = User.find_by_email("carumachado@gmail.com")
+c = Category.find_by_user_id(u.id)
+total_distance = u.monthly_runs_km_on_date(filter_date)
+Category.create(first_day: Time.zone.now.at_beginning_of_month, last_day: Time.zone.now.at_end_of_month, name: "Yellow",user_id:u.id)
+
+u.weekly_goal
+
+carumachado@gmail.com
+
+filter_date = Time.zone.now -1.month
+ug = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", "White", filter_date.at_beginning_of_month])
+
+
+u = User.all
+u.each do |runner| 
+c = Category.where(:user_id => runner.id, :first_day =>filter_date.at_beginning_of_month)
+end
 
 
 

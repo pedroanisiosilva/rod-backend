@@ -1,5 +1,5 @@
 class Api::V1::RunSerializer < Api::V1::BaseSerializer
-  attributes :id, :distance, :duration, :speed, :note, :pace, :datetime, :rod_images
+  attributes :id, :distance, :duration, :speed, :note, :pace, :datetime
   belongs_to :user
   has_many :rod_images
 
