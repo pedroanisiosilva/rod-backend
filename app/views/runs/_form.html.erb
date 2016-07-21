@@ -8,7 +8,7 @@ end
 
 <script>
 
-$('#new_run').submit(function(){
+$('form').submit(function(){
   $('#run_duration').val(moment.duration($('#run_duration').val(), "HH:mm:ss").asSeconds());
   return true
 });
