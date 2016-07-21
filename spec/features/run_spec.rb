@@ -92,5 +92,25 @@ RSpec.feature "Run" do
 		expect(page).to have_content('Bla bla bla')
 	end
 
+	scenario ".can edit run" do
+
+		user = create(:user)
+		login_as user, :scope => :user
+
+		visit('/runs/new')
+		#save_and_open_page
+		#select user.name, :from => 'User'
+		select_date("2016,June,10", :from => "Datetime")
+		select_time(15,45, :from => "Datetime")
+		fill_in('Distance', :with => '15.6')
+		fill_in('run_duration',:with => '01:30:00')
+		fill_in('Note',:with => 'Bla bla bla')
+		click_button('Create Run')
+		click_link('Edit')
+		fill_in('run_duration',:with => '01:29:00')
+		click_button('Update Run')
+		expect(page).to have_content('Run was successfully updated.')
+	end	
+
 
 end

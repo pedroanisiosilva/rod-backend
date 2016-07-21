@@ -89,3 +89,12 @@ RSpec.feature "User status" do
 
 	end
 end
+
+RSpec.feature "restrict duplicate email" do
+
+	it "on create" do
+		create(:user, :email => "email1@email.com")
+		build(:user, :email => "email1@email.com").should_not be_valid
+	end
+
+end
