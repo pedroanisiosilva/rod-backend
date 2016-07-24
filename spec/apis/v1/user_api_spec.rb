@@ -10,7 +10,6 @@ RSpec.feature "User" do
 			login_as user, :scope => :user			
 
 			visit(%{#{api_v1_user_url(user)}})
-			pp page
 			expect(page).to have_content(%{"run_count":0})
 		end
 
