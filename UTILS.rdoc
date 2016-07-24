@@ -104,6 +104,8 @@ curl -X DELETE -H "Accept: application/json" --data "email=runordieadm@gmail.com
 
 curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: fSC5x4k4wtTQDQrcrAzX" http://localhost:3000/api/v1/users/2/runs -v -k
 
+curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: fSC5x4k4wtTQDQrcrAzX" http://localhost:3000/api/v1/users/2 -v -k
+
 curl -X POST -H "Accept: application/json" --data "user[email]=pedroanisio@gmail.com" http://localhost:3000/api/v1/password -v -k
 
 ## upload image
