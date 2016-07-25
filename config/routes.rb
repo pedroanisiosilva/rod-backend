@@ -40,7 +40,8 @@ Rails.application.routes.draw do
                resources :runs
           end
       end
-      devise_scope :user do      
+      get '/runs/rank/:period/:qtd', to: 'rank#index', :defaults => {:qtd => 1}, as: :rank
+      devise_scope :user do
         post "/sessions" => "sessions#create", :as => :session
         delete "/sessions/destroy" => "sessions#destroy", :as => :session_destroy
         post "/password" => "passwords#create", :as => :passwords
