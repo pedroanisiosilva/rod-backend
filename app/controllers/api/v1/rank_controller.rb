@@ -13,7 +13,7 @@ class Api::V1::RankController < Api::V1::BaseController
         start_date = Time.now.beginning_of_day - 10.years
     end
 
-    runs = User.joins(:runs).select("user_id, name, sum(runs.distance) as ran_meters, avg(runs.distance / (runs.duration / 3600)) as speed, max(runs.distance / (runs.duration / 3600)) as top_speed").where("datetime >= :start_date", {start_date: start_date}).order(params[:order].present? ? params[:order] : "ran_meters")
+    runs = User.joins(:runs).select("user_id, name, sum(runs.distance) as ran_meters, avg(runs.distance / (runs.duration / 3600)) as speed, max(runs.distance / (runs.duration / 3600)) as top_speed, count(1) as qtd_runs").where("datetime >= :start_date", {start_date: start_date}).order(params[:order].present? ? params[:order] : "ran_meters")
 
     render(json: runs.to_json(except: :id))
   end
