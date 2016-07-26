@@ -49,7 +49,7 @@ class Api::V1::RunsController < Api::V1::BaseController
   end
 
   def create
-    byebug
+    # byebug
     @run = Run.create(user_id: params[:user_id], rod_images_attributes: params[:rod_images_attributes], duration: params[:duration], created_at: Time.zone.now, distance: params[:distance], datetime: Time.parse(params[:datetime]).to_datetime, updated_at: Time.zone.now)
 
 	  if @run.save
