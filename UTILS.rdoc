@@ -120,6 +120,8 @@ curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.co
 
 curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: 2SyHaQrDMBj9EhZNKnNq" http://app.runordie.run/api/v1/users/6/runs -v -k
 
+curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: 2SyHaQrDMBj9EhZNKnNq" http://app.runordie.run/api/v1/users/6 -v -k
+
 ---
 
 

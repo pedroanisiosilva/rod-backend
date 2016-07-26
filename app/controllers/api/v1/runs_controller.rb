@@ -2,9 +2,17 @@ class Api::V1::RunsController < Api::V1::BaseController
 
   def index
     users = User.all
+    render json: users, each_serializer: Api::V1::UserSerializer
+  end
 
-	 render json: users, each_serializer: Api::V1::UserSerializer
-
+  # DELETE /runs/1
+  # DELETE /runs/1.json
+  def destroy
+    r = Run.find(params[:id])
+    r.destroy
+    respond_to do |format|
+      format.json { head :no_content }
+    end
   end
 
   def show
@@ -15,9 +23,7 @@ class Api::V1::RunsController < Api::V1::BaseController
 
   # GET /runs/new
   def new
-
       @run = Run.new()
-
   end
 
   def create
