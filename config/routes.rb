@@ -1,5 +1,12 @@
+require 'sidekiq/web'
+
+
 Rails.application.routes.draw do
   devise_for :users, :skip => [:registrations, :sessions]
+
+  authenticate :user, lambda { |u| u.role.name == "admin" } do
+    mount Sidekiq::Web => '/sidekiq-admin'
+  end
 
   as :user do
       get "/sign_up" => "devise/registrations#new", :as => :new_user_registration

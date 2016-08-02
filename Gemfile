@@ -32,6 +32,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass', '~> 3.3.6'
 gem "obfuscate_id"
 
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
+
 group :production do
 	gem 'rails_12factor'
 	gem 'pg'

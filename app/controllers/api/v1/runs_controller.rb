@@ -26,17 +26,6 @@ class Api::V1::RunsController < Api::V1::BaseController
       @run = Run.new()
   end
 
-  # def update
-  #   respond_to do |format|
-  #     if @run.update(run_params)
-  #       format.html { redirect_to @run, notice: 'Run was successfully updated.' }
-  #       format.json { render :show, status: :ok, location: @run }
-  #     else
-  #       format.html { render :edit }
-  #       format.json { render json: @run.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
 
   def update
       @run = Run.find_by_id(params[:id])
@@ -54,6 +43,7 @@ class Api::V1::RunsController < Api::V1::BaseController
 
 	  if @run.save
 		  render(json: Api::V1::RunSerializer.new(@run).to_json)
+      RunMessagesWorker.perform_async(@run.id)
 	  else
 		  render json: @run.errors, status: :unprocessable_entity
 	  end
