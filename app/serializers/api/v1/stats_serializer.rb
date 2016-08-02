@@ -7,10 +7,6 @@ class Api::V1::RunSerializer < Api::V1::BaseSerializer
     object.pace
   end
 
-  def speed
-    object.speed
-  end
-
   def id
   	object.id = object.to_param
   end

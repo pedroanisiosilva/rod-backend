@@ -7,50 +7,88 @@ class RunMessagesWorker
 		send_create_congrats(@run) #
 		send_max_distance
 		send_max_duration
+		send_max_speed
+		send_distance_max_speed(5)
+		send_distance_max_speed(8)
+		send_distance_max_speed(10)
+		send_distance_max_speed(16)		
+		send_distance_max_speed(21)
+		send_distance_max_speed(42)
+		check_if_did_meet_goal
+
 	end
 
 	def send_create_congrats(run)
-	  	new_run_message = Array.new
-	  	new_run_message[0] = "👏👏👏 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km"
-		new_run_message[1] = "Congrats!🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km👊"
-		new_run_message[2] = "🏃👏👏 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km"
-		new_run_message[3] = "👏🎉🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km"
-		new_run_message[4] = "👏💪🎉🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km"
-		new_run_message[5] = "👊Congrats!🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km👊"
-		new_run_message[6] = "👊🏃💨 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km👊"
-		new_run_message[7] = "👏🎉🏃🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km💪"
+	  	msg_array = Array.new
+	  	msg_array[0] = "👏👏👏 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km"
+		msg_array[1] = "Congrats!🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km👊"
+		msg_array[2] = "🏃👏👏 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km"
+		msg_array[3] = "👏🎉🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km"
+		msg_array[4] = "👏💪🎉🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km"
+		msg_array[5] = "👊Congrats!🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km👊"
+		msg_array[6] = "👊🏃💨 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km👊"
+		msg_array[7] = "👏🎉🏃🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km💪"
 	
-		comunicator.send_msg(random_message(new_run_message),run)
+		comunicator.send_msg(random_message(msg_array),run)
 	end
 
 	def send_max_distance
-	  	max_running_distance_msg = Array.new
-	  	max_running_distance_msg[0] = "🌍 #{short_name(@run.user.name)} essa foi sua maior distancia #{"%3.1f"%@run.distance}Km"
+	  	msg_array = Array.new
+	  	msg_array[0] = "🌍 #{short_name(@run.user.name)} essa foi sua maior distancia #{"%3.1f"%@run.distance}Km"
 		
 	  	if  @user.runs.maximum(:distance).to_f == @run.distance.to_f
-			comunicator.send_text_only(random_message(max_running_distance_msg))
+			comunicator.send_text_only(random_message(msg_array))
 		end
 	end	
 
 	def send_max_duration
-	  	max_running_duration_msg = Array.new
-	  	max_running_duration_msg[0] = "⌛️ #{short_name(@run.user.name)} essa foi sua corrida de maior duração #{@run.duration_formated}"
+	  	msg_array = Array.new
+	  	msg_array[0] = "⌛️ #{short_name(@run.user.name)} essa foi sua corrida de maior duração #{@run.duration_formated}"
 		
 	  	if  @user.runs.maximum(:duration).to_i == @run.duration.to_f
-			comunicator.send_text_only(random_message(max_running_duration_msg))
+			comunicator.send_text_only(random_message(msg_array))
 		end
 	end		
 
-	#u.runs.where("distance > 10 and distance < 11")
+	def check_if_did_meet_goal
+		time_obj = Date.parse(Time.parse(Time.zone.now.to_s).strftime('%Y/%m/%d'))
 
-	# def send_max_speed
-	#   	max_running_pace_msg = Array.new
-	#   	max_running_pace_msg[0] = "🏃💨 #{short_name(@run.user.name)} faz sua corrida mais rápida #{"%3.1f"%@run.distance}Km em #{@run.pace}"
+		weekly_goal = WeeklyGoal.find_by(:first_day => time_obj.beginning_of_week, :user_id =>@user.id)
+		runned_so_far = @user.weekly_runs_km
 
-	#   	if  @user.runs.maximum(:duration).to_i == @run.duration.to_f
-	# 		comunicator.send_text_only(random_message(max_running_duration_msg))
-	# 	end
-	# end	
+		byebug
+
+		 msg_array = Array.new
+		 msg_array[0] = "🎯 #{short_name(@run.user.name)} acabou de bater a meta semanal: #{runned_so_far.to_f}km de #{weekly_goal.distance.to_f}km"
+
+		if runned_so_far.to_f >= weekly_goal.distance.to_f && (runned_so_far.to_f - @run.distance.to_f) < weekly_goal.distance.to_f
+			comunicator.send_text_only(random_message(msg_array))
+		end
+	end
+
+	def send_distance_max_speed(run_distance)
+
+		 msg_array = Array.new
+		 msg_array[0] = "🏆🏃💨 #{short_name(@run.user.name)} fez seus #{run_distance}km mais rápidos: #{"%3.1f"%@run.speed.to_f} km/h"
+
+		if @run.distance.to_f >= run_distance and @run.distance.to_f < run_distance+1
+
+		  	same_distance_runs = @user.runs.where(%{distance >= #{run_distance} and distance < #{run_distance+1}})
+
+		  	if  same_distance_runs.maximum(:speed).to_f == @run.speed.to_f
+				comunicator.send_text_only(random_message(msg_array))
+			end			
+		end
+	end
+
+	def send_max_speed
+	  	msg_array = Array.new
+	  	msg_array[0] = "🏃💨 #{short_name(@run.user.name)} fez sua corrida mais rápida #{"%3.1f"%@run.distance}Km em #{"%3.1f"%@run.speed.to_f} km/h"
+
+	  	if  @user.runs.maximum(:speed).to_f == @run.speed.to_f
+			comunicator.send_text_only(random_message(msg_array))
+		end
+	end	
 
 	def random_message(message_array)
 		message_array[Random.rand(0..message_array.size-1)]

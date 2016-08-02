@@ -1,8 +1,9 @@
 class Run < ActiveRecord::Base
+	before_save :calculate_speed
 	belongs_to :user, :validate => true
 	validates_presence_of :distance, :user_id
 	has_many :rod_images, :dependent => :destroy
-	attr_accessor :speed, :pace
+	attr_accessor :pace
 	accepts_nested_attributes_for :rod_images, allow_destroy: true
 
 	def self.to_csv(options = {})
@@ -25,14 +26,14 @@ class Run < ActiveRecord::Base
 		Time.zone.parse datetime.to_s
 	end
 
-	def speed
-		(self.distance/(self.duration.to_f/3600)).round(2)
-	end
-
 	def pace
 		pace = self.duration.to_f/self.distance
         mm, ss = pace.divmod(60)            #=> [4515, 21]
         hh, mm = mm.divmod(60)           #=> [75, 15]
         "%d:%02d" % [mm, ss]
+	end
+
+	def calculate_speed
+		self.speed = (self.distance/(self.duration.to_f/3600)).round(2)
 	end
 end
