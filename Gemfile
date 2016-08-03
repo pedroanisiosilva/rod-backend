@@ -32,13 +32,16 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass', '~> 3.3.6'
 gem "obfuscate_id"
 
+# message queue
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
 
+#production and development database
+gem 'pg'
+
 group :production do
 	gem 'rails_12factor'
-	gem 'pg'
 end
 
 group :development, :test do
