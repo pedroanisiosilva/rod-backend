@@ -19,8 +19,6 @@ class RunsController < ApplicationController
       @runs = current_user.runs.order('datetime DESC')
     end
 
-    # @runs = @runs.sort_by{|p| p.speed}
-
     respond_to do |format|
       format.html
       format.csv { send_data @runs.to_csv }

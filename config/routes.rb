@@ -1,5 +1,12 @@
+require 'sidekiq/web'
+
+
 Rails.application.routes.draw do
   devise_for :users, :skip => [:registrations, :sessions]
+
+  authenticate :user, lambda { |u| u.role.name == "admin" } do
+    mount Sidekiq::Web => '/sidekiq-admin'
+  end
 
   as :user do
       get "/sign_up" => "devise/registrations#new", :as => :new_user_registration
@@ -18,6 +25,7 @@ Rails.application.routes.draw do
   get 'week_status/:week_number/:belt', to: 'week_status#index'
   get 'week_status/:week_number', to: 'week_status#index'
   get '/users/:id/stats/:year/:target/:w_id', to: 'user_stats#index'
+  get '/image/index', to: 'images#index'
 
   resources :runs
   # The priority is based upon order of creation: first created -> highest priority.

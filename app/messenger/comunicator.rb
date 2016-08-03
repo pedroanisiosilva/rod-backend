@@ -11,6 +11,21 @@ module Comunicator
 
     attr :bot, :rod_group
 
+    def send_text_only(txt)
+
+      LOGGER.debug "send msg to ROD"
+
+      Logger.info("Telegram not configured for this env") unless CONFIG[:telegram][Rails.env].present?
+
+      Telegram::Bot::Client.run(CONFIG[:telegram][Rails.env]["token"]) do |bot|
+
+        bot.api.send_message new_group_msg(txt) if txt.present?
+
+      end if CONFIG[:telegram][Rails.env].present?
+
+      LOGGER.debug "end send msg to ROD"
+    end
+
     def send_msg(txt, run = nil)
       raise 'message or photo is required!' if !txt.present? and !run.present?
 

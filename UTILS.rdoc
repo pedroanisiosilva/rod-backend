@@ -72,7 +72,7 @@ u = User.find_by(:email=>"juarezmacedo@uol.com.br")
 u = User.find_by(:email=>"tati@mail.com")
 Category.create(first_day: Time.zone.now.at_beginning_of_month, last_day: Time.zone.now.at_end_of_month, name: "White",user_id:u.id)
 
-WeeklyGoal.create(first_day:Time.zone.now.at_beginning_of_week, last_day: Time.zone.now.at_end_of_week, number: Time.zone.now.at_beginning_of_week.strftime("%W").to_i, distance:8, user_id:u.id)
+WeeklyGoal.create(first_day:Time.zone.now.at_beginning_of_week, last_day: Time.zone.now.at_end_of_week, number: Time.zone.now.at_beginning_of_week.strftime("%W").to_i, distance:60, user_id:u.id)
 
 
 #importacao
@@ -115,16 +115,22 @@ curl -X DELETE -H "Accept: application/json" http://localhost:3000/api/v1/runs/4
 ## upload image
 curl -v -H 'Content-Type: multipart/form-data' -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: fSC5x4k4wtTQDQrcrAzX" -X POST -i -F content_type="image/jpg" -F user_id=2 -F duration=3600 -F distance=10 -F datetime=2016-06-29T22:20:02Z -F "rod_images_attributes]["0"][image]=@/Users/pasilv1/Desktop/upload.png;type=image/png" http://localhost:3000/api/v1/users/2/runs -v -k 
 
+curl -X PUT -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: fSC5x4k4wtTQDQrcrAzX"  --data "user_id=7&duration=3600&distance=6&datetime=2016-06-29T22:20:02Z" http://localhost:3000/api/v1/runs/47 -v -k 
+
 
 PRODUCAO
 
-curl -X POST -H "Accept: application/json" --data "email=pedroanisio@gmail.com&password=ironman2014" http://app.runordie.run/api/v1/sessions
+curl -X POST -H "Accept: application/json" --data "email=pedroanisio@gmail.com&password=ironman2014" http://protected-reaches-89531.herokuapp.com/api/v1/sessions
 
 curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: 2SyHaQrDMBj9EhZNKnNq" http://app.runordie.run/api/v1/users/ -v -k
 
 curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: 2SyHaQrDMBj9EhZNKnNq" http://app.runordie.run/api/v1/users/6/runs -v -k
 
 curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: 2SyHaQrDMBj9EhZNKnNq" http://app.runordie.run/api/v1/users/6 -v -k
+
+curl -X GET -H "Accept: application/json" -H "X-User-Email: pedroanisio@gmail.com" -H "X-User-Token: 2SyHaQrDMBj9EhZNKnNq" http://app.runordie.run/api/v1/runs/rank/1/1 -v -k
+
+ get '',
 
 ---
 
@@ -219,7 +225,11 @@ u.each do |runner|
 c = Category.where(:user_id => runner.id, :first_day =>filter_date.at_beginning_of_month)
 end
 
+@@@@@@@@@@@ Sidekiq @@@@@@@@
 
+brew install redis
+redis-server /usr/local/etc/redis.conf
+bundle exec sidekiq
 
 
 
