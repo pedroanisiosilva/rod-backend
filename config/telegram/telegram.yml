@@ -4,10 +4,20 @@ telegram:
     chat_id: -149144441
     title: "RoD"
   production:
-    token: '221019387:AAETSCb_vXeRZb3jcORGDFAOSAYxRGcDEqc'
-    chat_id: -128838555
+    token: '227016059:AAFf73zjb52ftKSugmz2O4EFTf2shtATe2o'
+    chat_id: -149144441
     title: "RoD"
   test:
     token: '227016059:AAFf73zjb52ftKSugmz2O4EFTf2shtATe2o'
     chat_id: -149144441
     title: "RoD"
+
+    # Bot de Producao    
+    # token: '221019387:AAETSCb_vXeRZb3jcORGDFAOSAYxRGcDEqc'
+    # chat_id: -128838555
+    # title: "RoD"
+
+    # Bot de Desenvolvimento
+    # token: '227016059:AAFf73zjb52ftKSugmz2O4EFTf2shtATe2o'
+    # chat_id: -149144441
+    # title: "RoD"  
