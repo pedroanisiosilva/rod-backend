@@ -51,13 +51,14 @@ class RunMessagesWorker
 	end		
 
 	def check_if_did_meet_goal
-		msg_array = Array.new
-		msg_array[0] = "🎯 #{short_name(@run.user.name)} acabou de bater a meta semanal: #{runned_so_far.to_f}km de #{weekly_goal.distance.to_f}km"
 
 		time_obj = Date.parse(Time.parse(Time.zone.now.to_s).strftime('%Y/%m/%d'))
 
 		weekly_goal = WeeklyGoal.find_by(:first_day => time_obj.beginning_of_week, :user_id =>@user.id)
 		runned_so_far = @user.weekly_runs_km
+
+		msg_array = Array.new
+		msg_array[0] = "🎯 #{short_name(@run.user.name)} acabou de bater a meta semanal: #{runned_so_far.to_f}km de #{weekly_goal.distance.to_f}km"		
 
 		if runned_so_far.to_f >= weekly_goal.distance.to_f && (runned_so_far.to_f - @run.distance.to_f) < weekly_goal.distance.to_f
 			comunicator.send_text_only(random_message(msg_array))
