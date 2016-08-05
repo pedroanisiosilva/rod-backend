@@ -16,8 +16,7 @@ describe "week status", :type=> :feature do
 
     scenario 'generate image' do
     	visit '/week_status/31/red/image.png'
-    	byebug
-    	expect(page.response_headers['Content-Type']).to eq("image/png; charset=utf-8")
+    	expect(page.response_headers['Content-Type']).to eq("application/octet-stream")
     	expect(page.response_headers['Content-Length'].to_i).to be > 0
     end
 end
