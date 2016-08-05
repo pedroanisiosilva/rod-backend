@@ -56,6 +56,7 @@ group :development, :test do
   gem "factory_girl_rails"
   gem 'forgery', '0.6.0'
   gem 'selenium-webdriver'
+  gem "rack-test"
 end
 
 group :development do

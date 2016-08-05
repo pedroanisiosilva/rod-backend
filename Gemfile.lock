@@ -304,6 +304,7 @@ DEPENDENCIES
   paperclip
   pg
   puma
+  rack-test
   rails (= 4.2.6)
   rails-observers
   rails_12factor

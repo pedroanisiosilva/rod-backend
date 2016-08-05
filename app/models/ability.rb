@@ -7,7 +7,7 @@ class Ability
       can :manage, :all
     elsif user.role.name == "registered"
       can :manage, Run, :user_id => user.id
-      can :read, :all
+      can :read, :user_id => user.id
     elsif user.role.name == "banned"
       cannot :manage, :all
     end

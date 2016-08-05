@@ -62,7 +62,6 @@ RSpec.feature "User status" do
 			user.status = "injured"
 			user.save
 			login_as user, :scope => :user
-
 		end
 
 		scenario "visit week_status" do
@@ -78,11 +77,9 @@ RSpec.feature "User status" do
 			user.status = "quitted"
 			user.save
 			login_as user, :scope => :user
-
 		end
 
 		scenario "visit week_status" do
-
 			visit('/week_status/index')
 			expect(page).to have_content("🚫")
 		end
@@ -94,7 +91,7 @@ RSpec.feature "restrict duplicate email" do
 
 	it "on create" do
 		create(:user, :email => "email1@email.com")
-		build(:user, :email => "email1@email.com").should_not be_valid
+		expect(build(:user, :email => "email1@email.com")).to_not be_valid
 	end
 
 end

@@ -39,20 +39,16 @@ RSpec.feature "Runner profile" do
 		expect(page).to have_content('Run was successfully created')
 	end
 
-	# scenario "as registered users cannot create run for another user" do
+	scenario "as registered users cannot access others user's run" do
 
-	# 	user = create(:user)
-	# 	user_b = create(:user, :name => "Usain Bolt")
-	# 	login_as user, :scope => :user
-	# 	visit('/runs/new')
-	# 	# select "Usain Bolt", :from => 'User'
-	# 	select_date("2016,June,10", :from => "Datetime")
-	# 	select_time(15,45, :from => "Datetime")
-	# 	fill_in('Distance', :with => '15.6')
-	# 	fill_in('run_duration',:with => '01:30:00')
-	# 	click_button('Create Run')
-	# 	expect(page).to_not have_content('Run was successfully created')
-	# end
+		user_a = create(:user)
+		user_b	= create(:user, :name => "Usain Bolt")
+		run_b 	= create(:run, :user=>user_b)
+
+		login_as user_a, :scope => :user
+		visit(%{/runs/#{run_b.id}})
+		expect(page).to have_content('not authorized')
+	end
 
 	scenario "as admin users can create run for another user" do
 
@@ -87,7 +83,7 @@ RSpec.feature "Runner profile" do
 		expect(page).to have_content(user_a.name)
 	end
 
-	scenario "as admin users cannot see other runners run" do
+	scenario "as admin users can see other runners run" do
 		user_a = create(:user, :name => "Pedro Silva")
 		r = create(:role, :name => "admin")
 		#r = Role.find_by_name("admin")
