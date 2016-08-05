@@ -40,6 +40,9 @@ gem 'slim'
 #production and development database
 gem 'pg'
 
+#process HTML as IMAGE
+gem 'imgkit'
+
 group :production do
 	gem 'rails_12factor'
   gem 'puma'
@@ -57,6 +60,7 @@ group :development, :test do
   gem 'forgery', '0.6.0'
   gem 'selenium-webdriver'
   gem "rack-test"
+  gem 'guard-rspec', require: false
 end
 
 group :development do

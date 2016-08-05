@@ -1,10 +1,30 @@
+require 'open-uri'
+
 
 class WeekStatusController < ApplicationController
   include ApplicationHelper
 
-  # GET /week_status
-  # GET /week_status.json
+def image
+  url = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'
+  css = page_content = open(url)
 
+  output = render_to_string(:action => "#{self.index}", :format=>[:html], :locals => {:params => params},
+    :template => "week_status/index.html.erb")
+
+  # IMGKit.new takes the HTML and any options for wkhtmltoimage
+  # run `wkhtmltoimage --extended-help` for a full list of options
+  kit = IMGKit.new(output, :quality => 50)
+  # kit.stylesheets << '/path/to/css/file'
+  # kit.javascripts << '/path/to/js/file'
+  kit.stylesheets << css  
+
+
+  @img = kit.to_img(:png)
+
+    respond_to do |format|
+      format.png {send_data @img}
+    end  
+end
 
 def index
 
