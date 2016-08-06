@@ -32,6 +32,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass', '~> 3.3.6'
 gem "obfuscate_id"
 
+# locale
+gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'rails-4-x' # For 4.x
+
 # message queue
 gem 'sidekiq'
 gem 'sinatra', require: false

@@ -1,5 +1,6 @@
 class RunMessagesWorker
 	include Sidekiq::Worker
+	include ActionView::Helpers::DateHelper
   
 	def perform(run_id)
 		@run = Run.find(run_id)
@@ -20,14 +21,14 @@ class RunMessagesWorker
 
 	def send_create_congrats(run)
 	  	msg_array = Array.new
-	  	msg_array[0] = "👏👏👏 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km"
-		msg_array[1] = "Congrats!🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km👊"
-		msg_array[2] = "🏃👏👏 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km"
-		msg_array[3] = "👏🎉🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km"
-		msg_array[4] = "👏💪🎉🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km"
-		msg_array[5] = "👊Congrats!🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km👊"
-		msg_array[6] = "👊🏃💨 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km👊"
-		msg_array[7] = "👏🎉🏃🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km💪"
+	  	msg_array[0] = "👏👏👏 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km #{time_relative(run.datetime)}"
+		msg_array[1] = "Congrats!🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km #{time_relative(run.datetime)}👊"
+		msg_array[2] = "🏃👏👏 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km #{time_relative(run.datetime)}"
+		msg_array[3] = "👏🎉🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km #{time_relative(run.datetime)}"
+		msg_array[4] = "👏💪🎉🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km #{time_relative(run.datetime)}"
+		msg_array[5] = "👊Congrats!🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km #{time_relative(run.datetime)}👊"
+		msg_array[6] = "👊🏃💨 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km #{time_relative(run.datetime)}👊"
+		msg_array[7] = "👏🎉🏃🏃 #{short_name(run.user.name)} correu #{"%3.1f"%run.distance}Km a #{run.pace} min/km #{time_relative(run.datetime)}💪"
 	
 		comunicator.send_msg(random_message(msg_array),run)
 	end
@@ -99,5 +100,9 @@ class RunMessagesWorker
 	def short_name(full_name)
 		%{#{full_name.split(" ")[0]} #{full_name.split(" ")[-1]}}
 	end  
+
+	def time_relative(datetime)
+		%{#{distance_of_time_in_words(datetime,Time.zone.now, :locale=> "pt-BR")} atrás} 
+	end
 end
 
