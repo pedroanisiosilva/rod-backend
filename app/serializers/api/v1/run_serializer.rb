@@ -1,5 +1,5 @@
 class Api::V1::RunSerializer < Api::V1::BaseSerializer
-  attributes :id, :distance, :duration, :speed, :note, :pace, :datetime
+  attributes :id, :distance, :duration, :speed, :note, :pace, :datetime, :image_path
   belongs_to :user
   has_many :rod_images
 
@@ -9,6 +9,12 @@ class Api::V1::RunSerializer < Api::V1::BaseSerializer
 
   def speed
     object.speed
+  end
+
+  def image_path
+    if object.rod_images.present?
+      object.rod_images.first.image.url
+    end
   end
 
   def id
