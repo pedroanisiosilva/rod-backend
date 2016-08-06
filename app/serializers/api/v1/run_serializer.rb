@@ -13,7 +13,7 @@ class Api::V1::RunSerializer < Api::V1::BaseSerializer
 
   def image_path
     if object.rod_images.present?
-      object.rod_images.first.image.url
+      object.rod_images.first.image.url if object.rod_images.first.image.present?
     end
   end
 
