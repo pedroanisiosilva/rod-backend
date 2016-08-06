@@ -29,7 +29,7 @@ class Api::V1::RunsController < Api::V1::BaseController
 
   def update
       @run = Run.find_by_id(params[:id])
-      @run.update(duration: params[:duration], distance: params[:distance], datetime: Time.parse(params[:datetime]).to_datetime, updated_at: Time.zone.now)
+      @run.update(note: params[:note], duration: params[:duration], distance: params[:distance], datetime: Time.parse(params[:datetime]).to_datetime, updated_at: Time.zone.now)
       if @run.save
         render(json: Api::V1::RunSerializer.new(@run).to_json)
     else
@@ -38,7 +38,7 @@ class Api::V1::RunsController < Api::V1::BaseController
   end
 
   def create
-    @run = Run.create(user_id: params[:user_id], rod_images_attributes: (params[:rod_images_attributes] || []), duration: params[:duration], created_at: Time.zone.now, distance: params[:distance], datetime: Time.parse(params[:datetime]).to_datetime, updated_at: Time.zone.now)
+    @run = Run.create(note: params[:note], user_id: params[:user_id], rod_images_attributes: (params[:rod_images_attributes] || []), duration: params[:duration], created_at: Time.zone.now, distance: params[:distance], datetime: Time.parse(params[:datetime]).to_datetime, updated_at: Time.zone.now)
 
 	  if @run.save
 		  render(json: Api::V1::RunSerializer.new(@run).to_json)
