@@ -1,5 +1,6 @@
 class RunMessagesWorker
 	include Sidekiq::Worker
+	sidekiq_options :retry => false
 	include ActionView::Helpers::DateHelper
   
 	def perform(run_id)
