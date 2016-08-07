@@ -83,7 +83,7 @@ class RunMessagesWorker
 
 	def send_max_speed
 	  	msg_array = Array.new
-	  	msg_array[0] = "🏃💨 #{short_name(@run.user.name)} fez sua corrida mais rápida #{"%3.1f"%@run.distance}Km em #{"%3.1f"%@run.speed.to_f} km/h"
+	  	msg_array[0] = "🏃💨 #{short_name(@run.user.name)} fez sua corrida mais rápida #{"%3.1f"%@run.distance}Km a #{"%3.1f"%@run.speed.to_f} km/h"
 
 	  	if  @user.runs.maximum(:speed).to_f == @run.speed.to_f
 			comunicator.send_text_only(random_message(msg_array))
