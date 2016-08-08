@@ -38,6 +38,9 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+  ENV['PINTEREST_APP_ID'] = '4849852462680523477'
+  ENV['PINTEREST_APP_SECRET'] = '3b75a0c51ed559d5a8309a2c3195fff51f8a3713f9f25f5f8706fb8e695663c9'
+
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

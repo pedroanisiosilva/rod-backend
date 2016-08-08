@@ -26,6 +26,24 @@ module Comunicator
       LOGGER.debug "end send msg to ROD"
     end
 
+    def send_image(image)
+
+      LOGGER.debug "send image to ROD"
+
+      Logger.info("Telegram not configured for this env") unless CONFIG[:telegram][Rails.env].present?
+
+      Telegram::Bot::Client.run(CONFIG[:telegram][Rails.env]["token"]) do |bot|
+
+
+          bot.api.send_photo(new_raw_image(image))
+
+
+      end if CONFIG[:telegram][Rails.env].present?
+
+      LOGGER.debug "end send image to ROD"
+    end
+
+
     def send_msg(txt, run = nil)
       raise 'message or photo is required!' if !txt.present? and !run.present?
 
@@ -57,6 +75,11 @@ module Comunicator
 
         {chat_id: CONFIG[:telegram][Rails.env]["chat_id"], photo: Faraday::UploadIO.new(Paperclip.io_adapters.for(photo.image), photo.image_content_type), caption: photo.caption || ""}
       end
+
+      def new_raw_image(image)
+
+        {chat_id: CONFIG[:telegram][Rails.env]["chat_id"], photo: image, caption: ""}
+      end      
 
   end
 

@@ -37,6 +37,7 @@ gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'rails-4-x' # For 4.x
 
 # message queue
 gem 'sidekiq'
+gem 'sidekiq-scheduler', '~> 2.0'
 gem 'sinatra', require: false
 gem 'slim'
 
@@ -45,6 +46,9 @@ gem 'pg'
 
 #process HTML as IMAGE
 gem 'imgkit'
+
+#Faraday
+gem 'faraday'
 
 group :production do
 	gem 'rails_12factor'

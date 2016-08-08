@@ -1,5 +1,5 @@
 class WeeklyHighlightsWorker
-	#include Sidekiq::Worker
+	include Sidekiq::Worker
   
 	def perform
 		@begin_date 		= 1.week.ago.beginning_of_week
