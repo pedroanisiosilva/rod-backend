@@ -15,7 +15,7 @@ class WeeklyHighlightsWorker
 	def build_high_lights_msg
 		@msg = @msg + "\n"+ fast_run(@week_high_lights.fastest_run)
 		@msg = @msg + "\n"+ farthest_run(@week_high_lights.farthest_run)
-		@msg = @msg + "\n"+ hookie(@week_high_lights.hookie)
+		#@msg = @msg + "\n"+ hookie(@week_high_lights.hookie)
 		if (@end_date - @begin_date)/24/60/60.round <8
 			@msg = @msg + "\n"+ target_smasher(@week_high_lights.target_smasher)
 		end
