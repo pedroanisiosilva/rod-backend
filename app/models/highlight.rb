@@ -38,8 +38,12 @@ class Highlight
 
 	def hookie
 		freshman = @runners.where(:created_at => 2.week.ago.beginning_of_week..1.week.ago.end_of_week)
-		real = freshman.each_with_index.map{|f,i| [f.weekly_runs_km_on_date(1.week.ago.beginning_of_week),i]}
-		freshman[real.sort.last[1]]
+		unless freshman.nil?
+			real = freshman.each_with_index.map{|f,i| [f.weekly_runs_km_on_date(1.week.ago.beginning_of_week),i]}
+			freshman[real.sort.last[1]]
+		else
+			nil
+		end
 	end
 
 	def target_smasher
