@@ -38,7 +38,13 @@ class Api::V1::RunsController < Api::V1::BaseController
   end
 
   def create
-    @run = Run.create(note: params[:note], user_id: params[:user_id], rod_images_attributes: (params[:rod_images_attributes] || []), duration: params[:duration], created_at: Time.zone.now, distance: params[:distance], datetime: Time.parse(params[:datetime]).to_datetime, updated_at: Time.zone.now)
+
+    fix_android_time = params[:datetime]
+    if fix_android_time == "" || fix_android_time.nil?
+      fix_android_time = Time.zone.now.to_datetime
+    end
+
+    @run = Run.create(note: params[:note], user_id: params[:user_id], rod_images_attributes: (params[:rod_images_attributes] || []), duration: params[:duration], created_at: Time.zone.now, distance: params[:distance], datetime: fix_android_time , updated_at: Time.zone.now)
 
 	  if @run.save
 		  render(json: Api::V1::RunSerializer.new(@run).to_json)
