@@ -1,7 +1,7 @@
   WeeklyHighlightsWorker:
-    cron: "30 6 * * 1 America/Sao_Paulo"
+    cron: "30 7 * * 1 America/Sao_Paulo"
     description: "This job send the weekly hightlights"
 
   PinterestMondayWorker:
-    cron: "0 6 * * 1 America/Sao_Paulo"
+    cron: "0 5 * * 1 America/Sao_Paulo"
     description: "This job send the monday morning motivation"
