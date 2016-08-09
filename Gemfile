@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.3.1'
 
 gem 'devise'
 gem 'cancancan'
@@ -34,6 +35,7 @@ gem "obfuscate_id"
 
 # locale
 gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'rails-4-x' # For 4.x
+
 
 # message queue
 gem 'sidekiq'
