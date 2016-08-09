@@ -26,7 +26,6 @@ class Api::V1::RunsController < Api::V1::BaseController
       @run = Run.new()
   end
 
-
   def update
       @run = Run.find_by_id(params[:id])
       @run.update(rod_images_attributes: (params[:rod_images_attributes] || []), note: params[:note], duration: params[:duration], distance: params[:distance], datetime: Time.parse(params[:datetime]).to_datetime, updated_at: Time.zone.now)

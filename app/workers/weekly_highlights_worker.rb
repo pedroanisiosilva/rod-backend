@@ -7,21 +7,24 @@ class WeeklyHighlightsWorker
 		week_set			= Run.where(:datetime => @begin_date ..@end_date)
 		@week_high_lights	= Highlight.new(week_set)
 
-		@msg = "Destaques da semana!!"
 		build_high_lights_msg
 		comunicator.send_text_only(@msg)
 	end
 
 	def build_high_lights_msg
-		@msg = @msg + "\n"+ fast_run(@week_high_lights.fastest_run)
-		@msg = @msg + "\n"+ farthest_run(@week_high_lights.farthest_run)
-		#@msg = @msg + "\n"+ hookie(@week_high_lights.hookie)
-		if (@end_date - @begin_date)/24/60/60.round <8
-			@msg = @msg + "\n"+ target_smasher(@week_high_lights.target_smasher)
-		end
-		@msg = @msg + "\n"+ latest_and_earliest(@week_high_lights.latest_and_earliest)
-		@msg = @msg + "\n"+ run_count_smasher(@week_high_lights.run_count_smasher)
-		@msg = @msg + "\n"+ weely_half_marathon(@week_high_lights.run_at_distance(21))	
+
+		highlights = Array.new
+
+		highlights.push(%{Destaques da semana(##{@begin_date.strftime("%W")}): #{@begin_date.strftime("%d/%b")} - #{@end_date.strftime("%d/%b")}!!})
+		highlights.push(fast_run(@week_high_lights.fastest_run))
+		highlights.push(farthest_run(@week_high_lights.farthest_run))
+		highlights.push(hookie(@week_high_lights.hookie))
+		highlights.push(weely_half_marathon(@week_high_lights.run_at_distance(21)))
+		highlights.push( target_smasher(@week_high_lights.target_smasher))
+		highlights.push(latest_and_earliest(@week_high_lights.latest_and_earliest))
+		highlights.push(run_count_smasher(@week_high_lights.run_count_smasher))
+
+		@msg = highlights.reject { |h| h.length ==0 }.join("\n")
 	end
 
 	def fast_run(run)

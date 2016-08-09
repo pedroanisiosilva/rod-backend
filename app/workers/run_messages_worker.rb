@@ -16,8 +16,10 @@ class RunMessagesWorker
 		send_distance_max_speed(16)		
 		send_distance_max_speed(21)
 		send_distance_max_speed(42)
-		check_if_did_meet_goal
-
+		
+		if Date.today.saturday? || Date.today.sunday?
+		 	check_if_did_meet_goal
+		end
 	end
 
 	def send_create_congrats(run)
