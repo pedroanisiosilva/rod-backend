@@ -5,3 +5,7 @@
   PinterestMondayWorker:
     cron: "0 5 * * 1 America/Sao_Paulo"
     description: "This job send the monday morning motivation"
+
+ InactiveAthletesWorker:
+  cron: "0 17 * * 6 America/Sao_Paulo"
+  description: "This job send the incentive to innactive uses (don't run in 2 weeks)"   
