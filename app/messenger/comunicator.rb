@@ -33,14 +33,26 @@ module Comunicator
       Logger.info("Telegram not configured for this env") unless CONFIG[:telegram][Rails.env].present?
 
       Telegram::Bot::Client.run(CONFIG[:telegram][Rails.env]["token"]) do |bot|
-
-
-          bot.api.send_photo(new_raw_image(image))
+        bot.api.send_photo(new_raw_image(image))
 
 
       end if CONFIG[:telegram][Rails.env].present?
 
       LOGGER.debug "end send image to ROD"
+    end
+    
+
+    def send_image_with_caption(image,caption)
+      LOGGER.debug "send image to ROD"
+
+      Logger.info("Telegram not configured for this env") unless CONFIG[:telegram][Rails.env].present?
+
+      Telegram::Bot::Client.run(CONFIG[:telegram][Rails.env]["token"]) do |bot|
+        bot.api.send_photo(new_raw_image(image))
+
+      end if CONFIG[:telegram][Rails.env].present?
+
+      LOGGER.debug "end send image to ROD"      
     end
 
 

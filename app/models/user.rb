@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
 	end
 
 	def weekly_runs_km_on_date(date)
-		time_obj = Time.parse(date.to_s)
+		time_obj = Time.zone.parse(date.to_s)
 		self.runs.where(:datetime => time_obj.beginning_of_week..time_obj.end_of_week).sum(:distance).to_f
 	end
 
@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
 	end
 
 	def weekly_runs_count_on_date(date)
-		time_obj = Time.parse(date.to_s)
+		time_obj = Time.zone.parse(date.to_s)
 		self.runs.where(:datetime => time_obj.beginning_of_week..time_obj.end_of_week).count
 	end
 
@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
 	end
 
 	def weekly_runs_duration_on_date(date)
-		time_obj = Time.parse(date.to_s)
+		time_obj = Time.zone.parse(date.to_s)
 		self.runs.where(:datetime => time_obj.beginning_of_week..time_obj.end_of_week).sum(:duration)
 	end
 
@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
 	end
 
 	def monthly_runs_km_on_date(date)
-		time_obj = Time.parse(date.to_s)
+		time_obj = Time.zone.parse(date.to_s)
 		self.runs.where(:datetime => time_obj.at_beginning_of_month..time_obj.end_of_month).sum(:distance).to_f
 	end
 
@@ -75,7 +75,7 @@ class User < ActiveRecord::Base
 	end
 
 	def monthly_runs_count_on_date(date)
-		time_obj = Time.parse(date.to_s)
+		time_obj = Time.zone.parse(date.to_s)
 		self.runs.where(:datetime => time_obj.at_beginning_of_month..time_obj.end_of_month).count
 	end
 
@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
 	end
 
 	def monthly_runs_duration_on_date(date)
-		time_obj = Time.parse(date.to_s)
+		time_obj = Time.zone.parse(date.to_s)
 		self.runs.where(:datetime => time_obj.at_beginning_of_month..time_obj.end_of_month).sum(:duration)
 	end
 

@@ -70,6 +70,8 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem "rack-test"
   gem 'guard-rspec', require: false
+  gem 'derailed_benchmarks'
+  gem 'stackprof'
 end
 
 group :development do

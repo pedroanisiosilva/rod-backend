@@ -37,6 +37,23 @@ describe "Run API", :type=> :request do
     #check to make sure the right amount of messages are returned
   end
 
+  it 'create a run via api with notes and accent' do
+
+    user = create(:user)
+    login_as user, :scope => :user
+    runs = {:distance => "21.2", :duration =>2*60*60, :user=>user, :datetime => Time.now.in_time_zone.iso8601, :note => "rápida"}
+
+    post %{/api/v1/users/#{user.id}/runs}, runs
+
+    json = JSON.parse(response.body)
+
+    # test for the 200 status-code
+    expect(response).to be_success
+    expect(json['duration']).to eq(2*60*60)
+
+    #check to make sure the right amount of messages are returned
+  end  
+
   it 'create a run via api with a image' do
 
     user = create(:user)

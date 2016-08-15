@@ -57,6 +57,29 @@ RSpec.feature "Run" do
 		expect(page).to have_content('15:45 BRT')
 	end
 
+	scenario "Create run for Brasilia Time Zone at 21:30" do
+		user = create(:user)
+		login_as user, :scope => :user
+
+		visit('/runs/new')
+		#save_and_open_page
+		#select user.name, :from => 'User'
+		select_date("2016,June,10", :from => "Datetime")
+		select_time(21,30, :from => "Datetime")
+		fill_in('Distance', :with => '15.6')
+		fill_in('run_duration',:with => '01:30:00')
+		click_button('Create Run')
+		#save_and_open_page
+		expect(page).to have_content('21:30 BRT')
+
+		week = Time.zone.now.at_beginning_of_week.strftime("%W").to_i
+		range_date = Date.commercial(Time.zone.now.year.to_i, week)
+
+		expect(user.weekly_runs_km).to eq(user.weekly_runs_km_on_date(range_date))
+		
+	end
+
+
 	scenario "Create run for Pacific Time (US & Canada) Time Zone" do
 		user = create(:user)
 		user.time_zone = 'Pacific Time (US & Canada)'
