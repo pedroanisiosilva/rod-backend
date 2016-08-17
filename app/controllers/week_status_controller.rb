@@ -2,6 +2,7 @@ require 'open-uri'
 
 
 class WeekStatusController < ApplicationController
+  layout false, except: [:index]
   include ApplicationHelper
 
 def daily
@@ -22,18 +23,20 @@ def daily
 end
 
 def image
-  url = 'https://fonts.googleapis.com/css?family=Roboto'
-  css = page_content = open(url)
+  url2  = view_context.asset_url('css/pro-bars.min.css')
+  css2  = open(url2)
 
   output = render_to_string(:action => "#{self.daily}", :format =>[:html], :layout => false,
-    :template => "week_status/daily.html.erb")
+    :template => "week_status/daily.html.erb", :locals => {:imgkit => "true"})
 
   # IMGKit.new takes the HTML and any options for wkhtmltoimage
   # run `wkhtmltoimage --extended-help` for a full list of options
-  kit = IMGKit.new(output, :quality => 50, :'crop-w' => 490, :'crop-h' => 200)
+  kit = IMGKit.new(output, :quality => 90, :'crop-w' => 452, :'crop-x' => 18, :'crop-y' => 10, :'crop-h' => 192,:custom_header => ['IMGKit', "yes"])
+  #kit = IMGKit.new(output, :quality => 90,:custom_header => ['IMGKit', "yes"])
+
   # kit.stylesheets << '/path/to/css/file'
   # kit.javascripts << '/path/to/js/file'
-  kit.stylesheets << css  
+  kit.stylesheets << css2
 
 
   @img = kit.to_img(:png)
