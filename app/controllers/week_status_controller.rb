@@ -4,16 +4,33 @@ require 'open-uri'
 class WeekStatusController < ApplicationController
   include ApplicationHelper
 
+def daily
+
+  begin_date      = Date.today.beginning_of_week
+  @active_runners  = User.joins(:runs).where("datetime > ? and user_id IS NOT NULL", begin_date).distinct 
+  w               = WeeklyGoal.where(:first_day => begin_date)
+  @meta            = w.map{|m|m.distance.to_f}.reduce(:+)
+  u               = User.where(:status =>0)
+  @real            = u.map{|m|m.weekly_runs_km}.reduce(:+)
+  @run_count       = u.map{|m|m.weekly_runs_count}.reduce(:+)
+  @percent         = @real/@meta
+  @percent_string  = %{#{(@percent*100).round(0)}%}
+
+  @real = @real.to_i
+  @meta = @meta.to_i
+
+end
+
 def image
-  url = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'
+  url = 'https://fonts.googleapis.com/css?family=Roboto'
   css = page_content = open(url)
 
-  output = render_to_string(:action => "#{self.index}", :format=>[:html], :locals => {:params => params},
-    :template => "week_status/index.html.erb")
+  output = render_to_string(:action => "#{self.daily}", :format =>[:html], :layout => false,
+    :template => "week_status/daily.html.erb")
 
   # IMGKit.new takes the HTML and any options for wkhtmltoimage
   # run `wkhtmltoimage --extended-help` for a full list of options
-  kit = IMGKit.new(output, :quality => 50)
+  kit = IMGKit.new(output, :quality => 50, :'crop-w' => 490, :'crop-h' => 200)
   # kit.stylesheets << '/path/to/css/file'
   # kit.javascripts << '/path/to/js/file'
   kit.stylesheets << css  

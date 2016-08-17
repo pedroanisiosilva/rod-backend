@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<style>
+
+img.runner {
+  height: 40px;
+  vertical-align:middle;
+  padding-left: 10px; 
+  padding-right: 10px; 
+
+}
+
+img.track {
+  height: 30px;
+  vertical-align:middle;
+  padding-right: 10px;   
+}
+
+div.box {
+    width:450px;
+    height: 178px;
+    margin: 10px;
+    border: 1px solid #5F2476;
+    font-family: 'Roboto', Helvetica, sans-serif;
+}
+
+div.header {
+    width:450px;
+    height: 67px;
+    background-color: #5F2476;
+    color: #F4F5F0;
+    font-size: 200%;
+}
+div.header_left {
+    width:100px;
+    height: 67px;
+    color: #F4F5F0;
+    font-size: 80%;
+    float: left;
+    line-height: 67px;
+}
+div.header_center {
+    width:250px;
+    height: 67px;
+    color: #F4F5F0;
+    font-size: 80%;
+    float: left;
+    line-height: 67px;
+    text-align: center;
+}
+div.header_right {
+    width: 100px;
+    height: 67px;
+    color: #F4F5F0;
+    font-size: 80%;
+    float: left;
+    line-height: 67px;
+}
+div.content_left {
+    width: 225px;
+    height: 111px;
+    color: #5F2476;
+    font-size: 100%;
+    float: left;
+    position: relative;
+}
+div.content_right {
+    width: 225px;
+    height: 111px;
+    font-size: 100%;
+    color: #615A57;
+    float: left;
+}
+
+.meta {
+    font-size: 480%;   
+    padding-left: 40px;
+    height: 70px; 
+}
+
+.real {
+    font-size: 480%;   
+    padding-left: 45px;
+    height: 70px; 
+}
+
+.km {
+  padding: 0px;
+}
+
+.pipe {
+  font-size: 400%;
+  float:right
+}
+
+.hash {
+  position: absolute; padding: 90px 52px;
+  font-size: 100%;
+}
+
+
+
+</style>
+</head>
+<body>
+
+<div class="box">
+  <div class="header">
+      <div class="header_left"><img src="<%= image_url('runners.png')%>" class="runner"><%= @active_runners.size %></div>
+      <div class="header_center"><%= @percent_string %></div>
+      <div class="header_right"><img src="<%= image_url('pista.png')%>" class="track"> <%= @run_count %></div>
+  </div>
+  <div class="content">
+      <div class="content_left">
+      <span class="hash">#realizado</span>
+        <span class="meta"><%= @real %></span><span class="km">km</span>
+        <span class="pipe">|</span> 
+      </div>
+      <div class="content_right">
+        <span class="hash">#meta</span>
+        <span class="real"><%= @meta %></span><span class="km">km</span>
+      </div>
+  </div>
+</div>
+
+</body>
+</html>
+
