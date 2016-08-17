@@ -24,7 +24,7 @@ class DailyStatusWorker
 		tempfile.write open(pin_image).read
 		tempfile.rewind
 
-		msg = %{Fechamento do dia: #{Time.zone.now.strftime("%d-%b-%Y")}}
+		msg = %{Fechamento do dia: #{60.minutes.ago.strftime("%d-%b-%Y")}}
 
 		comunicator.send_image_with_caption(Faraday::UploadIO.new(tempfile, 'octet/stream'),msg)
 		tempfile.close
