@@ -69,7 +69,7 @@ module Comunicator
 
         run.rod_images.each do |image|
 
-          bot.api.send_photo(new_group_photo(image)) if image.image_file_size.present? and image.image_file_name.present?
+          bot.api.send_photo(new_group_photo(image,chat_id)) if image.image_file_size.present? and image.image_file_name.present?
 
         end if run.rod_images.present?
 
