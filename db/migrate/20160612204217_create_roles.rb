@@ -5,7 +5,7 @@ class CreateRoles < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    ['registered', 'banned', 'moderator', 'admin'].each do |role|
+    ['registered', 'banned', 'moderator', 'admin', 'guest'].each do |role|
       Role.find_or_create_by({name: role})
     end
   end

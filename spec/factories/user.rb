@@ -8,5 +8,9 @@ FactoryGirl.define do
     	email {generate(:email)}
     	time_zone 'Brasilia'
     	password "734bds29rd"
+
+		after(:create) {|user| user.groups << FactoryGirl.create(:group) }      	
   	end
+
+	
 end

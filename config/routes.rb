@@ -22,14 +22,14 @@ Rails.application.routes.draw do
   get 'static_page/about'
   get 'static_page/help'
   get 'static_page/home'
-  get 'week_status/index', to: 'week_status#index'
-  get 'week_status/daily', to: 'week_status#daily'
-  get 'week_status/image', to: 'week_status#image'  
-  get 'week_status/:week_number/:belt', to: 'week_status#index'
-  get 'week_status/:week_number', to: 'week_status#index'
+  get 'week_status/:group_id/daily', to: 'week_status#daily'
+  get 'week_status/:group_id/image', to: 'week_status#image'  
+  get 'week_status/:group_id/:week_number/:belt', to: 'week_status#index'
+  get 'week_status/:group_id/:week_number', to: 'week_status#index'  
   get '/users/:id/stats/:year/:target/:w_id', to: 'user_stats#index'
 
   resources :runs
+  resources :groups
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

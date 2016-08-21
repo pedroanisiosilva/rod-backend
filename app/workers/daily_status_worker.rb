@@ -7,27 +7,29 @@ class DailyStatusWorker
   
 	def perform
 
-		pin_image = ""
+		@groups = Group.all.reject{|g|g.nil?}
+		@groups.each do |group|
+			pin_image = ""
 
-		if Rails.env.development?
-			pin_image 	= "http://localhost:3000/week_status/image.png"
-		else
-			pin_image 	= "https://app.runordie.run/week_status/image.png"
+			if Rails.env.development?
+				pin_image 	= "http://localhost:3000/week_status/#{group.id}/image.png"
+			else
+				pin_image 	= "https://app.runordie.run/week_status/#{group.id}/image.png"
+			end
 
+			name 		= (0...8).map { (65 + rand(26)).chr }.join
+			extension 	= File.extname(pin_image) 
+			tempfile 	= Tempfile.new([name, extension])
+			tempfile.binmode
+
+			tempfile.write open(pin_image).read
+			tempfile.rewind
+
+			msg = %{Fechamento do dia: #{60.minutes.ago.strftime("%d-%b-%Y")}}
+
+			comunicator.send_image_with_caption(Faraday::UploadIO.new(tempfile, 'octet/stream'),msg,group.telegram_id)
+			tempfile.close
 		end
-
-		name 		= (0...8).map { (65 + rand(26)).chr }.join
-		extension 	= File.extname(pin_image) 
-		tempfile 	= Tempfile.new([name, extension])
-		tempfile.binmode
-
-		tempfile.write open(pin_image).read
-		tempfile.rewind
-
-		msg = %{Fechamento do dia: #{60.minutes.ago.strftime("%d-%b-%Y")}}
-
-		comunicator.send_image_with_caption(Faraday::UploadIO.new(tempfile, 'octet/stream'),msg)
-		tempfile.close
 	end
 
 	def comunicator

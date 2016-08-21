@@ -35,8 +35,6 @@ RSpec.feature "Admin" do
 			user.role_id = r.id
 			user.save
 			login_as user, :scope => :user
-
-
 		end
 
 		scenario "other user" do
@@ -57,30 +55,31 @@ end
 RSpec.feature "User status" do
 
 	context "when injured" do
+
+		url = ""
+
 		before do
 			user = create(:user)
 			user.status = "injured"
 			user.save
 			login_as user, :scope => :user
+			url = %{/week_status/#{user.groups.first.id}/#{Date.today.strftime("%W")}}
 		end
 
 		scenario "visit week_status" do
 
-			visit('/week_status/index')
+			visit(url)
 			expect(page).to have_content("😷")
 		end
 	end
 
 	context "when quitted" do
-		before do
+		scenario "visit week_status" do
 			user = create(:user)
 			user.status = "quitted"
 			user.save
 			login_as user, :scope => :user
-		end
-
-		scenario "visit week_status" do
-			visit('/week_status/index')
+			visit(%{/week_status/#{user.groups.first.id}/#{Date.today.strftime("%W")}})
 			expect(page).to have_content("🚫")
 		end
 

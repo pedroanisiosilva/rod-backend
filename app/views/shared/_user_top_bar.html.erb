@@ -1,3 +1,47 @@
+  <style type="text/css">
+  .dropdown-submenu {
+    position:relative;
+}
+.dropdown-submenu>.dropdown-menu {
+    top:0;
+    left:100%;
+    margin-top:-6px;
+    margin-left:-1px;
+    -webkit-border-radius:0 6px 6px 6px;
+    -moz-border-radius:0 6px 6px 6px;
+    border-radius:0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+    display:block;
+}
+.dropdown-submenu>a:after {
+    display:block;
+    content:" ";
+    float:right;
+    width:0;
+    height:0;
+    border-color:transparent;
+    border-style:solid;
+    border-width:5px 0 5px 5px;
+    border-left-color:#cccccc;
+    margin-top:5px;
+    margin-right:-10px;
+}
+.dropdown-submenu:hover>a:after {
+    border-left-color:#ffffff;
+}
+.dropdown-submenu.pull-left {
+    float:none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left:-100%;
+    margin-left:10px;
+    -webkit-border-radius:6px 0 6px 6px;
+    -moz-border-radius:6px 0 6px 6px;
+    border-radius:6px 0 6px 6px;
+}  
+  </style>
+
   <ul class="nav nav-tabs" role="tablist">
    <% if !current_user.nil? %>
     <% if current_user.role.name == "admin" %>
@@ -17,13 +61,59 @@
         <li><%= link_to 'All Runs', runs_path %></li>
       </ul>
     </li>
+   <% if !current_user.nil? %>
+    <% if current_user.role.name == "admin" %>    
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Groups<span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <li><%= link_to 'New Group', new_group_path %></li>
+        <li><%= link_to 'All Groups', groups_path %></li>
+      </ul>
+    </li>
+    <% end %>
+    <% end %>    
 <!--     <li><a href="#">About</a></li> -->
     <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Stats<span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="<%= %{/week_status/#{Time.zone.now.in_time_zone.strftime('%W').to_i}} %>">Current Week</a></li>
-        <li><a href="<%= %{/week_status/#{Time.zone.now.in_time_zone.strftime('%W').to_i-1}} %>">Previus Week</a></li>
-        <li><a href="<%= %{/week_status/#{Time.zone.now.in_time_zone.strftime('%W').to_i+1}} %>">Next Week</a></li>
+
+   <% if !current_user.nil? %>
+    <% if current_user.role.name == "admin" %>
+
+      <% Group.all.each do |group| %>
+
+      <li class="menu-item dropdown dropdown-submenu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= group.name %></a>
+          <ul class="dropdown-menu">
+              <li>
+<li><a href="<%= %{/week_status/#{group.id}/#{Time.zone.now.in_time_zone.strftime('%W').to_i}} %>">Current Week</a></li>
+<li><a href="<%= %{/week_status/#{group.id}/#{Time.zone.now.in_time_zone.strftime('%W').to_i-1}} %>">Previus Week</a></li>
+<li><a href="<%= %{/week_status/#{group.id}/#{Time.zone.now.in_time_zone.strftime('%W').to_i+1}} %>">Next Week</a></li>
+              </li>
+          </ul>
+      </li>
+
+      <% end %>
+    <% else %>
+      <% current_user.groups.each do |group| %>
+
+      <li class="menu-item dropdown dropdown-submenu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= group.name %></a>
+          <ul class="dropdown-menu">
+              <li>
+<li><a href="<%= %{/week_status/#{group.id}/#{Time.zone.now.in_time_zone.strftime('%W').to_i}} %>">Current Week</a></li>
+<li><a href="<%= %{/week_status/#{group.id}/#{Time.zone.now.in_time_zone.strftime('%W').to_i-1}} %>">Previus Week</a></li>
+<li><a href="<%= %{/week_status/#{group.id}/#{Time.zone.now.in_time_zone.strftime('%W').to_i+1}} %>">Next Week</a></li>
+              </li>
+          </ul>
+      </li>
+
+      <% end %>  
+
+    <% end %>
+  <% end %>
+
+
       </ul>
     </li>
 

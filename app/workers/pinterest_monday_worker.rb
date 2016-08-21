@@ -24,17 +24,21 @@ class PinterestMondayWorker
 		OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined?('StringMax')
 		OpenURI::Buffer.const_set 'StringMax', 0
 
-		pin 		= random_object_array(pins_array)
-		pin_image 	= pin["image"]["original"]["url"]
-		name 		= (0...8).map { (65 + rand(26)).chr }.join
-		extension 	= File.extname(pin_image) 
-		tempfile 	= Tempfile.new([name, extension])
-		tempfile.binmode
+		@groups = Group.all.reject{|g|g.nil?}
+		@groups.each do |group|
+			pin 		= random_object_array(pins_array)
+			pin_image 	= pin["image"]["original"]["url"]
+			name 		= (0...8).map { (65 + rand(26)).chr }.join
+			extension 	= File.extname(pin_image) 
+			tempfile 	= Tempfile.new([name, extension])
+			tempfile.binmode
 
-		tempfile.write open(pin_image).read
-		tempfile.rewind
-		comunicator.send_image(Faraday::UploadIO.new(tempfile, 'octet/stream'))
-		tempfile.close
+			tempfile.write open(pin_image).read
+			tempfile.rewind
+			comunicator.send_image(Faraday::UploadIO.new(tempfile, 'octet/stream'),group.telegram_id)
+			tempfile.close
+		end
+
 	end
 
 	def comunicator

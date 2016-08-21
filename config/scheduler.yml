@@ -11,5 +11,5 @@ InactiveAthletesWorker:
   description: "This job send the incentive to innactive uses (don't run in 2 weeks)"   
 
 DailyStatusWorker:
-  cron: "0 0 * * * America/Sao_Paulo"
+  cron: "59 23 * * * America/Sao_Paulo"
   description: "This job send the daily evolution of the group"  

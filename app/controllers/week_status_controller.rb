@@ -2,29 +2,47 @@ require 'open-uri'
 
 
 class WeekStatusController < ApplicationController
+  skip_authorize_resource :only => [:image,:daily]
+  load_and_authorize_resource :class => "Membership"
   layout false, except: [:index]
   include ApplicationHelper
 
 def daily
 
   begin_date      = Date.today.beginning_of_week
-  @active_runners  = User.joins(:runs).where("datetime > ? and user_id IS NOT NULL", begin_date).distinct 
-  w               = WeeklyGoal.where(:first_day => begin_date)
-  @meta            = w.map{|m|m.distance.to_f}.reduce(:+)
-  u               = User.where(:status =>0)
-  @real            = u.map{|m|m.weekly_runs_km}.reduce(:+)
-  @run_count       = u.map{|m|m.weekly_runs_count}.reduce(:+)
-  @percent         = @real/@meta
-  @percent_string  = %{#{(@percent*100).round(0)}%}
+  @group_users_id = Membership.select(:user_id).where(:group_id => params[:group_id])
+  @active_runners = User.where(:id => @group_users_id).joins(:runs).where("datetime > ? and user_id IS NOT NULL", begin_date).distinct 
+  w               = WeeklyGoal.where(:first_day => begin_date, :user=>User.where(:id => @group_users_id))
+  u               = User.where(:status =>0, :id=> @group_users_id)  
+  @meta           = w.map{|m|m.distance.to_f}.reduce(:+)
+  @real           = u.map{|m|m.weekly_runs_km}.reduce(:+)
+  @run_count      = u.map{|m|m.weekly_runs_count}.reduce(:+)
 
-  @real = @real.to_i
-  @meta = @meta.to_i
+
+  if @meta.nil? || @meta == 0
+    @meta = 0
+  end 
+  if @real.nil? || @real == 0
+    @real         = 0
+    @percent      = 0
+  else
+     @percent     = @real/@meta
+  end  
+
+  @percent_string = %{#{(@percent*100).round(0)}%}
+  @real           = @real.to_i
+  @meta           = @meta.to_i
 
 end
 
 def image
   url2  = view_context.asset_url('css/pro-bars.min.css')
-  css2  = open(url2)
+  css2 = ""
+
+  begin
+    css2  = open(url2)
+  rescue
+  end
 
   output = render_to_string(:action => "#{self.daily}", :format =>[:html], :layout => false,
     :template => "week_status/daily.html.erb", :locals => {:imgkit => "true"})
@@ -36,7 +54,10 @@ def image
 
   # kit.stylesheets << '/path/to/css/file'
   # kit.javascripts << '/path/to/js/file'
-  kit.stylesheets << css2
+
+  if css2.size >0 
+    kit.stylesheets << css2
+  end
 
 
   @img = kit.to_img(:png)
@@ -53,7 +74,11 @@ def index
         "Red" => "+200km","Purple" => "+150km","Blue" => "+100km", "Green" => "+75km",
         "Orange" => "+50km", "Yellow" => "+25km", "White" => "0-24km"}
 
+  # Group Selection #
   @result = Hash.new
+  @group_users_id = Membership.accessible_by(current_ability).select(:user_id).where(:group_id => params[:group_id])
+  ###################
+ 
 
   if params[:week_number].nil?
     week = Time.zone.now.at_beginning_of_week.strftime("%W").to_i
@@ -75,7 +100,7 @@ def index
       speed_hash = Hash.new
 
     	belt = params[:belt].capitalize
-			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", belt, filter_date.at_beginning_of_month])
+			runners =  User.where(:id => @group_users_id).group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", belt, filter_date.at_beginning_of_month])
 			self.delete_from_relation_if_no_goal(runners,range_date)
 
       runners.each do |runner|
@@ -97,7 +122,7 @@ def index
         speed_hash = Hash.new
 
 
-  			runners = User.group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", key, filter_date.at_beginning_of_month])
+  			runners = User.where(:id => @group_users_id).group('users.id').joins(:categories).includes(:runs).select('users.id,users.name,status').where(["categories.name = ? and categories.first_day = ?", key, filter_date.at_beginning_of_month])
   			self.delete_from_relation_if_no_goal(runners,range_date)
 
         runners.each do |runner|

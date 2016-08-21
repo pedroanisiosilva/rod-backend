@@ -10,12 +10,31 @@ class User < ActiveRecord::Base
 	has_many :runs, -> { order(datetime: :desc) }
 	has_many :categories
 	has_many :weekly_goals
+	has_many :memberships
+	has_many :groups, :through => :memberships
 	validates_presence_of :email, :time_zone
 	after_create :create_category_and_initial_goal
 	before_create :set_default_role
+	after_initialize :set_default_role
 	before_validation :set_default_time_zone
+	before_update :log_status_change, :if => :status_changed?
 
   ROLES = %w[admin moderator author banned].freeze
+
+  	def log_status_change
+
+		case self.status when "injured"
+			Activity.create(:user_id => self.id, :event_type=>'user_injured', :is_public=>false)
+		when "active"
+			Activity.create(:user_id => self.id, :event_type=>'user_active', :is_public=>false)
+		when "inactive"
+			Activity.create(:user_id => self.id, :event_type=>'user_inactive', :is_public=>false)
+		when "failed"
+			Activity.create(:user_id => self.id, :event_type=>'user_failed', :is_public=>false)			
+		when "quitted"
+			Activity.create(:user_id => self.id, :event_type=>'user_quitted', :is_public=>false)			
+		end
+  	end
 
 	def category
 		self.category_on_date(Time.zone.now)

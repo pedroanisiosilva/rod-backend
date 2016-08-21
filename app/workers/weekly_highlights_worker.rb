@@ -2,13 +2,18 @@ class WeeklyHighlightsWorker
 	include Sidekiq::Worker
   
 	def perform
-		@begin_date 		= 1.week.ago.beginning_of_week
-		@end_date			= 1.week.ago.end_of_week	
-		week_set			= Run.where(:datetime => @begin_date ..@end_date)
-		@week_high_lights	= Highlight.new(week_set)
 
-		build_high_lights_msg
-		comunicator.send_text_only(@msg)
+		@groups = Group.all.reject{|g|g.nil?}
+
+		@groups.each do |group|
+			@begin_date 		= 1.week.ago.beginning_of_week
+			@end_date			= 1.week.ago.end_of_week	
+			week_set			= Run.where(:datetime => @begin_date..@end_date, :user=>User.where(:id => Membership.select(:user_id).where(:group_id => group.id)))
+			@week_high_lights	= Highlight.new(week_set)
+			build_high_lights_msg
+			comunicator.send_text_only(@msg,group.telegram_id)
+		end
+
 	end
 
 	def build_high_lights_msg
@@ -73,7 +78,7 @@ class WeeklyHighlightsWorker
 			earliest 	= run_hash['earliest']
 			latest 		= run_hash['latest']
 			msg_array = Array.new
-		  	msg_array[0] = %{🌚 Corrida mais tarde: #{short_name(latest.user.name)} - #{latest.datetime.strftime("%d/%m/%Y %H:%M")}\n🌞 Corrida mais cedo: #{earliest.user.name} - #{earliest.datetime.strftime("%d/%m/%Y %H:%M")}}
+		  	msg_array[0] = %{🌚 Corrida mais tarde: #{short_name(latest.user.name)} - #{latest.datetime.strftime("%d/%m/%Y %H:%M")}\n🌞 Corrida mais cedo: #{short_name(earliest.user.name)} - #{earliest.datetime.strftime("%d/%m/%Y %H:%M")}}
 		  	random_message(msg_array)
 		else
 			return ""			

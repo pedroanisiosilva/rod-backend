@@ -35,16 +35,20 @@ class InactiveAthletesWorker
 		tempfile.rewind
 
 
-		@begin_date 		= 2.week.ago
-		@active				= User.joins(:runs).where("datetime > ? and user_id IS NOT NULL", @begin_date).distinct
-		@inactive 			= User.where('id NOT IN (?) and status = 0 and created_at < ?',@active.map {|m| m.id},@begin_date)
-		@inactive 			= @inactive.map {|m| [m.name,m.runs.size]}.reject { |e|  e[1] == 0}
-		@msg 				= ""
+		@groups = Group.all.reject{|g|g.nil?}
+		@groups.each do |group|
+			@begin_date = 2.week.ago
+			@group_users_id = Membership.select(:user_id).where(:group_id => group.id)
+			@active	= User.where(:id => @group_users_id).joins(:runs).where("datetime > ? and user_id IS NOT NULL", @begin_date).distinct
+			@inactive = User.where('id NOT IN (?) and status = 0 and created_at < ? and id IN (?)',@active.map {|m| m.id},@begin_date,@group_users_id)
+			@inactive = @inactive.map {|m| [m.name,m.runs.size]}.reject { |e|  e[1] == 0}
+			@msg 				= ""
 
-		build_inactive_call
-		comunicator.send_image(Faraday::UploadIO.new(tempfile, 'octet/stream'))
-		comunicator.send_text_only(@msg)
-		tempfile.close
+			build_inactive_call
+			comunicator.send_image(Faraday::UploadIO.new(tempfile, 'octet/stream'),group.telegram_id)
+			comunicator.send_text_only(@msg,group.telegram_id)
+			tempfile.close
+		end
 	end
 
 	def build_inactive_call

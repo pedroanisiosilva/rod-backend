@@ -11,7 +11,7 @@ module Comunicator
 
     attr :bot, :rod_group
 
-    def send_text_only(txt)
+    def send_text_only(txt,chat_id)
 
       LOGGER.debug "send msg to ROD"
 
@@ -19,21 +19,21 @@ module Comunicator
 
       Telegram::Bot::Client.run(CONFIG[:telegram][Rails.env]["token"]) do |bot|
 
-        bot.api.send_message new_group_msg(txt) if txt.present?
+        bot.api.send_message new_group_msg(txt,chat_id) if txt.present?
 
       end if CONFIG[:telegram][Rails.env].present?
 
       LOGGER.debug "end send msg to ROD"
     end
 
-    def send_image(image)
+    def send_image(image,chat_id)
 
       LOGGER.debug "send image to ROD"
 
       Logger.info("Telegram not configured for this env") unless CONFIG[:telegram][Rails.env].present?
 
       Telegram::Bot::Client.run(CONFIG[:telegram][Rails.env]["token"]) do |bot|
-        bot.api.send_photo(new_raw_image(image,""))
+        bot.api.send_photo(new_raw_image(image,"",chat_id))
 
 
       end if CONFIG[:telegram][Rails.env].present?
@@ -42,13 +42,13 @@ module Comunicator
     end
     
 
-    def send_image_with_caption(image,caption)
+    def send_image_with_caption(image,caption,chat_id)
       LOGGER.debug "send image to ROD"
 
       Logger.info("Telegram not configured for this env") unless CONFIG[:telegram][Rails.env].present?
 
       Telegram::Bot::Client.run(CONFIG[:telegram][Rails.env]["token"]) do |bot|
-        bot.api.send_photo(new_raw_image(image,caption))
+        bot.api.send_photo(new_raw_image(image,caption,chat_id))
 
       end if CONFIG[:telegram][Rails.env].present?
 
@@ -56,7 +56,7 @@ module Comunicator
     end
 
 
-    def send_msg(txt, run = nil)
+    def send_msg(txt, run = nil, chat_id)
       raise 'message or photo is required!' if !txt.present? and !run.present?
 
       LOGGER.debug "send msg to ROD"
@@ -65,7 +65,7 @@ module Comunicator
 
       Telegram::Bot::Client.run(CONFIG[:telegram][Rails.env]["token"]) do |bot|
 
-        bot.api.send_message new_group_msg(txt) if txt.present?
+        bot.api.send_message new_group_msg(txt,chat_id) if txt.present?
 
         run.rod_images.each do |image|
 
@@ -79,18 +79,18 @@ module Comunicator
     end
 
     private
-      def new_group_msg(txt)
-        {chat_id: CONFIG[:telegram][Rails.env]["chat_id"], text: txt}
+      def new_group_msg(txt,chat_id)
+        {chat_id: chat_id, text: txt}
       end
 
-      def new_group_photo(photo)
+      def new_group_photo(photo,chat_id)
 
-        {chat_id: CONFIG[:telegram][Rails.env]["chat_id"], photo: Faraday::UploadIO.new(Paperclip.io_adapters.for(photo.image), photo.image_content_type), caption: photo.caption || ""}
+        {chat_id: chat_id, photo: Faraday::UploadIO.new(Paperclip.io_adapters.for(photo.image), photo.image_content_type), caption: photo.caption || ""}
       end
 
-      def new_raw_image(image,caption)
+      def new_raw_image(image,caption,chat_id)
 
-        {chat_id: CONFIG[:telegram][Rails.env]["chat_id"], photo: image, caption: caption}
+        {chat_id: chat_id, photo: image, caption: caption}
       end
 
 
