@@ -8,6 +8,9 @@ class WeekStatusController < ApplicationController
   include ApplicationHelper
 
 def daily
+  # User.joins(:membership).where("group_id = ? and datetime > ? and user_id IS NOT NULL",1, begin_datetime).distinct 
+  # User.distinct(:id).joins(:groups, :runs).where("group_id = ? and datetime > ?",1, begin_datetime)
+  # User.select("count(distinct users.id) as users, count(runs.id)").joins(:groups, :runs).where("group_id = ? and datetime > ?",1, begin_datetime).to_a.first.users
 
   begin_date      = Date.parse(Time.zone.now.beginning_of_week.to_s)
   begin_datetime  = Time.zone.now.beginning_of_week.utc.to_s  
