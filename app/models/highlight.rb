@@ -2,7 +2,7 @@ class Highlight
 	def initialize (run_data_set)
 		@data_set = run_data_set
 		@runs
-		@runners = User.where(id: @data_set.pluck(:user_id).uniq)
+		@runners = User.where(id: @data_set.pluck(:user_id).uniq, :status=>0)
 	end
 
 	def fastest_run

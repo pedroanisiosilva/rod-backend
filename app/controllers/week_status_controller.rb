@@ -9,7 +9,7 @@ class WeekStatusController < ApplicationController
 
 def daily
 
-  begin_date      = Date.today.beginning_of_week
+  begin_date      = Date.parse(Time.zone.now.beginning_of_week.to_s)
   @group_users_id = Membership.select(:user_id).where(:group_id => params[:group_id])
   @active_runners = User.where(:id => @group_users_id).joins(:runs).where("datetime > ? and user_id IS NOT NULL", begin_date).distinct 
   w               = WeeklyGoal.where(:first_day => begin_date, :user=>User.where(:id => @group_users_id))
@@ -23,13 +23,15 @@ def daily
     @meta = 0
   end 
   if @real.nil? || @real == 0
-    @real         = 0
-    @percent      = 0
+    @real             = 0
+    @percent          = 0
+    @percent_string   = 0
   else
-     @percent     = @real/@meta
+     @percent         = @real/@meta
+     @percent_string  = %{#{(@percent*100).round(0)}%}
   end  
 
-  @percent_string = %{#{(@percent*100).round(0)}%}
+  
   @real           = @real.to_i
   @meta           = @meta.to_i
 
