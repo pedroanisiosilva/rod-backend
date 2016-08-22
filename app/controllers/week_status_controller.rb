@@ -10,14 +10,14 @@ class WeekStatusController < ApplicationController
 def daily
 
   begin_date      = Date.parse(Time.zone.now.beginning_of_week.to_s)
+  begin_datetime  = Time.zone.now.beginning_of_week.utc.to_s  
   @group_users_id = Membership.select(:user_id).where(:group_id => params[:group_id])
-  @active_runners = User.where(:id => @group_users_id).joins(:runs).where("datetime > ? and user_id IS NOT NULL", begin_date).distinct 
+  @active_runners = User.where(:id => @group_users_id).joins(:runs).where("datetime > ? and user_id IS NOT NULL", begin_datetime).distinct 
   w               = WeeklyGoal.where(:first_day => begin_date, :user=>User.where(:id => @group_users_id))
   u               = User.where(:status =>0, :id=> @group_users_id)  
   @meta           = w.map{|m|m.distance.to_f}.reduce(:+)
   @real           = u.map{|m|m.weekly_runs_km}.reduce(:+)
   @run_count      = u.map{|m|m.weekly_runs_count}.reduce(:+)
-
 
   if @meta.nil? || @meta == 0
     @meta = 0
@@ -31,39 +31,39 @@ def daily
      @percent_string  = %{#{(@percent*100).round(0)}%}
   end  
 
-  
   @real           = @real.to_i
   @meta           = @meta.to_i
 
 end
 
 def image
-  url2  = view_context.asset_url('css/pro-bars.min.css')
-  css2 = ""
 
-  begin
-    css2  = open(url2)
-  rescue
-  end
+  css_url = Array.new
+  js_url  = Array.new
+
+  ##don't use minified js or CSS urls
+
+  css_url.push('http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css')
+  js_url.push('https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js')
+  js_url.push('http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js')
 
   output = render_to_string(:action => "#{self.daily}", :format =>[:html], :layout => false,
     :template => "week_status/daily.html.erb", :locals => {:imgkit => "true"})
 
   # IMGKit.new takes the HTML and any options for wkhtmltoimage
   # run `wkhtmltoimage --extended-help` for a full list of options
-  kit = IMGKit.new(output, :quality => 90, :'crop-w' => 452, :'crop-x' => 18, :'crop-y' => 10, :'crop-h' => 192,:custom_header => ['IMGKit', "yes"])
+  kit = IMGKit.new(output, :quality => 90, :'crop-w' => 450, :'crop-x' => 10, :'crop-y' => 10, :'crop-h' => 190,:custom_header => ['IMGKit', "yes"])
   #kit = IMGKit.new(output, :quality => 90,:custom_header => ['IMGKit', "yes"])
 
-  # kit.stylesheets << '/path/to/css/file'
-  # kit.javascripts << '/path/to/js/file'
-
-  if css2.size >0 
-    kit.stylesheets << css2
+  css_url.each do |url|
+    kit.stylesheets << open(url)
   end
 
+  js_url.each do |url|
+    kit.javascripts << open(url)
+  end
 
   @img = kit.to_img(:png)
-
     respond_to do |format|
       format.png {send_data @img}
     end  
