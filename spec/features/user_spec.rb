@@ -60,8 +60,9 @@ RSpec.feature "User status" do
 
 		before do
 			user = create(:user)
-			user.status = "injured"
-			user.save
+			user.injured!
+			group 		= create(:group, :name=>"Run or Die")
+			membership 	= create(:membership, :user=>user,:group=>group)		
 			login_as user, :scope => :user
 			url = %{/week_status/#{user.groups.first.id}/#{Date.today.strftime("%W")}}
 		end

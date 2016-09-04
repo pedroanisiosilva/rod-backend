@@ -72,7 +72,7 @@ u = User.find_by(:email=>"juarezmacedo@uol.com.br")
 u = User.find_by(:email=>"tati@mail.com")
 Category.create(first_day: Time.zone.now.at_beginning_of_month, last_day: Time.zone.now.at_end_of_month, name: "White",user_id:u.id)
 
-WeeklyGoal.create(first_day:Time.zone.now.at_beginning_of_week, last_day: Time.zone.now.at_end_of_week, number: Time.zone.now.at_beginning_of_week.strftime("%W").to_i, distance:60, user_id:u.id)
+WeeklyGoal.create(first_day:Time.zone.now.at_beginning_of_week, last_day: Time.zone.now.at_end_of_week, number: Time.zone.now.at_beginning_of_week.strftime("%W").to_i, distance:8, user_id:u.id)
 
 
 #importacao
@@ -139,12 +139,8 @@ last_month = Time.now - 1.month
 time_obj = Time.parse(last_month.to_s)
 runner.runs.where(:datetime => time_obj.at_beginning_of_month..time_obj.end_of_month).sum(:distance).to_f
 
-
+// mudança de categoria
 last_month = DateTime.now.in_time_zone('Brasilia') -1.month
-time_obj = Time.parse(last_month.to_s)
-runner.runs.where(:datetime => time_obj.at_beginning_of_month..time_obj.end_of_month).sum(:distance).to_f
-
-
 users = User.active
 users.each do |user|
 total_distance = user.monthly_runs_km_on_date(last_month)
@@ -172,6 +168,20 @@ Category.create(first_day: Date.today.at_beginning_of_month, last_day: Date.toda
 end
 end
 end
+//
+
+// remoção do grupo
+inativar = Array.new
+last_month = DateTime.now.in_time_zone('Brasilia') -1.month
+users = User.active
+users.each do |user|
+total_run = user.monthly_runs_count_on_date(last_month)
+if total_run < 2
+	inativar.push(user)
+end
+end
+inativar
+//
 
 
 c = Category.where(:first_day => Date.today.at_beginning_of_month)

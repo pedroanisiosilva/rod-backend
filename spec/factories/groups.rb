@@ -8,6 +8,7 @@ FactoryGirl.define  do
 		geolng Forgery('geo').longitude
 		is_public Forgery('basic').boolean
 		needs_admin_aproval Forgery('basic').boolean
+		telegram_id "-149144441"
 
 	end
 end

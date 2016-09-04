@@ -24,19 +24,21 @@ class InactiveAthletesWorker
 		OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined?('StringMax')
 		OpenURI::Buffer.const_set 'StringMax', 0
 
-		pin 		= random_object_array(pins_array)
-		pin_image 	= pin["image"]["original"]["url"]
-		name 		= (0...8).map { (65 + rand(26)).chr }.join
-		extension 	= File.extname(pin_image) 
-		tempfile 	= Tempfile.new([name, extension])
-		tempfile.binmode
-
-		tempfile.write open(pin_image).read
-		tempfile.rewind
-
 
 		@groups = Group.all.reject{|g|g.nil?}
 		@groups.each do |group|
+
+			## generate random file
+			pin 		= random_object_array(pins_array)
+			pin_image 	= pin["image"]["original"]["url"]
+			name 		= (0...8).map { (65 + rand(26)).chr }.join
+			extension 	= File.extname(pin_image) 
+			tempfile 	= Tempfile.new([name, extension])
+			tempfile.binmode
+			tempfile.write open(pin_image).read
+			tempfile.rewind
+			##
+
 			@begin_date = 2.week.ago
 			@group_users_id = Membership.select(:user_id).where(:group_id => group.id)
 			@active	= User.where(:id => @group_users_id).joins(:runs).where("datetime > ? and user_id IS NOT NULL", @begin_date).distinct
@@ -47,8 +49,11 @@ class InactiveAthletesWorker
 			build_inactive_call
 			comunicator.send_image(Faraday::UploadIO.new(tempfile, 'octet/stream'),group.telegram_id)
 			comunicator.send_text_only(@msg,group.telegram_id)
-			tempfile.close
+
+			tempfile.close			
 		end
+
+
 	end
 
 	def build_inactive_call

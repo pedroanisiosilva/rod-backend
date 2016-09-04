@@ -94,7 +94,7 @@ def index
   range_date = Date.commercial(Time.zone.now.year.to_i, week)
 
   if range_date.beginning_of_week.month != range_date.end_of_week.month
-    filter_date = Time.zone.now
+    filter_date = Date.parse(Time.zone.now.to_s)
   else
     filter_date = range_date
   end
