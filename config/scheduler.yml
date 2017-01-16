@@ -12,4 +12,8 @@ InactiveAthletesWorker:
 
 DailyStatusWorker:
   cron: "59 23 * * * America/Sao_Paulo"
-  description: "This job send the daily evolution of the group"  
+  description: "This job send the daily evolution of the group"
+
+GoalGeneratorWorker:
+  cron: "0 2 * * 1 America/Sao_Paulo"
+  description: "This job generates the runner target"
