@@ -43,8 +43,8 @@ class GoalGeneratorWorker
 	    	new_target_goal_based = "%2.0f"%(last_week_goal*0.8).to_i
 	    end
 
-	    if  new_target.to_i < minimum_weekly_goal
-	    	new_target = minimum_weekly_goal
+	    if  new_target.to_i < @minimum_weekly_goal
+	    	new_target = @minimum_weekly_goal
 	    end 
 
 		WeeklyGoal.create(first_day:today.at_beginning_of_week, last_day: today.at_end_of_week, number: today.at_beginning_of_week.strftime("%W").to_i, distance:new_target.to_i, user_id:user.id)
