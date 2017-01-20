@@ -40,7 +40,7 @@ class GoalGeneratorWorker
 	    if last_week_performance >= last_week_goal
 	    	new_target = "%2.0f"%(last_week_goal*1.1)
 	    else
-	    	new_target_goal_based = "%2.0f"%(last_week_goal*0.8).to_i
+	    	new_target = "%2.0f"%(last_week_goal*0.8).to_i
 	    end
 
 	    if  new_target.to_i < @minimum_weekly_goal
