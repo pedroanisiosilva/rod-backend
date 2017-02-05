@@ -2,6 +2,15 @@ u = User.find_by(:email => 'Luiz.Pimentel@walmart.com')
 
 results = Hash.new
 
+def pace_helper(duration,distance)
+if distance > 0
+	pace = duration.to_f/distance
+	mm, ss = pace.divmod(60)
+	hh, mm = mm.divmod(60)
+	"%d:%02d" % [mm, ss]
+end
+end
+
 (0..10).each do |w|
 
 	total_week_km = u.runs.where(:datetime => w.week.ago.beginning_of_week..w.week.ago.end_of_week).sum(:distance).to_f
@@ -12,12 +21,7 @@ results = Hash.new
 end
 
 
-def pace_helper(duration,distance)
-pace = duration.to_f/distance
-mm, ss = pace.divmod(60)
-hh, mm = mm.divmod(60)
-"%d:%02d" % [mm, ss]
-end
+
 
 
 

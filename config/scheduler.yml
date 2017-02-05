@@ -17,3 +17,9 @@ DailyStatusWorker:
 GoalGeneratorWorker:
   cron: "0 2 * * 1 America/Sao_Paulo"
   description: "This job generates the runner target"
+
+CategoryBuilderWorker:
+  cron: "0 0 1 * * America/Sao_Paulo"
+  description: "This job generates the Category for the month"  
+
+
