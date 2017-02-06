@@ -89,6 +89,7 @@ class GoalGeneratorWorker
 		last_week 				= 1.week.ago.at_beginning_of_week
     	last_week_goal 			= user.weekly_goal_on_date(last_week)
     	last_week_performance	= user.weekly_runs_km_on_date(last_week)
+    	new_target 				= @minimum_weekly_goal
 
     	unless last_week_goal.nil?
     		last_week_goal = user.weekly_goal_on_date(last_week).distance.to_i
@@ -104,7 +105,9 @@ class GoalGeneratorWorker
 
 	    if  new_target.to_i < @minimum_weekly_goal
 	    	new_target = @minimum_weekly_goal
-	    end 
+	    end
+
+	    new_target
 
 	end  
 
