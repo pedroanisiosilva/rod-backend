@@ -13,7 +13,8 @@ class GoalGeneratorWorker
 
 	def perform_better_algo(user)
 
-		new_target = @minimum_weekly_goal
+		new_target 	= @minimum_weekly_goal
+		today		= Time.now.utc.to_date
 
 		## For now, there is only one, but all improvements
 		## will show-up here
@@ -85,7 +86,6 @@ class GoalGeneratorWorker
 		## if user looses target: 
 		##    - new target will be an 20% decrease over last target
 
-		today					= Time.now.utc.to_date
 		last_week 				= 1.week.ago.at_beginning_of_week
     	last_week_goal 			= user.weekly_goal_on_date(last_week)
     	last_week_performance	= user.weekly_runs_km_on_date(last_week)
