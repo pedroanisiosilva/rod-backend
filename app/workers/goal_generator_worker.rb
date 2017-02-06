@@ -13,6 +13,8 @@ class GoalGeneratorWorker
 
 	def perform_better_algo(user)
 
+		new_target = @minimum_weekly_goal
+
 		## For now, there is only one, but all improvements
 		## will show-up here
 
