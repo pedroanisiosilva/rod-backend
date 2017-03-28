@@ -12,6 +12,8 @@ class CategoryBuilderWorker
 
 		users.each do |user|
 
+			belt = "White"
+
 			total_distance = user.monthly_runs_km_on_date(last_month)
 
 			if total_distance < 25
@@ -28,16 +30,14 @@ class CategoryBuilderWorker
 				belt = "Purple"
 			elsif total_distance >= 200 && total_distance < 250
 				belt = "Red"
-			elsif total_distance >= 250 && total_distance < 350
+			elsif total_distance >= 250
 				belt = "Black"
 			end
+			
+			c = Category.where(:user_id => user.id, :first_day => Date.today.at_beginning_of_month)
 
-			if belt
-				c = Category.where(:user_id => user.id, :first_day => Date.today.at_beginning_of_month)
-
-				if c.nil?
-					Category.create(first_day: Date.today.at_beginning_of_month, last_day: Date.today.at_end_of_month, name: belt,user_id:user.id)
-				end
+			if c.size == 0
+				Category.create(first_day: Date.today.at_beginning_of_month, last_day: Date.today.at_end_of_month, name: belt,user_id:user.id)
 			end
 		end
 	end
