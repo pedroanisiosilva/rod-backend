@@ -9,9 +9,13 @@ class WeeklyHighlightsWorker
 			@begin_date 		= 1.week.ago.beginning_of_week
 			@end_date			= 1.week.ago.end_of_week	
 			week_set			= Run.where(:datetime => @begin_date..@end_date, :user=>User.where(:id => Membership.select(:user_id).where(:group_id => group.id)))
-			@week_high_lights	= Highlight.new(week_set)
-			build_high_lights_msg
-			comunicator.send_text_only(@msg,group.telegram_id)
+			
+			## Increvelmente, tem grupos que passa 1 semana e ninguem corre.
+			if (week_set.size > 0)
+				@week_high_lights	= Highlight.new(week_set)
+				build_high_lights_msg
+				comunicator.send_text_only(@msg,group.telegram_id)
+			end
 		end
 
 	end
